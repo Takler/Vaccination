@@ -75,7 +75,7 @@ public class PatientRepository {
                 "zip_code, " +
                 "address, " +
                 "telephone_number, " +
-                "underlying_medical_condition, " +
+                "underlying_medical_condition) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             int rowsAffected = jdbc.update(sql,
