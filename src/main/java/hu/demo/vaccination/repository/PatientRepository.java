@@ -50,15 +50,15 @@ public class PatientRepository {
         }
     }
 
-    public List<Patient> getPatient(int id) {
+    public Patient getPatient(int id) {
         String sqlQuery = "SELECT id, first_name, last_name, mothers_name, gender, date_of_birth, " +
                 "email, city, zip_code, address, telephone_number, underlying_medical_condition " +
                 "FROM patient " +
                 "WHERE id = ? AND deleted = false";
         try {
-            return jdbc.query(sqlQuery, patientRowMapper, id);
+            return jdbc.queryForObject(sqlQuery, patientRowMapper, id);
         } catch (DataAccessException e) {
-            return Collections.emptyList();
+            return null;
         }
     }
 
