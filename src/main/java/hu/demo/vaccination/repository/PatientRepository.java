@@ -111,7 +111,7 @@ public class PatientRepository {
                 "zip_code = ?, " +
                 "address = ?, " +
                 "telephone_number = ?, " +
-                "underlying_medical_condition = ?, " +
+                "underlying_medical_condition = ? " +
                 "WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql,
