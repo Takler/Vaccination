@@ -36,6 +36,7 @@ public class PatientRepository {
     @Autowired
     public PatientRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
+        init();
     }
 
     public List<Patient> getPatients() {
@@ -143,5 +144,11 @@ public class PatientRepository {
         } catch (DataAccessException e) {
             return false;
         }
+    }
+
+    private void init() {
+        jdbc.execute(PatientInit.PATIENT_DROP_TABLE);
+        jdbc.execute(PatientInit.PATIENT_INIT_TABLE);
+        jdbc.execute(PatientInit.PATIENT_SAMPLE_DATA_INSERT);
     }
 }
