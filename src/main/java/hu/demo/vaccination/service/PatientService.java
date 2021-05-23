@@ -28,6 +28,10 @@ public class PatientService {
     }
 
     public boolean createPatient(PatientCreateData data) {
+        int id = data.getId();
+        if (patientRepository.isPatientDeleted(id)) {
+            return patientRepository.unDeletePatient(id) && patientRepository.updatePatient(id, data);
+        }
         return patientRepository.createPatient(data);
     }
 

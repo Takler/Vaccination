@@ -1,6 +1,7 @@
 package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Patient;
+import hu.demo.vaccination.dto.patient.PatientAvailableData;
 import hu.demo.vaccination.dto.patient.PatientCreateData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -30,6 +31,13 @@ public class PatientRepository {
         patient.setAddress(resultSet.getString("address"));
         patient.setTelephoneNumber(resultSet.getString("telephone_number"));
         patient.setUnderlyingMedicalCondition(resultSet.getBoolean("underlying_medical_condition"));
+        return patient;
+    });
+
+    private final RowMapper<PatientAvailableData> patientDeletedRowMapper = ((resultSet, i) -> {
+        PatientAvailableData patient = new PatientAvailableData();
+        patient.setId(resultSet.getInt("id"));
+        patient.setDeleted(resultSet.getBoolean("deleted"));
         return patient;
     });
 
@@ -141,6 +149,27 @@ public class PatientRepository {
         try {
             int rowsAffected = jdbc.update(sql, true, id);
             return rowsAffected == 1;
+        } catch (DataAccessException e) {
+            return false;
+        }
+    }
+
+    public boolean unDeletePatient(int id) {
+        String sql = "UPDATE patient SET deleted = ? WHERE id = ?";
+        try {
+            int rowsAffected = jdbc.update(sql, false, id);
+            return rowsAffected == 1;
+        } catch (DataAccessException e) {
+            return false;
+        }
+    }
+
+    public boolean isPatientDeleted(int id) {
+        String sqlQuery = "SELECT id, deleted FROM patient WHERE id = ?";
+        try {
+            PatientAvailableData patientAvailableData;
+            patientAvailableData = jdbc.queryForObject(sqlQuery, patientDeletedRowMapper, id);
+            return patientAvailableData != null && patientAvailableData.isDeleted();
         } catch (DataAccessException e) {
             return false;
         }
