@@ -52,6 +52,7 @@ class PatientRepositoryTest {
     @BeforeEach
     void init() {
         patientRepository = new PatientRepository(jdbc);
+        jdbc.execute("DROP TABLE IF EXISTS patient");
         jdbc.execute("CREATE TABLE patient " +
                 "(id INT PRIMARY KEY, " +
                 "first_name VARCHAR(250) NOT NULL, " +
