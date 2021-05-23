@@ -23,7 +23,7 @@ public class VaccineController {
 
     @GetMapping
     public ResponseEntity<List<Vaccine>> getVaccines() {
-        List<Vaccine> vaccines = vaccineService.getPatients();
+        List<Vaccine> vaccines = vaccineService.getVaccines();
         return new ResponseEntity<>(vaccines, HttpStatus.OK);
     }
 
@@ -49,7 +49,7 @@ public class VaccineController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateVaccine(@PathVariable int id, @RequestBody VaccineCreateData data) {
-        boolean updateSuccessful = vaccineService.updatePatient(id, data);
+        boolean updateSuccessful = vaccineService.updateVaccine(id, data);
         if (updateSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

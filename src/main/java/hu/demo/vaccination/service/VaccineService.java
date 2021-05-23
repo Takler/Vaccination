@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 @Transactional
 public class VaccineService {
-    public List<Vaccine> getPatients() {
+    public List<Vaccine> getVaccines() {
         return null;
     }
 
@@ -22,7 +22,7 @@ public class VaccineService {
         return false;
     }
 
-    public boolean updatePatient(int id, VaccineCreateData data) {
+    public boolean updateVaccine(int id, VaccineCreateData data) {
         return false;
     }
 
