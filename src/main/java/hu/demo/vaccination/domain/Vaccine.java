@@ -12,6 +12,7 @@ public class Vaccine {
     private int daysUntilNextShot;
     private int nextShotId;
     private int fullyVaccinatedTimePeriod;
+    private boolean isApplicable;
     private boolean isApplicableForPregnant;
     private boolean isApplicableForChronic;
 
@@ -93,6 +94,14 @@ public class Vaccine {
 
     public void setFullyVaccinatedTimePeriod(int fullyVaccinatedTimePeriod) {
         this.fullyVaccinatedTimePeriod = fullyVaccinatedTimePeriod;
+    }
+
+    public boolean isApplicable() {
+        return isApplicable;
+    }
+
+    public void setApplicable(boolean applicable) {
+        isApplicable = applicable;
     }
 
     public boolean isApplicableForPregnant() {
