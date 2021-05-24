@@ -54,28 +54,13 @@ class PatientRepositoryTest {
     @BeforeEach
     void init() {
         patientRepository = new PatientRepository(jdbc);
-        jdbc.execute("DROP TABLE IF EXISTS patient");
-        jdbc.execute("CREATE TABLE patient " +
-                "(id INT PRIMARY KEY, " +
-                "first_name VARCHAR(250) NOT NULL, " +
-                "last_name VARCHAR(250) NOT NULL, " +
-                "mothers_name VARCHAR(250) NOT NULL, " +
-                "gender VARCHAR(50) NOT NULL, " +
-                "date_of_birth DATE NOT NULL, " +
-                "email VARCHAR(250) NOT NULL, " +
-                "city VARCHAR(250) NOT NULL, " +
-                "zip_code VARCHAR(20) NOT NULL, " +
-                "address VARCHAR(250) NOT NULL, " +
-                "telephone_number VARCHAR(250) NOT NULL, " +
-                "pregnant BOOLEAN NOT NULL, " +
-                "underlying_medical_condition BOOLEAN NOT NULL, " +
-                "deleted BOOLEAN NOT NULL DEFAULT false);"
-        );
+        jdbc.execute(PatientInit.PATIENT_DROP_TABLE);
+        jdbc.execute(PatientInit.PATIENT_INIT_TABLE);
     }
 
     @AfterEach
     void destruct() {
-        jdbc.execute("DROP TABLE IF EXISTS patient");
+        jdbc.execute(PatientInit.PATIENT_DROP_TABLE);
     }
 
     @Test
