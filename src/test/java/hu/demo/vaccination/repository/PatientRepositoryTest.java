@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.sql.Date;
 import java.util.List;
 
+import static hu.demo.vaccination.config.PatientTestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -22,34 +23,6 @@ class PatientRepositoryTest {
     private JdbcTemplate jdbc;
 
     private PatientRepository patientRepository;
-
-    private final int PATIENT_1_ID = 748237274;
-    private final String PATIENT_1_FIRST_NAME = "Frigyes";
-    private final String PATIENT_1_LAST_NAME = "Csonka";
-    private final String PATIENT_1_MOTHERS_NAME = "Prohászka Adél";
-    private final String PATIENT_1_GENDER = "male";
-    private final Date PATIENT_1_BIRTH_DATE = Date.valueOf("1980-01-22");
-    private final String PATIENT_1_EMAIL = "frigyes.csonka@email.com";
-    private final String PATIENT_1_CITY = "Ács";
-    private final String PATIENT_1_ZIP_CODE = "2941";
-    private final String PATIENT_1_ADDRESS = "Munkácsy Mihály út 14.";
-    private final String PATIENT_1_TELEPHONE_NUMBER = "0634388544";
-    private final boolean PATIENT_1_PREGNANT = false;
-    private final boolean PATIENT_1_UNDERLYING_MEDICAL_CONDITION = false;
-
-    private final int PATIENT_2_ID = 248248264;
-    private final String PATIENT_2_FIRST_NAME = "Virág";
-    private final String PATIENT_2_LAST_NAME = "Szakáts";
-    private final String PATIENT_2_MOTHERS_NAME = "Vörös Hermina";
-    private final String PATIENT_2_GENDER = "female";
-    private final Date PATIENT_2_BIRTH_DATE = Date.valueOf("1970-06-11");
-    private final String PATIENT_2_EMAIL = "virag70@email.com";
-    private final String PATIENT_2_CITY = "Budapest";
-    private final String PATIENT_2_ZIP_CODE = "1149";
-    private final String PATIENT_2_ADDRESS = "Árpád fejedelem útja 51.";
-    private final String PATIENT_2_TELEPHONE_NUMBER = "0618659140";
-    private final boolean PATIENT_2_PREGNANT = true;
-    private final boolean PATIENT_2_UNDERLYING_MEDICAL_CONDITION = true;
 
     @BeforeEach
     void init() {
