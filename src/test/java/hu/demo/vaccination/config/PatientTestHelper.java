@@ -1,6 +1,7 @@
 package hu.demo.vaccination.config;
 
 import hu.demo.vaccination.domain.Patient;
+import hu.demo.vaccination.dto.patient.PatientCreateData;
 
 import java.sql.Date;
 
@@ -71,5 +72,41 @@ public class PatientTestHelper {
         patient.setPregnant(PATIENT_2_PREGNANT);
         patient.setUnderlyingMedicalCondition(PATIENT_2_UNDERLYING_MEDICAL_CONDITION);
         return patient;
+    }
+
+    public static PatientCreateData getPatientOneCreateData() {
+        PatientCreateData data = new PatientCreateData();
+        data.setId(PATIENT_1_ID);
+        data.setFirstName(PATIENT_1_FIRST_NAME);
+        data.setLastName(PATIENT_1_LAST_NAME);
+        data.setMothersName(PATIENT_1_MOTHERS_NAME);
+        data.setGender(PATIENT_1_GENDER);
+        data.setDateOfBirth(PATIENT_1_BIRTH_DATE);
+        data.setEmail(PATIENT_1_EMAIL);
+        data.setCity(PATIENT_1_CITY);
+        data.setZipCode(PATIENT_1_ZIP_CODE);
+        data.setAddress(PATIENT_1_ADDRESS);
+        data.setTelephoneNumber(PATIENT_1_TELEPHONE_NUMBER);
+        data.setPregnant(PATIENT_1_PREGNANT);
+        data.setUnderlyingMedicalCondition(PATIENT_1_UNDERLYING_MEDICAL_CONDITION);
+        return data;
+    }
+
+    public static PatientCreateData getPatientTwoCreateData() {
+        PatientCreateData data = new PatientCreateData();
+        data.setId(PATIENT_2_ID);
+        data.setFirstName(PATIENT_2_FIRST_NAME);
+        data.setLastName(PATIENT_2_LAST_NAME);
+        data.setMothersName(PATIENT_2_MOTHERS_NAME);
+        data.setGender(PATIENT_2_GENDER);
+        data.setDateOfBirth(PATIENT_2_BIRTH_DATE);
+        data.setEmail(PATIENT_2_EMAIL);
+        data.setCity(PATIENT_2_CITY);
+        data.setZipCode(PATIENT_2_ZIP_CODE);
+        data.setAddress(PATIENT_2_ADDRESS);
+        data.setTelephoneNumber(PATIENT_2_TELEPHONE_NUMBER);
+        data.setPregnant(PATIENT_2_PREGNANT);
+        data.setUnderlyingMedicalCondition(PATIENT_2_UNDERLYING_MEDICAL_CONDITION);
+        return data;
     }
 }
