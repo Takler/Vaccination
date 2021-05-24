@@ -30,6 +30,7 @@ public class PatientRepository {
         patient.setZipCode(resultSet.getString("zip_code"));
         patient.setAddress(resultSet.getString("address"));
         patient.setTelephoneNumber(resultSet.getString("telephone_number"));
+        patient.setPregnant(resultSet.getBoolean("pregnant"));
         patient.setUnderlyingMedicalCondition(resultSet.getBoolean("underlying_medical_condition"));
         return patient;
     });
@@ -49,7 +50,7 @@ public class PatientRepository {
 
     public List<Patient> getPatients() {
         String sql = "SELECT id, first_name, last_name, mothers_name, gender, date_of_birth, " +
-                "email, city, zip_code, address, telephone_number, underlying_medical_condition " +
+                "email, city, zip_code, address, telephone_number, pregnant, underlying_medical_condition " +
                 "FROM patient " +
                 "WHERE deleted = false";
         try {
@@ -61,7 +62,7 @@ public class PatientRepository {
 
     public Patient getPatient(int id) {
         String sqlQuery = "SELECT id, first_name, last_name, mothers_name, gender, date_of_birth, " +
-                "email, city, zip_code, address, telephone_number, underlying_medical_condition " +
+                "email, city, zip_code, address, telephone_number, pregnant, underlying_medical_condition " +
                 "FROM patient " +
                 "WHERE id = ? AND deleted = false";
         try {
@@ -84,8 +85,9 @@ public class PatientRepository {
                 "zip_code, " +
                 "address, " +
                 "telephone_number, " +
+                "pregnant, " +
                 "underlying_medical_condition) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             int rowsAffected = jdbc.update(sql,
                     data.getId(),
@@ -99,6 +101,7 @@ public class PatientRepository {
                     data.getZipCode(),
                     data.getAddress(),
                     data.getTelephoneNumber(),
+                    data.isPregnant(),
                     data.isUnderlyingMedicalCondition()
             );
             return rowsAffected == 1;
@@ -120,6 +123,7 @@ public class PatientRepository {
                 "zip_code = ?, " +
                 "address = ?, " +
                 "telephone_number = ?, " +
+                "pregnant = ?, " +
                 "underlying_medical_condition = ? " +
                 "WHERE id = ?";
         try {
@@ -135,6 +139,7 @@ public class PatientRepository {
                     data.getZipCode(),
                     data.getAddress(),
                     data.getTelephoneNumber(),
+                    data.isPregnant(),
                     data.isUnderlyingMedicalCondition(),
                     id
             );

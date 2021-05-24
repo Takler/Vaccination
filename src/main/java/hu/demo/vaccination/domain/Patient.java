@@ -15,6 +15,7 @@ public class Patient {
     private String zipCode;
     private String address;
     private String telephoneNumber;
+    private boolean pregnant;
     private boolean underlyingMedicalCondition;
 
     public int getId() {
@@ -103,6 +104,14 @@ public class Patient {
 
     public void setTelephoneNumber(String telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
+    }
+
+    public boolean isPregnant() {
+        return pregnant;
+    }
+
+    public void setPregnant(boolean pregnant) {
+        this.pregnant = pregnant;
     }
 
     public boolean isUnderlyingMedicalCondition() {

@@ -20,15 +20,16 @@ public class PatientInit {
             "address VARCHAR(250) NOT NULL, " +
             "telephone_number VARCHAR(250) NOT NULL, " +
             "underlying_medical_condition BOOLEAN NOT NULL, " +
+            "pregnant BOOLEAN NOT NULL, " +
             "deleted BOOLEAN NOT NULL DEFAULT false);";
 
     public static final String PATIENT_SAMPLE_DATA_INSERT = "INSERT INTO patient VALUES " +
             "(157648531,'Albert','Magyar','Bodnár Gyöngyi','male','1979-09-16'," +
-            "'magyar.a@email.com','Monori erdő','2213','Síp utca 38.','20207128918',1,0)," +
+            "'magyar.a@email.com','Monori erdő','2213','Síp utca 38.','20207128918',1,0,0)," +
             "(175684569,'Péter','Pálinkás','Lukács Franciska','male','1985-10-03'," +
-            "'p.peti@email.com','Budapest','1133','Csabai kapu 1.','0617530147',0,0)," +
+            "'p.peti@email.com','Budapest','1133','Csabai kapu 1.','0617530147',0,0,0)," +
             "(248248264,'Virág','Szakáts','Vörös Hermina','female','1970-06-11'," +
-            "'virag70@email.com','Budapest','1149','Árpád fejedelem útja 51.','0618659140',1,0)," +
+            "'virag70@email.com','Budapest','1149','Árpád fejedelem útja 51.','0618659140',1,0,0)," +
             "(748237274,'Frigyes','Csonka','Prohászka Adél','male','1980-01-22'," +
-            "'frigyes.csonka@email.com','Ács','2941','Munkácsy Mihály út 14.','0634388544',0,0);";
+            "'frigyes.csonka@email.com','Ács','2941','Munkácsy Mihály út 14.','0634388544',0,0,0);";
 }

@@ -34,6 +34,7 @@ class PatientRepositoryTest {
     private final String PATIENT_1_ZIP_CODE = "2941";
     private final String PATIENT_1_ADDRESS = "Munkácsy Mihály út 14.";
     private final String PATIENT_1_TELEPHONE_NUMBER = "0634388544";
+    private final boolean PATIENT_1_PREGNANT = false;
     private final boolean PATIENT_1_UNDERLYING_MEDICAL_CONDITION = false;
 
     private final int PATIENT_2_ID = 248248264;
@@ -47,6 +48,7 @@ class PatientRepositoryTest {
     private final String PATIENT_2_ZIP_CODE = "1149";
     private final String PATIENT_2_ADDRESS = "Árpád fejedelem útja 51.";
     private final String PATIENT_2_TELEPHONE_NUMBER = "0618659140";
+    private final boolean PATIENT_2_PREGNANT = true;
     private final boolean PATIENT_2_UNDERLYING_MEDICAL_CONDITION = true;
 
     @BeforeEach
@@ -65,6 +67,7 @@ class PatientRepositoryTest {
                 "zip_code VARCHAR(20) NOT NULL, " +
                 "address VARCHAR(250) NOT NULL, " +
                 "telephone_number VARCHAR(250) NOT NULL, " +
+                "pregnant BOOLEAN NOT NULL, " +
                 "underlying_medical_condition BOOLEAN NOT NULL, " +
                 "deleted BOOLEAN NOT NULL DEFAULT false);"
         );
@@ -110,6 +113,7 @@ class PatientRepositoryTest {
         assertEquals(PATIENT_1_ZIP_CODE, resultPatient.getZipCode());
         assertEquals(PATIENT_1_ADDRESS, resultPatient.getAddress());
         assertEquals(PATIENT_1_TELEPHONE_NUMBER, resultPatient.getTelephoneNumber());
+        assertEquals(PATIENT_1_PREGNANT, resultPatient.isPregnant());
         assertEquals(PATIENT_1_UNDERLYING_MEDICAL_CONDITION, resultPatient.isUnderlyingMedicalCondition());
     }
 
@@ -146,6 +150,7 @@ class PatientRepositoryTest {
         assertEquals(PATIENT_1_ZIP_CODE, firstPatient.getZipCode());
         assertEquals(PATIENT_1_ADDRESS, firstPatient.getAddress());
         assertEquals(PATIENT_1_TELEPHONE_NUMBER, firstPatient.getTelephoneNumber());
+        assertEquals(PATIENT_1_PREGNANT, firstPatient.isPregnant());
         assertEquals(PATIENT_1_UNDERLYING_MEDICAL_CONDITION, firstPatient.isUnderlyingMedicalCondition());
 
         assertEquals(PATIENT_2_ID, secondPatient.getId());
@@ -159,6 +164,7 @@ class PatientRepositoryTest {
         assertEquals(PATIENT_2_ZIP_CODE, secondPatient.getZipCode());
         assertEquals(PATIENT_2_ADDRESS, secondPatient.getAddress());
         assertEquals(PATIENT_2_TELEPHONE_NUMBER, secondPatient.getTelephoneNumber());
+        assertEquals(PATIENT_2_PREGNANT, secondPatient.isPregnant());
         assertEquals(PATIENT_2_UNDERLYING_MEDICAL_CONDITION, secondPatient.isUnderlyingMedicalCondition());
     }
 
@@ -183,6 +189,7 @@ class PatientRepositoryTest {
         data.setZipCode(MODIFIED_TEST_TEXT);
         data.setAddress(MODIFIED_TEST_TEXT);
         data.setTelephoneNumber(MODIFIED_TEST_TEXT);
+        data.setPregnant(MODIFIED_TEST_BOOLEAN);
         data.setUnderlyingMedicalCondition(MODIFIED_TEST_BOOLEAN);
 
         patientRepository.createPatient(data);
@@ -203,6 +210,7 @@ class PatientRepositoryTest {
         assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getZipCode());
         assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getAddress());
         assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getTelephoneNumber());
+        assertEquals(MODIFIED_TEST_BOOLEAN, modifiedPatient.isPregnant());
         assertEquals(MODIFIED_TEST_BOOLEAN, modifiedPatient.isUnderlyingMedicalCondition());
     }
 
@@ -230,6 +238,7 @@ class PatientRepositoryTest {
         data.setZipCode(PATIENT_1_ZIP_CODE);
         data.setAddress(PATIENT_1_ADDRESS);
         data.setTelephoneNumber(PATIENT_1_TELEPHONE_NUMBER);
+        data.setPregnant(PATIENT_1_PREGNANT);
         data.setUnderlyingMedicalCondition(PATIENT_1_UNDERLYING_MEDICAL_CONDITION);
         return data;
     }
@@ -247,6 +256,7 @@ class PatientRepositoryTest {
         secondData.setZipCode(PATIENT_2_ZIP_CODE);
         secondData.setAddress(PATIENT_2_ADDRESS);
         secondData.setTelephoneNumber(PATIENT_2_TELEPHONE_NUMBER);
+        secondData.setPregnant(PATIENT_2_PREGNANT);
         secondData.setUnderlyingMedicalCondition(PATIENT_2_UNDERLYING_MEDICAL_CONDITION);
         return secondData;
     }
