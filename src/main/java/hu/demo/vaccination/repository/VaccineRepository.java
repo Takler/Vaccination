@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
 
+@Repository
 public class VaccineRepository {
 
     private final JdbcTemplate jdbc;
@@ -34,6 +36,7 @@ public class VaccineRepository {
     @Autowired
     public VaccineRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
+        init();
     }
 
     public List<Vaccine> getVaccines() {
@@ -137,5 +140,11 @@ public class VaccineRepository {
         } catch (DataAccessException e) {
             return false;
         }
+    }
+
+    private void init() {
+        jdbc.execute(VaccineInit.VACCINE_DROP_TABLE);
+        jdbc.execute(VaccineInit.VACCINE_INIT_TABLE);
+        jdbc.execute(VaccineInit.VACCINE_DATA_INSERT);
     }
 }
