@@ -82,30 +82,22 @@ class PatientRepositoryTest {
     @Test
     void test_createPatient_samePatientDataReceived() {
         PatientCreateData data = getPatientOneCreateData();
+        Patient originalPatient = getPatientOne();
 
         patientRepository.createPatient(data);
 
         Patient resultPatient = patientRepository.getPatient(PATIENT_1_ID);
 
-        assertEquals(PATIENT_1_ID, resultPatient.getId());
-        assertEquals(PATIENT_1_FIRST_NAME, resultPatient.getFirstName());
-        assertEquals(PATIENT_1_LAST_NAME, resultPatient.getLastName());
-        assertEquals(PATIENT_1_MOTHERS_NAME, resultPatient.getMothersName());
-        assertEquals(PATIENT_1_GENDER, resultPatient.getGender());
-        assertEquals(PATIENT_1_BIRTH_DATE, resultPatient.getDateOfBirth());
-        assertEquals(PATIENT_1_EMAIL, resultPatient.getEmail());
-        assertEquals(PATIENT_1_CITY, resultPatient.getCity());
-        assertEquals(PATIENT_1_ZIP_CODE, resultPatient.getZipCode());
-        assertEquals(PATIENT_1_ADDRESS, resultPatient.getAddress());
-        assertEquals(PATIENT_1_TELEPHONE_NUMBER, resultPatient.getTelephoneNumber());
-        assertEquals(PATIENT_1_PREGNANT, resultPatient.isPregnant());
-        assertEquals(PATIENT_1_UNDERLYING_MEDICAL_CONDITION, resultPatient.isUnderlyingMedicalCondition());
+        assertEquals(originalPatient, resultPatient);
     }
 
     @Test
     void test_createPatient_twoPatientsCreated_samePatientsDataReceived() {
         PatientCreateData firstData = getPatientOneCreateData();
         PatientCreateData secondData = getPatientTwoCreateData();
+        Patient originalFirstPatient = getPatientOne();
+        Patient originalSecondPatient = getPatientTwo();
+
 
         patientRepository.createPatient(firstData);
         patientRepository.createPatient(secondData);
@@ -124,33 +116,8 @@ class PatientRepositoryTest {
 
         assertEquals(2, patients.size());
 
-        assertEquals(PATIENT_1_ID, firstPatient.getId());
-        assertEquals(PATIENT_1_FIRST_NAME, firstPatient.getFirstName());
-        assertEquals(PATIENT_1_LAST_NAME, firstPatient.getLastName());
-        assertEquals(PATIENT_1_MOTHERS_NAME, firstPatient.getMothersName());
-        assertEquals(PATIENT_1_GENDER, firstPatient.getGender());
-        assertEquals(PATIENT_1_BIRTH_DATE, firstPatient.getDateOfBirth());
-        assertEquals(PATIENT_1_EMAIL, firstPatient.getEmail());
-        assertEquals(PATIENT_1_CITY, firstPatient.getCity());
-        assertEquals(PATIENT_1_ZIP_CODE, firstPatient.getZipCode());
-        assertEquals(PATIENT_1_ADDRESS, firstPatient.getAddress());
-        assertEquals(PATIENT_1_TELEPHONE_NUMBER, firstPatient.getTelephoneNumber());
-        assertEquals(PATIENT_1_PREGNANT, firstPatient.isPregnant());
-        assertEquals(PATIENT_1_UNDERLYING_MEDICAL_CONDITION, firstPatient.isUnderlyingMedicalCondition());
-
-        assertEquals(PATIENT_2_ID, secondPatient.getId());
-        assertEquals(PATIENT_2_FIRST_NAME, secondPatient.getFirstName());
-        assertEquals(PATIENT_2_LAST_NAME, secondPatient.getLastName());
-        assertEquals(PATIENT_2_MOTHERS_NAME, secondPatient.getMothersName());
-        assertEquals(PATIENT_2_GENDER, secondPatient.getGender());
-        assertEquals(PATIENT_2_BIRTH_DATE, secondPatient.getDateOfBirth());
-        assertEquals(PATIENT_2_EMAIL, secondPatient.getEmail());
-        assertEquals(PATIENT_2_CITY, secondPatient.getCity());
-        assertEquals(PATIENT_2_ZIP_CODE, secondPatient.getZipCode());
-        assertEquals(PATIENT_2_ADDRESS, secondPatient.getAddress());
-        assertEquals(PATIENT_2_TELEPHONE_NUMBER, secondPatient.getTelephoneNumber());
-        assertEquals(PATIENT_2_PREGNANT, secondPatient.isPregnant());
-        assertEquals(PATIENT_2_UNDERLYING_MEDICAL_CONDITION, secondPatient.isUnderlyingMedicalCondition());
+        assertEquals(originalFirstPatient, firstPatient);
+        assertEquals(originalSecondPatient, secondPatient);
     }
 
     @Test
@@ -185,6 +152,7 @@ class PatientRepositoryTest {
 
         assertNull(patientRepository.getPatient(PATIENT_2_ID));
         assertEquals(MODIFIED_ID, modifiedPatient.getId());
+
         assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getFirstName());
         assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getLastName());
         assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getMothersName());
@@ -229,20 +197,56 @@ class PatientRepositoryTest {
     }
 
     private PatientCreateData getPatientTwoCreateData() {
-        PatientCreateData secondData = new PatientCreateData();
-        secondData.setId(PATIENT_2_ID);
-        secondData.setFirstName(PATIENT_2_FIRST_NAME);
-        secondData.setLastName(PATIENT_2_LAST_NAME);
-        secondData.setMothersName(PATIENT_2_MOTHERS_NAME);
-        secondData.setGender(PATIENT_2_GENDER);
-        secondData.setDateOfBirth(PATIENT_2_BIRTH_DATE);
-        secondData.setEmail(PATIENT_2_EMAIL);
-        secondData.setCity(PATIENT_2_CITY);
-        secondData.setZipCode(PATIENT_2_ZIP_CODE);
-        secondData.setAddress(PATIENT_2_ADDRESS);
-        secondData.setTelephoneNumber(PATIENT_2_TELEPHONE_NUMBER);
-        secondData.setPregnant(PATIENT_2_PREGNANT);
-        secondData.setUnderlyingMedicalCondition(PATIENT_2_UNDERLYING_MEDICAL_CONDITION);
-        return secondData;
+        PatientCreateData data = new PatientCreateData();
+        data.setId(PATIENT_2_ID);
+        data.setFirstName(PATIENT_2_FIRST_NAME);
+        data.setLastName(PATIENT_2_LAST_NAME);
+        data.setMothersName(PATIENT_2_MOTHERS_NAME);
+        data.setGender(PATIENT_2_GENDER);
+        data.setDateOfBirth(PATIENT_2_BIRTH_DATE);
+        data.setEmail(PATIENT_2_EMAIL);
+        data.setCity(PATIENT_2_CITY);
+        data.setZipCode(PATIENT_2_ZIP_CODE);
+        data.setAddress(PATIENT_2_ADDRESS);
+        data.setTelephoneNumber(PATIENT_2_TELEPHONE_NUMBER);
+        data.setPregnant(PATIENT_2_PREGNANT);
+        data.setUnderlyingMedicalCondition(PATIENT_2_UNDERLYING_MEDICAL_CONDITION);
+        return data;
+    }
+
+    private Patient getPatientOne() {
+        Patient patient = new Patient();
+        patient.setId(PATIENT_1_ID);
+        patient.setFirstName(PATIENT_1_FIRST_NAME);
+        patient.setLastName(PATIENT_1_LAST_NAME);
+        patient.setMothersName(PATIENT_1_MOTHERS_NAME);
+        patient.setGender(PATIENT_1_GENDER);
+        patient.setDateOfBirth(PATIENT_1_BIRTH_DATE);
+        patient.setEmail(PATIENT_1_EMAIL);
+        patient.setCity(PATIENT_1_CITY);
+        patient.setZipCode(PATIENT_1_ZIP_CODE);
+        patient.setAddress(PATIENT_1_ADDRESS);
+        patient.setTelephoneNumber(PATIENT_1_TELEPHONE_NUMBER);
+        patient.setPregnant(PATIENT_1_PREGNANT);
+        patient.setUnderlyingMedicalCondition(PATIENT_1_UNDERLYING_MEDICAL_CONDITION);
+        return patient;
+    }
+
+    private Patient getPatientTwo() {
+        Patient patient = new Patient();
+        patient.setId(PATIENT_2_ID);
+        patient.setFirstName(PATIENT_2_FIRST_NAME);
+        patient.setLastName(PATIENT_2_LAST_NAME);
+        patient.setMothersName(PATIENT_2_MOTHERS_NAME);
+        patient.setGender(PATIENT_2_GENDER);
+        patient.setDateOfBirth(PATIENT_2_BIRTH_DATE);
+        patient.setEmail(PATIENT_2_EMAIL);
+        patient.setCity(PATIENT_2_CITY);
+        patient.setZipCode(PATIENT_2_ZIP_CODE);
+        patient.setAddress(PATIENT_2_ADDRESS);
+        patient.setTelephoneNumber(PATIENT_2_TELEPHONE_NUMBER);
+        patient.setPregnant(PATIENT_2_PREGNANT);
+        patient.setUnderlyingMedicalCondition(PATIENT_2_UNDERLYING_MEDICAL_CONDITION);
+        return patient;
     }
 }

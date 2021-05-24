@@ -1,6 +1,7 @@
 package hu.demo.vaccination.domain;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Patient {
 
@@ -120,5 +121,18 @@ public class Patient {
 
     public void setUnderlyingMedicalCondition(boolean underlyingMedicalCondition) {
         this.underlyingMedicalCondition = underlyingMedicalCondition;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Patient)) return false;
+        Patient patient = (Patient) o;
+        return id == patient.id && pregnant == patient.pregnant && underlyingMedicalCondition == patient.underlyingMedicalCondition && Objects.equals(firstName, patient.firstName) && Objects.equals(lastName, patient.lastName) && Objects.equals(mothersName, patient.mothersName) && Objects.equals(gender, patient.gender) && Objects.equals(dateOfBirth, patient.dateOfBirth) && Objects.equals(email, patient.email) && Objects.equals(city, patient.city) && Objects.equals(zipCode, patient.zipCode) && Objects.equals(address, patient.address) && Objects.equals(telephoneNumber, patient.telephoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, mothersName, gender, dateOfBirth, email, city, zipCode, address, telephoneNumber, pregnant, underlyingMedicalCondition);
     }
 }
