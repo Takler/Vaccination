@@ -2,9 +2,9 @@ package hu.demo.vaccination.config;
 
 import java.sql.Date;
 
-public class PatientTestConstants {
+public class PatientTestHelper {
 
-    private PatientTestConstants() {
+    private PatientTestHelper() {
     }
 
     public static final int PATIENT_1_ID = 748237274;

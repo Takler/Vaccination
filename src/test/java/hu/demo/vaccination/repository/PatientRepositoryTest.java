@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.sql.Date;
 import java.util.List;
 
-import static hu.demo.vaccination.config.PatientTestConstants.*;
+import static hu.demo.vaccination.config.PatientTestHelper.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
