@@ -7,7 +7,7 @@ public class CenterInit {
     public static String CENTER_DROP_TABLE = "DROP TABLE IF EXISTS center";
 
     public static String CENTER_INIT_TABLE = "CREATE TABLE center " +
-            "(id INT PRIMARY KEY AUTO_INCREMENT" +
+            "(id INT PRIMARY KEY AUTO_INCREMENT, " +
             "name VARCHAR(250) NOT NULL, " +
             "city VARCHAR(250) NOT NULL, " +
             "email VARCHAR(250) NOT NULL, " +
