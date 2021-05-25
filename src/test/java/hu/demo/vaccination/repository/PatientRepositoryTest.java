@@ -2,6 +2,7 @@ package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.dto.patient.PatientCreateData;
+import hu.demo.vaccination.utility.PatientInit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

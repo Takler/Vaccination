@@ -1,4 +1,4 @@
-package hu.demo.vaccination.repository;
+package hu.demo.vaccination.utility;
 
 public class PatientInit {
 
