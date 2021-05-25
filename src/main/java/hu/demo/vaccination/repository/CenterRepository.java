@@ -20,7 +20,7 @@ public class CenterRepository {
         center.setName(resultSet.getString("name"));
         center.setCity(resultSet.getString("city"));
         center.setEmail(resultSet.getString("email"));
-        center.setTelephoneNumber("telephone_number");
+        center.setTelephoneNumber(resultSet.getString("telephone_number"));
         center.setDailyCapacity(resultSet.getInt("daily_capacity"));
         return center;
     });
