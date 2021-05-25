@@ -24,7 +24,7 @@ public class ReservationService {
     }
 
     public Reservation getReservation(int id) {
-        return reservationRepository.getReservation();
+        return reservationRepository.getReservation(id);
     }
 
     public boolean createReservation(ReservationCreateData data) {

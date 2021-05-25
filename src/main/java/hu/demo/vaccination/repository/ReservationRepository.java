@@ -23,7 +23,7 @@ public class ReservationRepository { //TODO: implement the logic for Reservation
         return Collections.emptyList();
     }
 
-    public Reservation getReservation() {
+    public Reservation getReservation(int id) {
         return new Reservation();
     }
 
