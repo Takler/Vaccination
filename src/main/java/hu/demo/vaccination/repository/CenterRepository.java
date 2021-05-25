@@ -23,6 +23,7 @@ public class CenterRepository {
         center.setEmail(resultSet.getString("email"));
         center.setTelephoneNumber(resultSet.getString("telephone_number"));
         center.setDailyCapacity(resultSet.getInt("daily_capacity"));
+        center.setDeleted(resultSet.getBoolean("deleted"));
         return center;
     });
 
@@ -77,7 +78,8 @@ public class CenterRepository {
     }
 
     public boolean deleteCenter(int id) {
-        String sql = "DELETE FROM center " +
+        String sql = "UPDATE center " +
+                "SET deleted = true " +
                 "WHERE id = ?";
         try {
             int rowsAffected = jdbcTemplate.update(sql, id);
