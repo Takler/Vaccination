@@ -14,5 +14,5 @@ public class ReservationInit {
             "vaccine_id INT NOT NULL, " +
             "FOREIGN KEY (patient_id) REFERENCES patient(id), " +
             "FOREIGN KEY (center_id) REFERENCES center(id), " +
-            "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id))";
+            "FOREIGN KEY (vaccine_id) REFERENCES vaccines(id))";
 }
