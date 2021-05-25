@@ -9,6 +9,7 @@ public class Center {
     private String email;
     private String telephoneNumber;
     private int dailyCapacity;
+    private boolean deleted;
 
     public int getId() {
         return id;
@@ -56,6 +57,14 @@ public class Center {
 
     public void setDailyCapacity(int dailyCapacity) {
         this.dailyCapacity = dailyCapacity;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override
