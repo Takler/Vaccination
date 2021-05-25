@@ -23,7 +23,7 @@ public class ReservationService {
         return reservationRepository.getReservations();
     }
 
-    public Reservation getReservation() {
+    public Reservation getReservation(int id) {
         return reservationRepository.getReservation();
     }
 
