@@ -12,11 +12,12 @@ public class CenterInit {
             "city VARCHAR(250) NOT NULL, " +
             "email VARCHAR(250) NOT NULL, " +
             "telephone_number VARCHAR(50) NOT NULL, " +
-            "daily_capacity INT NOT NULL)";
+            "daily_capacity INT NOT NULL, " +
+            "deleted BOOLEAN NOT NULL DEFAULT FALSE)";
 
     public static String CENTER_SAMPLE_DATA_INSERT = "INSERT INTO center VALUES " +
-            "(12, 'Honvéd Kórház', 'Budapest', 'honved@honved.hu', '+3619877651', 1000)," +
-            "(23, 'Szent Imre Kórház', 'Budapest', 'info@sztimre.hu', '+3612376593', 700)," +
-            "(32, 'Szent György Kórház', 'Székesfehérvár', 'vakcina@gyorgykorhaz.hu', '+3622877651', 500)," +
-            "(43, 'Szeged Kettes Kórház', 'Szeged', 'oltas@ketteskorhazszeged.hu', '+3662234876', 800)";
+            "(12, 'Honvéd Kórház', 'Budapest', 'honved@honved.hu', '+3619877651', 1000, false)," +
+            "(23, 'Szent Imre Kórház', 'Budapest', 'info@sztimre.hu', '+3612376593', 700, false)," +
+            "(32, 'Szent György Kórház', 'Székesfehérvár', 'vakcina@gyorgykorhaz.hu', '+3622877651', 500, false)," +
+            "(43, 'Szeged Kettes Kórház', 'Szeged', 'oltas@ketteskorhazszeged.hu', '+3662234876', 800, false)";
 }
