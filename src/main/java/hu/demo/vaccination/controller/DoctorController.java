@@ -1,6 +1,7 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.dto.DoctorCreate;
+import hu.demo.vaccination.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +13,12 @@ import java.util.List;
 @RequestMapping("/api/doctor")
 public class DoctorController {
 
-    @Autowired
+    private DoctorService doctorService;
 
+    @Autowired
+    public DoctorController(DoctorService doctorService) {
+        this.doctorService = doctorService;
+    }
 
     @PostMapping
     public ResponseEntity<Void> createDoctor(@RequestBody DoctorCreate doctorCreate) {
