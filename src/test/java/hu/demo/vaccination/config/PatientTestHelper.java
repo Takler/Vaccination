@@ -22,7 +22,7 @@ public class PatientTestHelper {
     public static final String PATIENT_1_ADDRESS = "Munkácsy Mihály út 14.";
     public static final String PATIENT_1_TELEPHONE_NUMBER = "0634388544";
     public static final boolean PATIENT_1_PREGNANT = false;
-    public static final boolean PATIENT_1_UNDERLYING_MEDICAL_CONDITION = false;
+    public static final boolean PATIENT_1_CHRONIC = false;
 
     public static final int PATIENT_2_ID = 248248264;
     public static final String PATIENT_2_FIRST_NAME = "Virág";
@@ -36,7 +36,7 @@ public class PatientTestHelper {
     public static final String PATIENT_2_ADDRESS = "Árpád fejedelem útja 51.";
     public static final String PATIENT_2_TELEPHONE_NUMBER = "0618659140";
     public static final boolean PATIENT_2_PREGNANT = true;
-    public static final boolean PATIENT_2_UNDERLYING_MEDICAL_CONDITION = true;
+    public static final boolean PATIENT_2_CHRONIC = true;
 
     public static Patient getPatientOne() {
         Patient patient = new Patient();
@@ -52,7 +52,7 @@ public class PatientTestHelper {
         patient.setAddress(PATIENT_1_ADDRESS);
         patient.setTelephoneNumber(PATIENT_1_TELEPHONE_NUMBER);
         patient.setPregnant(PATIENT_1_PREGNANT);
-        patient.setUnderlyingMedicalCondition(PATIENT_1_UNDERLYING_MEDICAL_CONDITION);
+        patient.setUnderlyingMedicalCondition(PATIENT_1_CHRONIC);
         return patient;
     }
 
@@ -70,7 +70,7 @@ public class PatientTestHelper {
         patient.setAddress(PATIENT_2_ADDRESS);
         patient.setTelephoneNumber(PATIENT_2_TELEPHONE_NUMBER);
         patient.setPregnant(PATIENT_2_PREGNANT);
-        patient.setUnderlyingMedicalCondition(PATIENT_2_UNDERLYING_MEDICAL_CONDITION);
+        patient.setUnderlyingMedicalCondition(PATIENT_2_CHRONIC);
         return patient;
     }
 
@@ -88,7 +88,7 @@ public class PatientTestHelper {
         data.setAddress(PATIENT_1_ADDRESS);
         data.setTelephoneNumber(PATIENT_1_TELEPHONE_NUMBER);
         data.setPregnant(PATIENT_1_PREGNANT);
-        data.setUnderlyingMedicalCondition(PATIENT_1_UNDERLYING_MEDICAL_CONDITION);
+        data.setUnderlyingMedicalCondition(PATIENT_1_CHRONIC);
         return data;
     }
 
@@ -106,7 +106,7 @@ public class PatientTestHelper {
         data.setAddress(PATIENT_2_ADDRESS);
         data.setTelephoneNumber(PATIENT_2_TELEPHONE_NUMBER);
         data.setPregnant(PATIENT_2_PREGNANT);
-        data.setUnderlyingMedicalCondition(PATIENT_2_UNDERLYING_MEDICAL_CONDITION);
+        data.setUnderlyingMedicalCondition(PATIENT_2_CHRONIC);
         return data;
     }
 }

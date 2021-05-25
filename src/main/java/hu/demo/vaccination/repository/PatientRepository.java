@@ -32,7 +32,7 @@ public class PatientRepository {
         patient.setAddress(resultSet.getString("address"));
         patient.setTelephoneNumber(resultSet.getString("telephone_number"));
         patient.setPregnant(resultSet.getBoolean("pregnant"));
-        patient.setUnderlyingMedicalCondition(resultSet.getBoolean("underlying_medical_condition"));
+        patient.setUnderlyingMedicalCondition(resultSet.getBoolean("chronic"));
         return patient;
     });
 
@@ -51,7 +51,7 @@ public class PatientRepository {
 
     public List<Patient> getPatients() {
         String sql = "SELECT id, first_name, last_name, mothers_name, gender, date_of_birth, " +
-                "email, city, zip_code, address, telephone_number, pregnant, underlying_medical_condition " +
+                "email, city, zip_code, address, telephone_number, pregnant, chronic " +
                 "FROM patient " +
                 "WHERE deleted = false";
         try {
@@ -63,7 +63,7 @@ public class PatientRepository {
 
     public Patient getPatient(int id) {
         String sqlQuery = "SELECT id, first_name, last_name, mothers_name, gender, date_of_birth, " +
-                "email, city, zip_code, address, telephone_number, pregnant, underlying_medical_condition " +
+                "email, city, zip_code, address, telephone_number, pregnant, chronic " +
                 "FROM patient " +
                 "WHERE id = ? AND deleted = false";
         try {
@@ -87,7 +87,7 @@ public class PatientRepository {
                 "address, " +
                 "telephone_number, " +
                 "pregnant, " +
-                "underlying_medical_condition) " +
+                "chronic) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             int rowsAffected = jdbc.update(sql,
@@ -125,7 +125,7 @@ public class PatientRepository {
                 "address = ?, " +
                 "telephone_number = ?, " +
                 "pregnant = ?, " +
-                "underlying_medical_condition = ? " +
+                "chronic = ? " +
                 "WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql,

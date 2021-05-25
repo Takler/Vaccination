@@ -19,7 +19,7 @@ public class PatientInit {
             "zip_code VARCHAR(20) NOT NULL, " +
             "address VARCHAR(250) NOT NULL, " +
             "telephone_number VARCHAR(250) NOT NULL, " +
-            "underlying_medical_condition BOOLEAN NOT NULL, " +
+            "chronic BOOLEAN NOT NULL, " +
             "pregnant BOOLEAN NOT NULL, " +
             "deleted BOOLEAN NOT NULL DEFAULT false);";
 
