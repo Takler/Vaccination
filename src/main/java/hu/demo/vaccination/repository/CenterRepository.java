@@ -2,6 +2,7 @@ package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Center;
 import hu.demo.vaccination.dto.CenterCreateData;
+import hu.demo.vaccination.utility.CenterInit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
