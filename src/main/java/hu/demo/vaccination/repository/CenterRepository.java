@@ -46,7 +46,7 @@ public class CenterRepository {
                 "FROM center" +
                 "WHERE id = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, centerRowMapper);
+            return jdbcTemplate.queryForObject(sql, centerRowMapper, id);
         } catch (DataAccessException e) {
             return null;
         }
