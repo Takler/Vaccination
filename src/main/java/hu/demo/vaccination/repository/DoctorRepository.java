@@ -29,7 +29,6 @@ public class DoctorRepository {
             result = jdbcTemplate.update(sqlInsert, doctorCreate.getId(), doctorCreate.getFirstName(),
                     doctorCreate.getLastName(), doctorCreate.getEmail(), doctorCreate.getAddress(),
                     doctorCreate.getTelephoneNumber(), doctorCreate.getType(), doctorCreate.getDateOfBirth());
-
         } catch (DataAccessException exception) {
             return result;
         }
@@ -48,11 +47,31 @@ public class DoctorRepository {
     }
 
     public List<DoctorCreate> getDoctor(int id) {     // List ??
+        List<DoctorCreate> doctor = null;
         DoctorMapper doctorMapper = new DoctorMapper();
         String sqlSelect = "SELECT * FROM doctor WHERE id=?";
         String[] sqlValues = new String[1];
         sqlValues[0] = Integer.toString(id);
-        List<DoctorCreate> doctor = jdbcTemplate.query(sqlSelect, sqlValues, doctorMapper);
+        try {
+            doctor = jdbcTemplate.query(sqlSelect, sqlValues, doctorMapper);
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
         return doctor;
+    }
+
+    public int updateDoctor(DoctorCreate doctorCreate) {
+        int result = -1;   // clean ??
+        String sqlUpdate = "UPDATE doctor SET id=?, first_name=?, last_name=?, email=?, address=?, telephone_number=?, " +
+                "type=?, date_of_birth=? WHERE id=?";
+        // vizsgálatok hiányoznak ...
+        try {
+            result = jdbcTemplate.update(sqlUpdate, doctorCreate.getId(), doctorCreate.getFirstName(),
+                    doctorCreate.getLastName(), doctorCreate.getEmail(), doctorCreate.getAddress(),
+                    doctorCreate.getTelephoneNumber(), doctorCreate.getType(), doctorCreate.getDateOfBirth(), doctorCreate.getId());
+        } catch (DataAccessException exception) {
+            return result;
+        }
+        return result;
     }
 }

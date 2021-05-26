@@ -44,16 +44,22 @@ public class DoctorController {
     @GetMapping("/{id}")
     public ResponseEntity<List<DoctorCreate>> getDoctor(@PathVariable int id) {
         List<DoctorCreate> doctor = doctorService.getDoctor(id);
-        if (doctor.size() > 0) {
+        if (doctor == null) {
+            return new ResponseEntity<>(doctor, HttpStatus.EXPECTATION_FAILED);
+        } else if (doctor.size() > 0) {
             return new ResponseEntity<>(doctor, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(doctor, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(doctor, HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping
     public ResponseEntity<Void> updateDoctor(@RequestBody DoctorCreate doctorCreate) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (doctorService.updateDoctor(doctorCreate) == 1) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/init")

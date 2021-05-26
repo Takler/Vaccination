@@ -18,6 +18,10 @@ public class DoctorService {
         this.doctorRepository = doctorRepository;
     }
 
+    public int createDoctor(DoctorCreate doctorCreate) {
+        return doctorRepository.createDoctor(doctorCreate);
+    }
+
     public List<Map<String, Object>> getDoctorslist() {
         return doctorRepository.getDoctorsList();
     }
@@ -26,8 +30,8 @@ public class DoctorService {
         return doctorRepository.getDoctor(id);
     }
 
-    public int createDoctor(DoctorCreate doctorCreate) {
-        return doctorRepository.createDoctor(doctorCreate);
+    public int updateDoctor(DoctorCreate doctorCreate){
+        return doctorRepository.updateDoctor(doctorCreate);
     }
 
 }
