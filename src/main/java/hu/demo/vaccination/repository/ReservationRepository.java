@@ -2,6 +2,7 @@ package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Reservation;
 import hu.demo.vaccination.dto.ReservationCreateData;
+import hu.demo.vaccination.dto.reservation.PatientReservationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,10 @@ public class ReservationRepository { //TODO: implement the logic for Reservation
     @Autowired
     public ReservationRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
+    }
+
+    public PatientReservationData getPatientReservation(int patientId) {
+        return new PatientReservationData();
     }
 
     public List<Reservation> getReservations() {
