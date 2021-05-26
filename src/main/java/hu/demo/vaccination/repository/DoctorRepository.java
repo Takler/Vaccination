@@ -7,11 +7,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class DoctorRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    List<Map<String, Object>> doctors;
 
     @Autowired
     public DoctorRepository(JdbcTemplate jdbcTemplate) {
@@ -19,7 +22,7 @@ public class DoctorRepository {
     }
 
     public int createDoctor(DoctorCreate doctorCreate) {
-        String sqlInsert = "INSERT INTO vaccination (firstName, lastName, email, address, telephone_nember, type, date_of_birth)" +
+        String sqlInsert = "INSERT INTO doctor (firstName, lastName, email, address, telephone_nember, type, date_of_birth)" +
                 "VALUES (?,?,?,?,?,?,?)";
         try {
             int result = jdbcTemplate.update(sqlInsert, doctorCreate.getFirstName(), doctorCreate.getLastName(),
@@ -31,4 +34,13 @@ public class DoctorRepository {
         }
     }
 
+    public List<Map<String, Object>> getDoctorsList() {
+        String sqlSelect = "SELECT * FROM doctor";
+        try {
+            doctors = jdbcTemplate.queryForList(sqlSelect);
+        } catch (DataAccessException ex) {                      // ??
+            ex.printStackTrace();
+        }
+        return doctors;
+    }
 }

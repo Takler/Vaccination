@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.DataInput;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/doctor")
 public class DoctorController {
 
     private DoctorService doctorService;
-    @Autowired
-    private DoctorInit doctorInit;
+    @Autowired                                    // temp
+    private DoctorInit doctorInit;                // temp
 
     @Autowired
     public DoctorController(DoctorService doctorService) {
@@ -29,10 +30,10 @@ public class DoctorController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<DoctorCreate>> getDoctorsList() {
-//        return new ResponseEntity<>(List < DoctorCreate >, HttpStatus.OK);
-//    }
+    @GetMapping
+    public ResponseEntity<List<Map<String, Object>>> getDoctorsList() {
+        return new ResponseEntity<>(doctorService.getDoctorslist(), HttpStatus.OK);
+    }
 //
 //    @GetMapping("/{id}")
 //    public ResponseEntity<DoctorCreate> getDoctor(@PathVariable int id) {
