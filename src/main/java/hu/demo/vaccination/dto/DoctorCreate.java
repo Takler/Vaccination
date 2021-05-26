@@ -8,17 +8,18 @@ public class DoctorCreate {
     private String email;
     private String address;
     private String telephoneNumber;
-    private int type;
-    private String date_of_birth;
+    private String type;
+    private String dateOfBirth;
 
-    public DoctorCreate(int id, String firstName, String lastName, String email, String address, String telephoneNumber, int type, String date_of_birth) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.address = address;
-        this.telephoneNumber = telephoneNumber;
-        this.type = type;
-        this.date_of_birth = date_of_birth;
+    public DoctorCreate() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -61,19 +62,19 @@ public class DoctorCreate {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public String getDate_of_birth() {
-        return date_of_birth;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDate_of_birth(String date_of_birth) {
-        this.date_of_birth = date_of_birth;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

@@ -27,7 +27,12 @@ public class DoctorController {
 
     @PostMapping
     public ResponseEntity<Void> createDoctor(@RequestBody DoctorCreate doctorCreate) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (doctorService.createDoctor(doctorCreate)==1){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping

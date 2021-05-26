@@ -22,4 +22,8 @@ public class DoctorService {
        return doctorRepository.getDoctorsList();
     }
 
+    public int createDoctor(DoctorCreate doctorCreate){
+        return doctorRepository.createDoctor(doctorCreate);
+    }
+
 }

@@ -22,12 +22,13 @@ public class DoctorRepository {
     }
 
     public int createDoctor(DoctorCreate doctorCreate) {
-        String sqlInsert = "INSERT INTO doctor (firstName, lastName, email, address, telephone_nember, type, date_of_birth)" +
-                "VALUES (?,?,?,?,?,?,?)";
+        String sqlInsert = "INSERT INTO doctor (id, firstName, lastName, email, address, telephone_nember, " +
+                "type, date_of_birth) VALUES (?,?,?,?,?,?,?,?)";
+        // vizsgálatok hiányoznak ...
         try {
-            int result = jdbcTemplate.update(sqlInsert, doctorCreate.getFirstName(), doctorCreate.getLastName(),
-                    doctorCreate.getAddress(), doctorCreate.getTelephoneNumber(), doctorCreate.getType(),
-                    doctorCreate.getDate_of_birth());
+            int result = jdbcTemplate.update(sqlInsert, doctorCreate.getId(), doctorCreate.getFirstName(),
+                    doctorCreate.getLastName(), doctorCreate.getEmail(), doctorCreate.getAddress(),
+                    doctorCreate.getTelephoneNumber(), doctorCreate.getType(), doctorCreate.getDateOfBirth());
             return result;
         } catch (DataAccessException exception) {
             return -1;
