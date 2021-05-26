@@ -19,10 +19,10 @@ public class DoctorRepository {
     }
 
     public int createDoctor(DoctorCreate doctorCreate) {
-        String sqlInsert = "INSERT INTO vaccination (id, firstName, lastName, email, address, telephone_nember, type, date_of_birth)" +
-                "VALUES (?,?,?,?,?,?,?,?)";
+        String sqlInsert = "INSERT INTO vaccination (firstName, lastName, email, address, telephone_nember, type, date_of_birth)" +
+                "VALUES (?,?,?,?,?,?,?)";
         try {
-            int result = jdbcTemplate.update(sqlInsert, doctorCreate.getId(), doctorCreate.getFirstName(), doctorCreate.getLastName(),
+            int result = jdbcTemplate.update(sqlInsert, doctorCreate.getFirstName(), doctorCreate.getLastName(),
                     doctorCreate.getAddress(), doctorCreate.getTelephoneNumber(), doctorCreate.getType(),
                     doctorCreate.getDate_of_birth());
             return result;

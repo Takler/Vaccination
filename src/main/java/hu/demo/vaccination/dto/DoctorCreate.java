@@ -12,7 +12,6 @@ public class DoctorCreate {
     private String date_of_birth;
 
     public DoctorCreate(int id, String firstName, String lastName, String email, String address, String telephoneNumber, int type, String date_of_birth) {
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -20,14 +19,6 @@ public class DoctorCreate {
         this.telephoneNumber = telephoneNumber;
         this.type = type;
         this.date_of_birth = date_of_birth;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFirstName() {
