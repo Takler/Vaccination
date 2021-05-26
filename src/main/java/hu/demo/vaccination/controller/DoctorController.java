@@ -3,6 +3,7 @@ package hu.demo.vaccination.controller;
 import hu.demo.vaccination.dto.DoctorCreate;
 import hu.demo.vaccination.service.DoctorService;
 import hu.demo.vaccination.utility.DoctorInit;
+import hu.demo.vaccination.utility.ServiceInit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ public class DoctorController {
 
     @Autowired                                    // temp
     private DoctorInit doctorInit;                // temp
+    @Autowired
+    private ServiceInit serviceInit;              // temp
 
     @Autowired
     public DoctorController(DoctorService doctorService) {
@@ -67,6 +70,7 @@ public class DoctorController {
         //public ResponseEntity<Void> createTable(){
         //     return new ResponseEntity<>(doctorInit.createTable(),HttpStatus.OK);
         doctorInit.createTable();
+        serviceInit.createTable();
     }
 
     @DeleteMapping("/{id}")
