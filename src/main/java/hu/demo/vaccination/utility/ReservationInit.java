@@ -12,6 +12,9 @@ public class ReservationInit {
             "patient_id INT NOT NULL, " +
             "center_id INT NOT NULL, " +
             "vaccine_id INT NOT NULL, " +
+            "registration DATE NOT NULL, " +
+            "next_shot DATE NOT NULL, " +
+            "deleted BOOLEAN NOT NULL DEFAULT false, " +
             "FOREIGN KEY (patient_id) REFERENCES patient(id), " +
             "FOREIGN KEY (center_id) REFERENCES center(id), " +
             "FOREIGN KEY (vaccine_id) REFERENCES vaccines(id))";
