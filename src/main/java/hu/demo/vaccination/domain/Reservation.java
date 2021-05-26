@@ -1,11 +1,15 @@
 package hu.demo.vaccination.domain;
 
+import java.time.LocalDate;
+
 public class Reservation {
 
     private int id;
     private int patientId;
     private int centerId;
     private int vaccineId;
+    private LocalDate registration;
+    private LocalDate nextShot;
 
     public int getId() {
         return id;
@@ -37,5 +41,21 @@ public class Reservation {
 
     public void setVaccineId(int vaccineId) {
         this.vaccineId = vaccineId;
+    }
+
+    public LocalDate getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(LocalDate registration) {
+        this.registration = registration;
+    }
+
+    public LocalDate getNextShot() {
+        return nextShot;
+    }
+
+    public void setNextShot(LocalDate nextShot) {
+        this.nextShot = nextShot;
     }
 }
