@@ -1,4 +1,4 @@
-package hu.demo.vaccination.repository;
+package hu.demo.vaccination.repository.mapper;
 
 import hu.demo.vaccination.dto.DoctorCreate;
 import org.springframework.jdbc.core.RowMapper;
