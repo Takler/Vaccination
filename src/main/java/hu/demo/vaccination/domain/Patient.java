@@ -1,6 +1,6 @@
 package hu.demo.vaccination.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Patient {
@@ -10,7 +10,7 @@ public class Patient {
     private String lastName;
     private String mothersName;
     private String gender;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String email;
     private String city;
     private String zipCode;
@@ -59,11 +59,11 @@ public class Patient {
         this.gender = gender;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

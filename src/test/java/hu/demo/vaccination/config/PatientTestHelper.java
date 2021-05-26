@@ -4,6 +4,8 @@ import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.dto.patient.PatientCreateData;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class PatientTestHelper {
 
@@ -15,7 +17,7 @@ public class PatientTestHelper {
     public static final String PATIENT_1_LAST_NAME = "Csonka";
     public static final String PATIENT_1_MOTHERS_NAME = "Prohászka Adél";
     public static final String PATIENT_1_GENDER = "male";
-    public static final Date PATIENT_1_BIRTH_DATE = Date.valueOf("1980-01-22");
+    public static final LocalDate PATIENT_1_BIRTH_DATE = Date.valueOf("1980-01-22").toLocalDate();
     public static final String PATIENT_1_EMAIL = "frigyes.csonka@email.com";
     public static final String PATIENT_1_CITY = "Ács";
     public static final String PATIENT_1_ZIP_CODE = "2941";
@@ -29,7 +31,7 @@ public class PatientTestHelper {
     public static final String PATIENT_2_LAST_NAME = "Szakáts";
     public static final String PATIENT_2_MOTHERS_NAME = "Vörös Hermina";
     public static final String PATIENT_2_GENDER = "female";
-    public static final Date PATIENT_2_BIRTH_DATE = Date.valueOf("1970-06-11");
+    public static final LocalDate PATIENT_2_BIRTH_DATE = Date.valueOf("1970-06-11").toLocalDate();
     public static final String PATIENT_2_EMAIL = "virag70@email.com";
     public static final String PATIENT_2_CITY = "Budapest";
     public static final String PATIENT_2_ZIP_CODE = "1149";

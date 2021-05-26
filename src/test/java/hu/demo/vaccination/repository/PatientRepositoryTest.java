@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static hu.demo.vaccination.config.PatientTestHelper.*;
@@ -98,7 +99,7 @@ class PatientRepositoryTest {
     void test_updatePatient_modifiedDataReceived() {
         final int MODIFIED_ID = 111111111;
         final String MODIFIED_TEST_TEXT = "modified";
-        final Date MODIFIED_TEST_DATE = Date.valueOf("2000-01-01");
+        final LocalDate MODIFIED_TEST_DATE = Date.valueOf("2000-01-01").toLocalDate();
         final boolean MODIFIED_TEST_BOOLEAN = false;
 
         PatientCreateData data = getPatientTwoCreateData();

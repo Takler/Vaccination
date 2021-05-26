@@ -25,7 +25,8 @@ public class PatientRepository {
         patient.setLastName(resultSet.getString("last_name"));
         patient.setMothersName(resultSet.getString("mothers_name"));
         patient.setGender(resultSet.getString("gender"));
-        patient.setDateOfBirth(resultSet.getDate("date_of_birth"));
+
+        patient.setDateOfBirth(resultSet.getDate("date_of_birth").toLocalDate());
         patient.setEmail(resultSet.getString("email"));
         patient.setCity(resultSet.getString("city"));
         patient.setZipCode(resultSet.getString("zip_code"));
