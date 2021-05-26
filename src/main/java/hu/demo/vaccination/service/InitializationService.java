@@ -1,5 +1,6 @@
 package hu.demo.vaccination.service;
 
+import hu.demo.vaccination.repository.InitializationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,14 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class InitializationService {
-    private final InitializationService initializationService;
+    private final InitializationRepository initializationRepository;
 
     @Autowired
-    public InitializationService(InitializationService initializationService) {
-        this.initializationService = initializationService;
+    public InitializationService(InitializationRepository initializationRepository) {
+        this.initializationRepository = initializationRepository;
     }
 
     public void initialization() {
-        initializationService.initialization();
+        initializationRepository.initialization();
     }
 }
