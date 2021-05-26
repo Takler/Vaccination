@@ -26,12 +26,15 @@ public class DoctorService {
         return doctorRepository.getDoctorsList();
     }
 
-    public List<DoctorCreate> getDoctor(int id){
+    public List<DoctorCreate> getDoctor(int id) {
         return doctorRepository.getDoctor(id);
     }
 
-    public int updateDoctor(DoctorCreate doctorCreate){
+    public int updateDoctor(DoctorCreate doctorCreate) {
         return doctorRepository.updateDoctor(doctorCreate);
     }
 
+    public int deletedDoctor(int id) {
+        return doctorRepository.deleteDoctor(id);
+    }
 }

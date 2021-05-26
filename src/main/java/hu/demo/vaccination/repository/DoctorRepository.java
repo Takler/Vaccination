@@ -74,4 +74,16 @@ public class DoctorRepository {
         }
         return result;
     }
+
+    public int deleteDoctor(int id) {
+        int result = -1;   // clean ??
+        String sqlDelete = "DELETE FROM doctor WHERE id=?";
+        // vizsgálatok hiányoznak ...
+        try {
+            result = jdbcTemplate.update(sqlDelete, id);
+        } catch (DataAccessException exception) {
+            return result;
+        }
+        return result;
+    }
 }
