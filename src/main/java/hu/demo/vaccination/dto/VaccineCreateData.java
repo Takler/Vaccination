@@ -11,9 +11,9 @@ public class VaccineCreateData {
     private int daysUntilNextShot;
     private int nextShotId;
     private int fullyVaccinatedTimePeriod;
-    private boolean isApplicable;
-    private boolean isApplicableForPregnant;
-    private boolean isApplicableForChronic;
+    private boolean applicable;
+    private boolean applicableForPregnant;
+    private boolean applicableForChronic;
 
     public String getName() {
         return name;
@@ -88,26 +88,26 @@ public class VaccineCreateData {
     }
 
     public boolean isApplicable() {
-        return isApplicable;
+        return applicable;
     }
 
     public void setApplicable(boolean applicable) {
-        isApplicable = applicable;
+        this.applicable = applicable;
     }
 
     public boolean isApplicableForPregnant() {
-        return isApplicableForPregnant;
+        return applicableForPregnant;
     }
 
     public void setApplicableForPregnant(boolean applicableForPregnant) {
-        isApplicableForPregnant = applicableForPregnant;
+        this.applicableForPregnant = applicableForPregnant;
     }
 
     public boolean isApplicableForChronic() {
-        return isApplicableForChronic;
+        return applicableForChronic;
     }
 
     public void setApplicableForChronic(boolean applicableForChronic) {
-        isApplicableForChronic = applicableForChronic;
+        this.applicableForChronic = applicableForChronic;
     }
 }
