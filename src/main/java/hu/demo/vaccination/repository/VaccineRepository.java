@@ -2,6 +2,7 @@ package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Vaccine;
 import hu.demo.vaccination.dto.VaccineCreateData;
+import hu.demo.vaccination.utility.VaccineInit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -40,7 +41,7 @@ public class VaccineRepository {
     }
 
     public List<Vaccine> getVaccines() {
-        String sql = "SELECT * FROM vaccines;";
+        String sql = "SELECT * FROM vaccine;";
         try {
             return jdbc.query(sql, vaccineRowMapper);
         } catch (DataAccessException e) {
@@ -49,7 +50,7 @@ public class VaccineRepository {
     }
 
     public Vaccine getVaccine(int id) {
-        String sql = "SELECT * FROM vaccines WHERE id = ?;";
+        String sql = "SELECT * FROM vaccine WHERE id = ?;";
         try {
             return jdbc.queryForObject(sql, vaccineRowMapper, id);
         } catch (DataAccessException e) {
@@ -58,7 +59,7 @@ public class VaccineRepository {
     }
 
     public boolean createVaccine(VaccineCreateData data) {
-        String sql = "INSERT INTO vaccines (" +
+        String sql = "INSERT INTO vaccine (" +
                 "name, " +
                 "type, " +
                 "storage_temperature, " +
@@ -94,7 +95,7 @@ public class VaccineRepository {
     }
 
     public boolean updateVaccine(int id, VaccineCreateData data) {
-        String sql = "UPDATE vaccines SET" +
+        String sql = "UPDATE vaccine SET" +
                 "name = ?, " +
                 "type = ?, " +
                 "storage_temperature = ?, " +
@@ -131,7 +132,7 @@ public class VaccineRepository {
     }
 
     public boolean deleteVaccine(int id) {
-        String sql = "UPDATE vaccines " +
+        String sql = "UPDATE vaccine " +
                 "SET is_available = FALSE " +
                 "WHERE id = ?";
         try {
