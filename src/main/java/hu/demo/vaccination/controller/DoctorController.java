@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.DataInput;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import java.util.Map;
 public class DoctorController {
 
     private DoctorService doctorService;
+
     @Autowired                                    // temp
     private DoctorInit doctorInit;                // temp
 
@@ -27,32 +29,37 @@ public class DoctorController {
 
     @PostMapping
     public ResponseEntity<Void> createDoctor(@RequestBody DoctorCreate doctorCreate) {
-        if (doctorService.createDoctor(doctorCreate)==1){
+        if (doctorService.createDoctor(doctorCreate) == 1) {
             return new ResponseEntity<>(HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping
-    public ResponseEntity<List<Map<String, Object>>> getDoctorsList() {
+    public ResponseEntity<List<Map<String, Object>>> getDoctorsList() {    // struktúra??
         return new ResponseEntity<>(doctorService.getDoctorslist(), HttpStatus.OK);
     }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<DoctorCreate> getDoctor(@PathVariable int id) {
-//        return new ResponseEntity<>(DoctorCreate, HttpStatus.OK);
-//    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<DoctorCreate>> getDoctor(@PathVariable int id) {
+        List<DoctorCreate> doctor = doctorService.getDoctor(id);
+        if (doctor.size() > 0) {
+            return new ResponseEntity<>(doctor, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(doctor, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @PutMapping
     public ResponseEntity<Void> updateDoctor(@RequestBody DoctorCreate doctorCreate) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PutMapping("/init")
-    public void createTable(){
-    //public ResponseEntity<Void> createTable(){
-    //     return new ResponseEntity<>(doctorInit.createTable(),HttpStatus.OK);
+    public void createTable() {
+        //public ResponseEntity<Void> createTable(){
+        //     return new ResponseEntity<>(doctorInit.createTable(),HttpStatus.OK);
         doctorInit.createTable();
     }
 

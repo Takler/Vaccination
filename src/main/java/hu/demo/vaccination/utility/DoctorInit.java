@@ -16,10 +16,10 @@ public class DoctorInit {
 
     public void createTable() {
         String sqlCreate = "CREATE TABLE IF NOT EXISTS doctor (id int PRIMARY KEY AUTO_INCREMENT, " +
-               "firstName varchar(20) NOT NULL, lastName varchar(20) NOT NULL, email varchar(60), address varchar(200), " +
-              "telephone_nember varchar(15), type varchar(10), date_of_birth datetime)";
+               "first_name varchar(20) NOT NULL, last_name varchar(20) NOT NULL, email varchar(60), address varchar(200), " +
+              "telephone_number varchar(15), type varchar(10), date_of_birth datetime)";
         jdbcTemplate.execute(sqlCreate);
-        String sqlInsert = "INSERT INTO doctor (firstName, lastName, email, address, telephone_nember, " +
+        String sqlInsert = "INSERT INTO doctor (first_name, last_name, email, address, telephone_number, " +
                 "type, date_of_birth) VALUES " +
                 "('Gipsz',  'Jakab',  'jakab.gipsz@gmail.com',   '1111, Budapest Gipsz utca 1',  '+36 11 111-1111', 'prof.', '1960.10.10'), "+
                 "('Kerek',  'Béla',   'bela.kerek@gmail.com',    '2222, Budapest Kerek utca 2',  '+36 22 222-2222', 'adj.',  '1970.10.10'), "+

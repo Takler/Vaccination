@@ -19,10 +19,14 @@ public class DoctorService {
     }
 
     public List<Map<String, Object>> getDoctorslist() {
-       return doctorRepository.getDoctorsList();
+        return doctorRepository.getDoctorsList();
     }
 
-    public int createDoctor(DoctorCreate doctorCreate){
+    public List<DoctorCreate> getDoctor(int id){
+        return doctorRepository.getDoctor(id);
+    }
+
+    public int createDoctor(DoctorCreate doctorCreate) {
         return doctorRepository.createDoctor(doctorCreate);
     }
 
