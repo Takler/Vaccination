@@ -125,7 +125,7 @@ public enum DataDefinition {
             "deleted BOOLEAN NOT NULL DEFAULT false, " +
             "FOREIGN KEY (patient_id) REFERENCES patient(id), " +
             "FOREIGN KEY (center_id) REFERENCES center(id), " +
-            "FOREIGN KEY (vaccine_id) REFERENCES vaccines(id))");
+            "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id))");
 
     private final String definition;
 
