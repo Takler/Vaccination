@@ -2,6 +2,7 @@ package hu.demo.vaccination.service;
 
 import hu.demo.vaccination.domain.Reservation;
 import hu.demo.vaccination.dto.ReservationCreateData;
+import hu.demo.vaccination.dto.reservation.PatientReservationData;
 import hu.demo.vaccination.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,10 @@ public class ReservationService {
     @Autowired
     public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
+    }
+
+    public PatientReservationData getPatientReservation(int patientId) {
+        return reservationRepository.getPatientReservation(patientId);
     }
 
     public List<Reservation> getReservations() {

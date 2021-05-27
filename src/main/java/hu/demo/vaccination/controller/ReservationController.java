@@ -2,6 +2,7 @@ package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Reservation;
 import hu.demo.vaccination.dto.ReservationCreateData;
+import hu.demo.vaccination.dto.reservation.PatientReservationData;
 import hu.demo.vaccination.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,16 @@ public class ReservationController {
     @Autowired
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
+    }
+
+    @GetMapping("/patientid/{patientId}")
+    public ResponseEntity<PatientReservationData> getPatientReservation(@PathVariable int patientId) {
+        PatientReservationData patientReservation = reservationService.getPatientReservation(patientId);
+        if (patientReservation != null) {
+            return new ResponseEntity<>(patientReservation, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping
