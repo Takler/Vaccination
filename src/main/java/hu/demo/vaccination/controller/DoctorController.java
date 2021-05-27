@@ -67,8 +67,8 @@ public class DoctorController {
     public void createTable() {
         //public ResponseEntity<Void> createTable(){
         //     return new ResponseEntity<>(doctorInit.createTable(),HttpStatus.OK);
-        doctorInit.createTable();
-        serviceInit.createTable();
+        //doctorInit.createTable();
+        //serviceInit.createTable();
     }
 
     @DeleteMapping("/{id}")
