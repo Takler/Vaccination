@@ -39,7 +39,7 @@ public class InitializationRepository {
         jdbc.execute(CenterInit.CENTER_SAMPLE_DATA_INSERT);
 
         jdbc.execute(InventoryInit.INVENTORY_INIT_TABLE);
-        //jdbc.execute(ShiftInit.SHIFT_INIT_TABLE);
+        jdbc.execute(ShiftInit.CREATE_TABLE_SHIFT);
         jdbc.execute(VaccinationInit.VACCINATION_INIT_TABLE);
         jdbc.execute(ReservationInit.RESERVATION_INIT_TABLE);
 
