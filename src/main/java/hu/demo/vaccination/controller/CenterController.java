@@ -46,7 +46,7 @@ public class CenterController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> updateCenter(@PathVariable int id, @RequestBody CenterCreateData data) {
         boolean updateSuccessful = centerService.updateCenter(id, data);
         if (updateSuccessful) {
@@ -56,7 +56,7 @@ public class CenterController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCenter(@PathVariable int id) {
         boolean deleteSuccessful = centerService.deleteCenter(id);
         if (deleteSuccessful) {
