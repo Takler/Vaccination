@@ -19,7 +19,7 @@ public class InitializationRepository {
         //TODO remove comment when ready :)
 
         //jdbc.execute(ShiftInit.SHIFT_DROP_TABLE);
-        //jdbc.execute(InventoryInit.INVENTORY_DROP_TABLE);
+        jdbc.execute(InventoryInit.INVENTORY_DROP_TABLE);
         jdbc.execute(VaccinationInit.VACCINATION_DROP_TABLE);
         jdbc.execute(ReservationInit.RESERVATION_DROP_TABLE);
 
@@ -38,7 +38,7 @@ public class InitializationRepository {
         jdbc.execute(PatientInit.PATIENT_SAMPLE_DATA_INSERT);
         jdbc.execute(CenterInit.CENTER_SAMPLE_DATA_INSERT);
 
-        //jdbc.execute(InventoryInit.INVENTORY_INIT_TABLE);
+        jdbc.execute(InventoryInit.INVENTORY_INIT_TABLE);
         //jdbc.execute(ShiftInit.SHIFT_INIT_TABLE);
         jdbc.execute(VaccinationInit.VACCINATION_INIT_TABLE);
         jdbc.execute(ReservationInit.RESERVATION_INIT_TABLE);
