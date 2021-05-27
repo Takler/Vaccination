@@ -1,9 +1,9 @@
 package hu.demo.vaccination.utility;
 
 public enum DataDefinition {
+    VACCINATION_DROP_TABLE("DROP TABLE IF EXISTS vaccination"),
     SHIFT_DROP_TABLE("DROP TABLE IF EXISTS shift"),
     INVENTORY_DROP_TABLE("DROP TABLE IF EXISTS inventory"),
-    VACCINATION_DROP_TABLE("DROP TABLE IF EXISTS vaccination"),
     RESERVATION_DROP_TABLE("DROP TABLE IF EXISTS reservation"),
 
     DOCTOR_DROP_TABLE("DROP TABLE IF EXISTS doctor"),
