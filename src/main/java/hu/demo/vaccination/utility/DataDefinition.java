@@ -95,7 +95,9 @@ public enum DataDefinition {
             "FOREIGN KEY (center_id) REFERENCES center(id), " +
             "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id))"),
     SHIFT_CREATE_TABLE("CREATE TABLE IF NOT EXISTS service(id int PRIMARY KEY AUTO_INCREMENT, " +
-            "center_id int NOT NULL, doctor_id int NOT NULL)"),
+            "center_id int NOT NULL, doctor_id int NOT NULL"+
+            "FOREIGN KEY (center_id) REFERENCES center(id)"+
+            "FOREIGN KEY (doctor_id) REFERENCES doctor(id)"),
     VACCINATION_CREATE_TABLE("CREATE TABLE vaccination " +
             "(id INT PRIMARY KEY AUTO_INCREMENT, " +
             "vaccine_id INT NOT NULL, " +
