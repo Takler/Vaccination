@@ -13,7 +13,7 @@ public class VaccinationMapper implements RowMapper<Vaccination> {
         Vaccination vaccination = new Vaccination();
         vaccination.setId(resultSet.getInt("id"));
         vaccination.setPatientId(resultSet.getInt("patient_id"));
-        vaccination.setServiceId(resultSet.getInt("service_id"));
+        vaccination.setShiftId(resultSet.getInt("shift_id"));
         vaccination.setDate(resultSet.getDate("date").toLocalDate());
         vaccination.setDeleted(resultSet.getBoolean("deleted"));
         return vaccination;

@@ -7,7 +7,7 @@ public class Vaccination {
     private int id;
     private int vaccineId;
     private int patientId;
-    private int serviceId;
+    private int shiftId;
     private LocalDate date;
     private boolean deleted;
 
@@ -35,12 +35,12 @@ public class Vaccination {
         this.patientId = patientId;
     }
 
-    public int getServiceId() {
-        return serviceId;
+    public int getShiftId() {
+        return shiftId;
     }
 
-    public void setServiceId(int serviceId) {
-        this.serviceId = serviceId;
+    public void setShiftId(int shiftId) {
+        this.shiftId = shiftId;
     }
 
     public LocalDate getDate() {

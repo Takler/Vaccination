@@ -45,7 +45,7 @@ public class VaccinationRepository {
         String sql = "INSERT INTO vaccination (" +
                 "vaccine_id, " +
                 "patient_id, " +
-                "service_id, " +
+                "shift_id, " +
                 "date, " +
                 "deleted) " +
                 "VALUES (?, ?, ?, ?, ?);";
@@ -53,7 +53,7 @@ public class VaccinationRepository {
             int rowsAffected = jdbc.update(sql,
                     data.getVaccineId(),
                     data.getPatientId(),
-                    data.getServiceId(),
+                    data.getShiftId(),
                     Date.valueOf(data.getDate()),
                     data.isDeleted()
             );
@@ -67,7 +67,7 @@ public class VaccinationRepository {
         String sql = "UPDATE vaccination SET" +
                 "vaccine_id = ?, " +
                 "patient_id = ?, " +
-                "service_id = ?, " +
+                "shift_id = ?, " +
                 "date = ?, " +
                 "deleted = ? " +
                 "WHERE id = ?;";
@@ -75,7 +75,7 @@ public class VaccinationRepository {
             int rowsAffected = jdbc.update(sql,
                     data.getVaccineId(),
                     data.getPatientId(),
-                    data.getServiceId(),
+                    data.getShiftId(),
                     Date.valueOf(data.getDate()),
                     data.isDeleted(),
                     id

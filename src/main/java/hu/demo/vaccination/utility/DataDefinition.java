@@ -111,10 +111,10 @@ public enum DataDefinition {
             "(id INT PRIMARY KEY AUTO_INCREMENT, " +
             "vaccine_id INT NOT NULL, " +
             "patient_id INT NOT NULL, " +
-            "service_id INT NOT NULL, " +
+            "shift_id INT NOT NULL, " +
             "FOREIGN KEY (patient_id) REFERENCES vaccine(id), " +
             "FOREIGN KEY (patient_id) REFERENCES patient(id), " +
-            "FOREIGN KEY (service_id) REFERENCES service(id))"),
+            "FOREIGN KEY (shift_id) REFERENCES shift(id))"),
     RESERVATION_CREATE_TABLE("CREATE TABLE reservation " +
             "(id INT PRIMARY KEY AUTO_INCREMENT, " +
             "patient_id INT NOT NULL, " +
