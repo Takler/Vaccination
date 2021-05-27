@@ -30,7 +30,6 @@ public class CenterRepository {
     @Autowired
     public CenterRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        init();
     }
 
     public List<Center> getCenters() {
@@ -87,11 +86,5 @@ public class CenterRepository {
         } catch (DataAccessException e) {
             return false;
         }
-    }
-
-    private void init() {
-        jdbcTemplate.execute(CenterInit.CENTER_DROP_TABLE);
-        jdbcTemplate.execute(CenterInit.CENTER_INIT_TABLE);
-        jdbcTemplate.execute(CenterInit.CENTER_SAMPLE_DATA_INSERT);
     }
 }
