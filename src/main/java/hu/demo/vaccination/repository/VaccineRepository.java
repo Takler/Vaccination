@@ -28,9 +28,9 @@ public class VaccineRepository {
         vaccine.setDaysUntilNextShot(resultSet.getInt("days_until_next_shot"));
         vaccine.setNextShotId(resultSet.getInt("next_shot_id"));
         vaccine.setFullyVaccinatedTimePeriod(resultSet.getInt("fully_vaccinated_time_period"));
-        vaccine.setApplicable(resultSet.getBoolean("is_applicable"));
-        vaccine.setApplicableForPregnant(resultSet.getBoolean("is_applicable_for_pregnant"));
-        vaccine.setApplicableForChronic(resultSet.getBoolean("is_applicable_for_chronic"));
+        vaccine.setApplicable(resultSet.getBoolean("applicable"));
+        vaccine.setApplicableForPregnant(resultSet.getBoolean("applicable_for_pregnant"));
+        vaccine.setApplicableForChronic(resultSet.getBoolean("applicable_for_chronic"));
         return vaccine;
     });
 
@@ -68,9 +68,9 @@ public class VaccineRepository {
                 "days_until_next_shot, " +
                 "next_shot_id, " +
                 "fully_vaccinated_time_period, " +
-                "is_applicable, " +
-                "is_applicable_for_pregnant, " +
-                "is_applicable_for_chronic) " +
+                "applicable, " +
+                "applicable_for_pregnant, " +
+                "applicable_for_chronic) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         try {
             int rowsAffected = jdbc.update(sql,
@@ -104,9 +104,9 @@ public class VaccineRepository {
                 "days_until_next_shot = ?, " +
                 "next_shot_id = ?, " +
                 "fully_vaccinated_time_period = ?, " +
-                "is_applicable = ?, " +
-                "is_applicable_for_pregnant = ?, " +
-                "is_applicable_for_chronic) = ? " +
+                "applicable = ?, " +
+                "applicable_for_pregnant = ?, " +
+                "applicable_for_chronic) = ? " +
                 "WHERE id = ?;";
         try {
             int rowsAffected = jdbc.update(sql,

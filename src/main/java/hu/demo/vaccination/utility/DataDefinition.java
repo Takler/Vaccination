@@ -112,7 +112,7 @@ public enum DataDefinition {
             "vaccine_id INT NOT NULL, " +
             "patient_id INT NOT NULL, " +
             "shift_id INT NOT NULL, " +
-            "FOREIGN KEY (patient_id) REFERENCES vaccine(id), " +
+            "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id), " +
             "FOREIGN KEY (patient_id) REFERENCES patient(id), " +
             "FOREIGN KEY (shift_id) REFERENCES shift(id))"),
     RESERVATION_CREATE_TABLE("CREATE TABLE reservation " +
