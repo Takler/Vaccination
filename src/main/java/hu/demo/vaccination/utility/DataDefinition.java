@@ -99,7 +99,7 @@ public enum DataDefinition {
             "deleted BOOLEAN NOT NULL DEFAULT FALSE, "),// +
             //"FOREIGN KEY (center_id) REFERENCES center(id), " +
             //"FOREIGN KEY (vaccine_id) REFERENCES vaccine(id))"),
-    SHIFT_CREATE_TABLE("CREATE TABLE IF NOT EXISTS service" +
+    SHIFT_CREATE_TABLE("CREATE TABLE IF NOT EXISTS shift" +
             "(id int PRIMARY KEY AUTO_INCREMENT, " +
             "center_id int NOT NULL, " +
             "doctor_id int NOT NULL,"+
