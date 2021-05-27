@@ -1,7 +1,7 @@
 package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Reservation;
-import hu.demo.vaccination.dto.ReservationCreateData;
+import hu.demo.vaccination.dto.reservation.ReservationCreateData;
 import hu.demo.vaccination.utility.DataDefinition;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

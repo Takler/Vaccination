@@ -1,7 +1,7 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Reservation;
-import hu.demo.vaccination.dto.ReservationCreateData;
+import hu.demo.vaccination.dto.reservation.ReservationCreateData;
 import hu.demo.vaccination.dto.reservation.PatientReservationData;
 import hu.demo.vaccination.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;

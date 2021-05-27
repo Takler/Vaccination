@@ -1,8 +1,8 @@
 package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Reservation;
-import hu.demo.vaccination.dto.ReservationCreateData;
 import hu.demo.vaccination.dto.reservation.PatientReservationData;
+import hu.demo.vaccination.dto.reservation.ReservationCreateData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,8 +34,24 @@ public class ReservationRepository {
     }
 
     public PatientReservationData getPatientReservation(int patientId) {
-        // TODO implement this!
-        return new PatientReservationData();
+        String sql = "SELECT reservation.id, patient.id, first_name, last_name, patient_id, center_id, " +
+                "vaccine_id, registration, next_shot " +
+                "FROM reservation " +
+                "JOIN patient ON patient_id = patient.id" +
+                "WHERE patient_id = ? AND deleted = false";
+        try {
+            return jdbc.queryForObject(sql, (resultSet, i) -> {
+                PatientReservationData patientReservation = new PatientReservationData();
+                patientReservation.setReservationId(resultSet.getInt("reservation.id"));
+                patientReservation.setPatientId(resultSet.getInt("patient_id"));
+                patientReservation.setPatientName(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
+                patientReservation.setRegistration(resultSet.getDate("registration").toLocalDate());
+                patientReservation.setNextShot(resultSet.getDate("next_shot").toLocalDate());
+                return patientReservation;
+            }, patientId);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     public List<Reservation> getReservations() {

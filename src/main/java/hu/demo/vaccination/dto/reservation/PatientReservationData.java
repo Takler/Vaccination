@@ -4,12 +4,21 @@ import java.time.LocalDate;
 
 public class PatientReservationData {
 
+    private int reservationId;
     private int patientId;
     private String patientName;
     private String centerName;
     private String vaccineName;
     private LocalDate registration;
     private LocalDate nextShot;
+
+    public int getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(int reservationId) {
+        this.reservationId = reservationId;
+    }
 
     public int getPatientId() {
         return patientId;
