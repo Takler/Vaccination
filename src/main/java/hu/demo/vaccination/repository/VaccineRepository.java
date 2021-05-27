@@ -37,7 +37,6 @@ public class VaccineRepository {
     @Autowired
     public VaccineRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
-        init();
     }
 
     public List<Vaccine> getVaccines() {
