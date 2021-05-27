@@ -3,14 +3,12 @@ package hu.demo.vaccination.controller;
 import hu.demo.vaccination.dto.DoctorCreate;
 import hu.demo.vaccination.service.DoctorService;
 import hu.demo.vaccination.utility.DoctorInit;
-import hu.demo.vaccination.utility.ServiceInit;
+import hu.demo.vaccination.utility.ShiftInit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.DataInput;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +21,7 @@ public class DoctorController {
     @Autowired                                    // temp
     private DoctorInit doctorInit;                // temp
     @Autowired
-    private ServiceInit serviceInit;              // temp
+    private ShiftInit serviceInit;              // temp
 
     @Autowired
     public DoctorController(DoctorService doctorService) {

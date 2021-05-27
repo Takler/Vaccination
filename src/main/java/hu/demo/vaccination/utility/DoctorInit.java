@@ -2,13 +2,13 @@ package hu.demo.vaccination.utility;
 
 public class DoctorInit {
 
-   public static String DOCTOR_DROP_TABLE = "DROP TABLE IF EXISTS doctor";
+   public static String DROP_TABLE_DOCTOR = "DROP TABLE IF EXISTS doctor";
 
-   public static String DOCTOR_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS doctor (id int PRIMARY KEY AUTO_INCREMENT, " +
+   public static String CREATE_TABLE_DOCTOR = "CREATE TABLE IF NOT EXISTS doctor (id int PRIMARY KEY AUTO_INCREMENT, " +
                 "first_name varchar(20) NOT NULL, last_name varchar(20) NOT NULL, email varchar(60), address varchar(200), " +
                 "telephone_number varchar(15), type varchar(10), date_of_birth datetime)";
 
-   public static String DOCTOR_SAMPLE_DATA_INSERT = "INSERT INTO doctor (first_name, last_name, email, address, telephone_number, " +
+   public static String INSERT_SAMLE_DATA_DOCTOR = "INSERT INTO doctor (first_name, last_name, email, address, telephone_number, " +
                 "type, date_of_birth) VALUES " +
                 "('Gipsz',  'Jakab',  'jakab.gipsz@gmail.com',   '1111, Budapest Gipsz utca 1',  '+36 11 111-1111', 'prof.', '1960.10.10'), " +
                 "('Kerek',  'Béla',   'bela.kerek@gmail.com',    '2222, Budapest Kerek utca 2',  '+36 22 222-2222', 'adj.',  '1970.10.10'), " +
