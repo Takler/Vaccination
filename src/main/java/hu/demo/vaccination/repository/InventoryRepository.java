@@ -27,7 +27,7 @@ public class InventoryRepository {
 
     public Inventory getInventory(int id) {
         String sql = "SELECT id, center_id, vaccine_id, amount " +
-                "FROM inventory" +
+                "FROM inventory " +
                 "WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new InventoryMapper(), id);
     }
