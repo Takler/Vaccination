@@ -48,6 +48,21 @@ public class PatientRepository {
         this.jdbc = jdbc;
     }
 
+    public List<String> getLastName(String firstName) {
+        String sql = "SELECT last_name FROM patient WHERE first_name = ?";
+        return jdbc.query(sql, (resultSet, i) -> resultSet.getString("last_name"), firstName);
+    }
+
+
+    public String getName(int id) {
+        String sql = "SELECT first_name, last_name FROM patient WHERE id = ?";
+        return jdbc.queryForObject(sql, (resultSet, i) -> {
+            String firstName = resultSet.getString("first_name");
+            String lastName = resultSet.getString("last_name");
+            return firstName + " " + lastName;
+        }, id);
+    }
+
     public List<Patient> getPatients() {
         String sql = "SELECT id, first_name, last_name, mothers_name, gender, date_of_birth, " +
                 "email, city, zip_code, address, telephone_number, pregnant, chronic " +

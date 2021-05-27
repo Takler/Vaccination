@@ -39,6 +39,25 @@ class PatientRepositoryTest {
     }
 
     @Test
+    void test_getName_getCorrectName() {
+        PatientCreateData data = getPatientOneCreateData();
+        String expectedName = data.getFirstName() + " " + data.getLastName();
+
+        patientRepository.createPatient(data);
+
+        assertEquals(expectedName, patientRepository.getName(data.getId()));
+    }
+
+    @Test
+    void test_getLastName_getCorrectNames() {
+        PatientCreateData data = getPatientOneCreateData();
+
+        patientRepository.createPatient(data);
+
+        assertEquals(data.getLastName(), patientRepository.getLastName(data.getFirstName()).get(0));
+    }
+
+    @Test
     void test_getPatients_noPatientsExists_returnsEmptyList() {
         assertEquals(0, patientRepository.getPatients().size());
     }

@@ -11,12 +11,22 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PatientService {
+public class PatientService implements HasLastName {
     private final PatientRepository patientRepository;
 
     @Autowired
     public PatientService(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
+    }
+
+    @Override
+    public List<String> getLastName(String firstName) {
+        return patientRepository.getLastName(firstName);
+    }
+
+    @Override
+    public String getName(int id) {
+        return patientRepository.getName(id);
     }
 
     public List<Patient> getPatients() {
