@@ -58,7 +58,7 @@ public enum DataDefinition {
             "deleted BOOLEAN NOT NULL DEFAULT FALSE)"),
 
     DOCTOR_INSERT_SAMPLE_DATA("INSERT INTO doctor (first_name, last_name, email, address, telephone_number, " +
-            "type, date_of_birth) VALUES " +
+            "date_of_birth) VALUES " +
             "('Gipsz',  'Jakab',  'jakab.gipsz@gmail.com',   '1111, Budapest Gipsz utca 1',  '+36 11 111-1111', '1960.10.10'), " +
             "('Kerek',  'Béla',   'bela.kerek@gmail.com',    '2222, Budapest Kerek utca 2',  '+36 22 222-2222',  '1970.10.10'), " +
             "('Karcsú', 'Virág',  'virag.karcsu@gmail.com',  '3333, Budapest Karcsú utca 3', '+36 33 333-3333', '1980.10.10'), " +
