@@ -5,7 +5,6 @@ import hu.demo.vaccination.dto.patient.PatientCreateData;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class PatientTestHelper {
 

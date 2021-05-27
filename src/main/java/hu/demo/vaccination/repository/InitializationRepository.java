@@ -17,7 +17,7 @@ public class InitializationRepository {
 
     public void initialization() {
         for (DataDefinition definition : DataDefinition.values()) {
-            jdbc.execute(String.valueOf(definition));
+            jdbc.execute(definition.getDefinition());
         }
     }
 }

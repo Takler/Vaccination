@@ -2,7 +2,7 @@ package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.dto.patient.PatientCreateData;
-import hu.demo.vaccination.utility.PatientInit;
+import hu.demo.vaccination.utility.DataDefinition;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,13 +29,13 @@ class PatientRepositoryTest {
     @BeforeEach
     void init() {
         patientRepository = new PatientRepository(jdbc);
-        jdbc.execute(PatientInit.PATIENT_DROP_TABLE);
-        jdbc.execute(PatientInit.PATIENT_INIT_TABLE);
+        jdbc.execute(DataDefinition.PATIENT_DROP_TABLE.getDefinition());
+        jdbc.execute(DataDefinition.PATIENT_CREATE_TABLE.getDefinition());
     }
 
     @AfterEach
     void destruct() {
-        jdbc.execute(PatientInit.PATIENT_DROP_TABLE);
+        jdbc.execute(DataDefinition.PATIENT_DROP_TABLE.getDefinition());
     }
 
     @Test

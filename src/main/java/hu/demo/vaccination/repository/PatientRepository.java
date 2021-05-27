@@ -3,7 +3,6 @@ package hu.demo.vaccination.repository;
 import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.dto.patient.PatientAvailableData;
 import hu.demo.vaccination.dto.patient.PatientCreateData;
-import hu.demo.vaccination.utility.PatientInit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -47,7 +46,6 @@ public class PatientRepository {
     @Autowired
     public PatientRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
-        init();
     }
 
     public List<Patient> getPatients() {
@@ -180,11 +178,5 @@ public class PatientRepository {
         } catch (DataAccessException e) {
             return false;
         }
-    }
-
-    private void init() {
-        jdbc.execute(PatientInit.PATIENT_DROP_TABLE);
-        jdbc.execute(PatientInit.PATIENT_INIT_TABLE);
-        jdbc.execute(PatientInit.PATIENT_SAMPLE_DATA_INSERT);
     }
 }
