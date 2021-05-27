@@ -18,7 +18,7 @@ public class InitializationRepository {
     public void initialization() {
         //TODO remove comment when ready :)
 
-        jdbc.execute(ShiftInit.CREATE_TABLE_SHIFT);
+        jdbc.execute(ShiftInit.DROP_TABLE_SHIFT);
         jdbc.execute(InventoryInit.INVENTORY_DROP_TABLE);
         jdbc.execute(VaccinationInit.VACCINATION_DROP_TABLE);
         jdbc.execute(ReservationInit.RESERVATION_DROP_TABLE);
