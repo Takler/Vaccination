@@ -95,10 +95,12 @@ public enum DataDefinition {
 
     INVENTORY_CREATE_TABLE("CREATE TABLE inventory " +
             "(id INT PRIMARY KEY AUTO_INCREMENT, " +
+            "center_id INT NOT NULL, " +
+            "vaccine_id INT NOT NULL, " +
             "amount INTEGER, " +
-            "deleted BOOLEAN NOT NULL DEFAULT FALSE, "),// +
-            //"FOREIGN KEY (center_id) REFERENCES center(id), " +
-            //"FOREIGN KEY (vaccine_id) REFERENCES vaccine(id))"),
+            "deleted BOOLEAN NOT NULL DEFAULT FALSE, " +
+            "FOREIGN KEY (center_id) REFERENCES center(id), " +
+            "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id))"),
     SHIFT_CREATE_TABLE("CREATE TABLE IF NOT EXISTS shift" +
             "(id int PRIMARY KEY AUTO_INCREMENT, " +
             "center_id int NOT NULL, " +
