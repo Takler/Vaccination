@@ -34,16 +34,16 @@ public class ReservationRepository {
     }
 
     public PatientReservationData getPatientReservation(int patientId) {
-        String sql = "SELECT reservation.id, patient.id, first_name, last_name, patient_id, center_id, " +
-                "vaccine_id, registration, next_shot " +
+        String sql = "SELECT reservation.id, patient.first_name, patient.last_name, reservation.center_id, " +
+                "reservation.vaccine_id, reservation.registration, reservation.next_shot, reservation.deleted " +
                 "FROM reservation " +
-                "JOIN patient ON patient_id = patient.id" +
-                "WHERE patient_id = ? AND deleted = false";
+                "JOIN patient ON reservation.patient_id = patient.id " +
+                "WHERE reservation.patient_id = ? AND reservation.deleted = false";
         try {
             return jdbc.queryForObject(sql, (resultSet, i) -> {
                 PatientReservationData patientReservation = new PatientReservationData();
-                patientReservation.setReservationId(resultSet.getInt("reservation.id"));
-                patientReservation.setPatientId(resultSet.getInt("patient_id"));
+                patientReservation.setReservationId(resultSet.getInt("id"));
+                patientReservation.setPatientId(patientId);
                 patientReservation.setPatientName(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
                 patientReservation.setRegistration(resultSet.getDate("registration").toLocalDate());
                 patientReservation.setNextShot(resultSet.getDate("next_shot").toLocalDate());
