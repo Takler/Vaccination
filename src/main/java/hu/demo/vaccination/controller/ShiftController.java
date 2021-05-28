@@ -20,9 +20,9 @@ public class ShiftController {
         this.shiftService = shiftService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ShiftInfoData> getShift(int shiftId){
-        return new ResponseEntity<>(shiftService.getShift(shiftId),HttpStatus.OK);
+    @GetMapping("/info/{id}")
+    public ResponseEntity<ShiftInfoData> getShiftInfo(int shiftId){
+        return new ResponseEntity<>(shiftService.getShiftInfo(shiftId),HttpStatus.OK);
     }
 
     @GetMapping

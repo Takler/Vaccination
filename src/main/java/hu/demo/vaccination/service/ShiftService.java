@@ -24,7 +24,7 @@ public class ShiftService implements Requestable {
 
 
 
-    public ShiftInfoData getShift(int shiftId) {
+    public ShiftInfoData getShiftInfo(int shiftId) {
         ShiftInfoData shiftData = new ShiftInfoData();
         ShiftDateData shiftDateData = shiftRepository.getShiftDateData(shiftId);
         shiftData.setStart(shiftDateData.getStart());
