@@ -11,14 +11,14 @@ public enum DataDefinition {
     VACCINE_DROP_TABLE("DROP TABLE IF EXISTS vaccine"),
     CENTER_DROP_TABLE("DROP TABLE IF EXISTS center"),
 
-    DOCTOR_CREATE_TABLE("CREATE TABLE IF NOT EXISTS doctor " +
-            "(id int PRIMARY KEY AUTO_INCREMENT, " +
-            "first_name varchar(20) NOT NULL, " +
-            "last_name varchar(20) NOT NULL, " +
-            "email varchar(60), " +
-            "address varchar(200), " +
-            "telephone_number varchar(15), " +
-            "date_of_birth datetime)"),
+    DOCTOR_CREATE_TABLE("CREATE TABLE IF NOT EXISTS doctor (" +
+            "id INT PRIMARY KEY AUTO_INCREMENT, " +
+            "first_name VARCHAR(20) NOT NULL, " +
+            "last_name VARCHAR(20) NOT NULL, " +
+            "email VARCHAR(60), " +
+            "address VARCHAR(200), " +
+            "telephone_number VARCHAR(15), " +
+            "deleted BOOLEAN NOT NULL DEFAULT FALSE)"),
     PATIENT_CREATE_TABLE("CREATE TABLE patient " +
             "(id INT PRIMARY KEY, " +
             "first_name VARCHAR(250) NOT NULL, " +
@@ -57,12 +57,11 @@ public enum DataDefinition {
             "daily_capacity INT NOT NULL, " +
             "deleted BOOLEAN NOT NULL DEFAULT FALSE)"),
 
-    DOCTOR_INSERT_SAMPLE_DATA("INSERT INTO doctor (first_name, last_name, email, address, telephone_number, " +
-            "date_of_birth) VALUES " +
-            "('Gipsz',  'Jakab',  'jakab.gipsz@gmail.com',   '1111, Budapest Gipsz utca 1',  '+36 11 111-1111', '1960.10.10'), " +
-            "('Kerek',  'Béla',   'bela.kerek@gmail.com',    '2222, Budapest Kerek utca 2',  '+36 22 222-2222',  '1970.10.10'), " +
-            "('Karcsú', 'Virág',  'virag.karcsu@gmail.com',  '3333, Budapest Karcsú utca 3', '+36 33 333-3333', '1980.10.10'), " +
-            "('Gipsz',  'Andrea', 'andrea.gipsz@gmail.com',  '4444, Budapest Gipsz utca 4',  '+36 44 444-4444', '1990.10.10')"),
+    DOCTOR_INSERT_SAMPLE_DATA("INSERT INTO doctor (first_name, last_name, email, address, telephone_number) VALUES " +
+            "('Gipsz',  'Jakab',  'jakab.gipsz@gmail.com',   '1111, Budapest Gipsz utca 1',  '+36 11 111-1111'), " +
+            "('Kerek',  'Béla',   'bela.kerek@gmail.com',    '2222, Budapest Kerek utca 2',  '+36 22 222-2222'), " +
+            "('Karcsú', 'Virág',  'virag.karcsu@gmail.com',  '3333, Budapest Karcsú utca 3', '+36 33 333-3333'), " +
+            "('Gipsz',  'Andrea', 'andrea.gipsz@gmail.com',  '4444, Budapest Gipsz utca 4',  '+36 44 444-4444')"),
     VACCINE_INSERT_SAMPLE_DATA("INSERT INTO vaccine " +
             "(name, type, storage_temperature, age_limit_min, age_limit_max, shots_needed, next_shot_id, " +
             "days_until_next_shot, fully_vaccinated_time_period, applicable, applicable_for_pregnant, " +
@@ -101,13 +100,14 @@ public enum DataDefinition {
             "deleted BOOLEAN NOT NULL DEFAULT FALSE, " +
             "FOREIGN KEY (center_id) REFERENCES center(id), " +
             "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id))"),
-    SHIFT_CREATE_TABLE("CREATE TABLE IF NOT EXISTS shift" +
-            "(id int PRIMARY KEY AUTO_INCREMENT, " +
-            "center_id int NOT NULL, " +
-            "doctor_id int NOT NULL, "+
-            "start timestamp, "+
-            "end timestamp, "+
-            "FOREIGN KEY (center_id) REFERENCES center(id), "+
+    SHIFT_CREATE_TABLE("CREATE TABLE IF NOT EXISTS shift (" +
+            "id INT PRIMARY KEY AUTO_INCREMENT, " +
+            "center_id INT NOT NULL, " +
+            "doctor_id INT NOT NULL, " +
+            "start TIMESTAMP NOT NULL, " +
+            "end TIMESTAMP NOT NULL, " +
+            "deleted BOOLEAN NOT NULL DEFAULT FALSE, " +
+            "FOREIGN KEY (center_id) REFERENCES center(id), " +
             "FOREIGN KEY (doctor_id) REFERENCES doctor(id))"),
     VACCINATION_CREATE_TABLE("CREATE TABLE vaccination " +
             "(id INT PRIMARY KEY AUTO_INCREMENT, " +
@@ -129,10 +129,11 @@ public enum DataDefinition {
             "FOREIGN KEY (center_id) REFERENCES center(id), " +
             "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id))"),
 
-    INVENTORY_INSERT_SAMPLE_DATA(""),
-    RESERVATION_INSERT_SAMPLE_DATA(""),
-    SHIFT_INSERT_SAMPLE_DATA(""),
-    VACCINATION_INSERT_SAMPLE_DATA("");
+    //INVENTORY_INSERT_SAMPLE_DATA(""),
+    //RESERVATION_INSERT_SAMPLE_DATA(""),
+    SHIFT_INSERT_SAMPLE_DATA("INSERT INTO shift (center_id, doctor_id, start, end) " +
+            "VALUES (12, 1, '2021-05-28 08:01:12', '2021-05-28 14:02:01')");
+    //VACCINATION_INSERT_SAMPLE_DATA("");
 
     private final String definition;
 
