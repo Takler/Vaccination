@@ -26,7 +26,7 @@ public class DoctorService {
         return doctorRepository.getDoctorsList();
     }
 
-    public List<DoctorCreate> getDoctor(int id) {
+    public DoctorCreate getDoctor(int id) {
         return doctorRepository.getDoctor(id);
     }
 

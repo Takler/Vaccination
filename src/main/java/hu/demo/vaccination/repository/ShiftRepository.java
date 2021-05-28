@@ -33,7 +33,7 @@ public class ShiftRepository {
         return shiftDateData;
     }
 
-    public ShiftData getShift(int shiftId) {
+    public ShiftData getShiftDate(int shiftId) {
         ShiftData shiftData = new ShiftData();
         List<ShiftData> shiftDataList = new LinkedList<>();
         ShiftDataMapper shiftDataMapper = new ShiftDataMapper();

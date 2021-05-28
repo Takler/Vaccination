@@ -1,6 +1,7 @@
 package hu.demo.vaccination.service;
 
 import hu.demo.vaccination.dto.DoctorCreate;
+import hu.demo.vaccination.dto.shift.ShiftData;
 import hu.demo.vaccination.dto.shift.ShiftDateData;
 import hu.demo.vaccination.dto.shift.ShiftInfoData;
 import hu.demo.vaccination.repository.ShiftRepository;
@@ -22,17 +23,19 @@ public class ShiftService implements Requestable {
     }
 
 
-
-
     public ShiftInfoData getShiftInfo(int shiftId) {
-        ShiftInfoData shiftData = new ShiftInfoData();
-        ShiftDateData shiftDateData = shiftRepository.getShiftDateData(shiftId);
-        shiftData.setStart(shiftDateData.getStart());
-        shiftData.setEnd(shiftDateData.getEnd());
-        DoctorCreate doctorCreate = doctorService.getDoctor()
+        ShiftInfoData shiftInfoData = new ShiftInfoData();
+
+        ShiftData shiftData = shiftRepository.getShiftDate(shiftId);
+        shiftInfoData.setStart(shiftData.getStart());
+        shiftInfoData.setEnd(shiftData.getEnd());
+
+        DoctorCreate doctorCreate = doctorService.getDoctor(shiftData.getDoctor_id());
+        shiftInfoData.setDoctorFirstName(doctorCreate.getFirstName());
+        shiftInfoData.setDoctorLastName(doctorCreate.getLastName());
 
 
-        return shiftData;
+        return shiftInfoData;
     }
 
     @Override

@@ -47,7 +47,7 @@ public class DoctorRepository {
         return doctors;
     }
 
-    public List<DoctorCreate> getDoctor(int id) {     // List ??
+    public DoctorCreate getDoctor(int id) {     // List ??
         List<DoctorCreate> doctor = null;
         DoctorMapper doctorMapper = new DoctorMapper();
         String sqlSelect = "SELECT * FROM doctor WHERE id=?";
@@ -58,7 +58,7 @@ public class DoctorRepository {
         } catch (DataAccessException ex) {
             ex.printStackTrace();
         }
-        return doctor;
+        return doctor.get(0);
     }
 
     public int updateDoctor(DoctorCreate doctorCreate) {
