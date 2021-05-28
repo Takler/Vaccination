@@ -32,7 +32,7 @@ public class CenterRepository {
     }
 
     public List<Center> getCenters() {
-        String sql = "SELECT id, name, city, email, telephone_number, daily_capacity " +
+        String sql = "SELECT id, name, city, email, telephone_number, daily_capacity, deleted " +
                 "FROM center";
         try {
             return jdbcTemplate.query(sql, centerRowMapper);
@@ -42,9 +42,9 @@ public class CenterRepository {
     }
 
     public Center getCenter(int id) {
-        String sql = "SELECT id, name, city, email, telephone_number, daily_capacity " +
+        String sql = "SELECT id, name, city, email, telephone_number, daily_capacity, deleted " +
                 "FROM center " +
-                "WHERE id = ?";
+                "WHERE id = ? AND deleted = FALSE";
         try {
             return jdbcTemplate.queryForObject(sql, centerRowMapper, id);
         } catch (DataAccessException e) {
@@ -85,5 +85,9 @@ public class CenterRepository {
         } catch (DataAccessException e) {
             return false;
         }
+    }
+
+    public String getName(int id) {
+        return getCenter(id).getName();
     }
 }

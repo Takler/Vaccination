@@ -11,12 +11,17 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CenterService {
+public class CenterService implements Requestable {
     private final CenterRepository centerRepository;
 
     @Autowired
     public CenterService(CenterRepository centerRepository) {
         this.centerRepository = centerRepository;
+    }
+
+    @Override
+    public String getName(int id) {
+        return centerRepository.getName(id);
     }
 
     public List<Center> getCenters() {
