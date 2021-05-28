@@ -29,7 +29,7 @@ public class VaccinationService {
     }
 
     public double getFirstVaccinatedPercentage(int minAge, int maxAge, boolean chronic, boolean pregnant) {
-        List<Patient> patients = patientService.getPatients();
+        List<Patient> patients = patientService.findAll();
 
         if (chronic) {
             patients = chronicPatients(patients);

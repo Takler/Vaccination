@@ -23,13 +23,13 @@ public class PatientController {
 
     @GetMapping
     public ResponseEntity<List<Patient>> getPatients() {
-        List<Patient> patients = patientService.getPatients();
+        List<Patient> patients = patientService.findAll();
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Patient> getPatient(@PathVariable int id) {
-        Patient patient = patientService.getPatient(id);
+        Patient patient = patientService.getById(id);
         if (patient != null) {
             return new ResponseEntity<>(patient, HttpStatus.OK);
         } else {
@@ -39,7 +39,7 @@ public class PatientController {
 
     @PostMapping
     public ResponseEntity<Void> createPatient(@RequestBody PatientCreateData data) {
-        boolean saveSuccessful = patientService.createPatient(data);
+        boolean saveSuccessful = patientService.save(data);
         if (saveSuccessful) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
@@ -49,7 +49,7 @@ public class PatientController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updatePatient(@PathVariable int id, @RequestBody PatientCreateData data) {
-        boolean updateSuccessful = patientService.updatePatient(id, data);
+        boolean updateSuccessful = patientService.update(id, data);
         if (updateSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -59,7 +59,7 @@ public class PatientController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePatient(@PathVariable int id) {
-        boolean deleteSuccessful = patientService.deletePatient(id);
+        boolean deleteSuccessful = patientService.delete(id);
         if (deleteSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

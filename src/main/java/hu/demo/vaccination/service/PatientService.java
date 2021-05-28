@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PatientService implements HasLastName {
+public class PatientService implements CrudOperation<Patient, PatientCreateData>, HasLastName {
     private final PatientRepository patientRepository;
 
     @Autowired
@@ -29,15 +29,18 @@ public class PatientService implements HasLastName {
         return patientRepository.getName(id);
     }
 
-    public List<Patient> getPatients() {
+    @Override
+    public List<Patient> findAll() {
         return patientRepository.getPatients();
     }
 
-    public Patient getPatient(int id) {
+    @Override
+    public Patient getById(int id) {
         return patientRepository.getPatient(id);
     }
 
-    public boolean createPatient(PatientCreateData data) {
+    @Override
+    public boolean save(PatientCreateData data) {
         int id = data.getId();
         if (patientRepository.isPatientDeleted(id)) {
             return patientRepository.unDeletePatient(id) && patientRepository.updatePatient(id, data);
@@ -45,11 +48,13 @@ public class PatientService implements HasLastName {
         return patientRepository.createPatient(data);
     }
 
-    public boolean updatePatient(int id, PatientCreateData data) {
+    @Override
+    public boolean update(int id, PatientCreateData data) {
         return patientRepository.updatePatient(id, data);
     }
 
-    public boolean deletePatient(int id) {
+    @Override
+    public boolean delete(int id) {
         return patientRepository.deletePatient(id);
     }
 }
