@@ -21,12 +21,12 @@ public class ShiftController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShiftInfoData> getShiftInfo(int shiftId){
-        return new ResponseEntity<>(shiftService.getShiftInfo(shiftId),HttpStatus.OK);
+    public ResponseEntity<ShiftInfoData> getShift(int shiftId){
+        return new ResponseEntity<>(shiftService.getShift(shiftId),HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<String> getShiftInfo() {
+    public ResponseEntity<String> getShiftList() {
         return new ResponseEntity<>("info", HttpStatus.OK);
     }
 }

@@ -1,7 +1,6 @@
 package hu.demo.vaccination.dto.shift;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class ShiftDateData {
     private Timestamp start;

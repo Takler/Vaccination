@@ -1,11 +1,12 @@
 package hu.demo.vaccination.dto.shift;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class ShiftInfoData {
     private int id;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private Timestamp start;
+    private Timestamp end;
     private String doctorFirstName;
     private String doctorLastName;
     private String centerName;
@@ -19,19 +20,19 @@ public class ShiftInfoData {
         this.id = id;
     }
 
-    public LocalDateTime getStart() {
+    public Timestamp getStart() {
         return start;
     }
 
-    public void setStart(LocalDateTime start) {
+    public void setStart(Timestamp start) {
         this.start = start;
     }
 
-    public LocalDateTime getEnd() {
+    public Timestamp getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDateTime end) {
+    public void setEnd(Timestamp end) {
         this.end = end;
     }
 
