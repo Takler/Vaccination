@@ -23,7 +23,11 @@ public class VaccinationController {
                                                                @RequestParam(name = "max_age", defaultValue = "0") int maxAge,
                                                                @RequestParam(name = "chronic", defaultValue = "false") boolean chronic,
                                                                @RequestParam(name = "pregnant", defaultValue = "false") boolean pregnant) {
-        return new ResponseEntity<>(vaccinationService.getFirstVaccinatedPercentage(minAge, maxAge, chronic, pregnant),
-                HttpStatus.OK);
+        if (minAge > maxAge && maxAge != 0) {
+            return new ResponseEntity<>(0.0, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(vaccinationService.getFirstVaccinatedPercentage(minAge, maxAge, chronic, pregnant),
+                    HttpStatus.OK);
+        }
     }
 }
