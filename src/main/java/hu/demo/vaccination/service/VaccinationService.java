@@ -51,14 +51,14 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
 
         List<Vaccination> vaccinations = vaccinationRepository.getVaccinations();
         Set<Integer> firstVaccinatedPatients = vaccinations.stream()
-                .mapToInt(Vaccination::getId)
+                .mapToInt(Vaccination::getPatientId)
                 .collect(HashSet::new, HashSet::add, HashSet::addAll);
 
         Set<Integer> filteredRegisteredPatients = new HashSet<>(filteredPatientIds);
         Set<Integer> vaccinatedRegisteredPatients = new HashSet<>(firstVaccinatedPatients);
         vaccinatedRegisteredPatients.retainAll(filteredRegisteredPatients);
 
-        return (double) vaccinatedRegisteredPatients.size() / (double) filteredRegisteredPatients.size();
+        return Math.round(vaccinatedRegisteredPatients.size() * 10000 / (double) filteredRegisteredPatients.size()) / 100.0;
     }
 
     @Override

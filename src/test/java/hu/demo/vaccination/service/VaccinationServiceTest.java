@@ -3,8 +3,11 @@ package hu.demo.vaccination.service;
 import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.repository.VaccinationRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
@@ -14,15 +17,19 @@ import java.util.List;
 @SpringBootTest
 class VaccinationServiceTest {
 
+    VaccinationService vaccinationService;
     @Mock
     VaccinationRepository vaccinationRepository;
     @Mock
     PatientService patientService;
+
     List<Patient> patients;
     List<Vaccination> vaccinations;
 
     @BeforeEach
     public void init() {
+        vaccinationService = new VaccinationService(vaccinationRepository, patientService);
+
         patients = new ArrayList<>();
         Patient patient1 = new Patient();
         patient1.setId(1);
@@ -241,6 +248,12 @@ class VaccinationServiceTest {
 
     }
 
-
+    @Test
+    public void getFirstVaccinatedPercentageTest_defaultArgs() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        double result = vaccinationService.getFirstVaccinatedPercentage(0, 0, false, false);
+        Assertions.assertEquals(76.19, result);
+    }
 
 }
