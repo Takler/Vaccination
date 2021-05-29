@@ -11,6 +11,17 @@ public class Vaccination {
     private LocalDate date;
     private boolean deleted;
 
+    public Vaccination() {}
+
+    public Vaccination(int id, int vaccineId, int patientId, int shiftId, LocalDate date, boolean deleted) {
+        this.id = id;
+        this.vaccineId = vaccineId;
+        this.patientId = patientId;
+        this.shiftId = shiftId;
+        this.date = date;
+        this.deleted = deleted;
+    }
+
     public int getId() {
         return id;
     }
