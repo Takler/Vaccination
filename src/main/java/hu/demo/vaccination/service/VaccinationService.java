@@ -32,30 +32,17 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
         List<Patient> patients = patientService.findAll();
 
         if (chronic) {
-            patients = chronicPatients(patients);
+            patients = getChronicPatients(patients);
         }
         if (pregnant) {
-            patients = pregnantPatients(patients);
+            patients = getPregnantPatients(patients);
         }
-        if (minAge > 0) {
-            patients = patients.stream()
-                    .filter(patient -> patient.getDateOfBirth().isBefore(LocalDate.now().minusYears(minAge)))
-                    .collect(Collectors.toList());
-        }
-        if (maxAge > 0) {
-            patients = patients.stream()
-                    .filter(patient -> patient.getDateOfBirth().isAfter(LocalDate.now().minusYears(maxAge)))
-                    .collect(Collectors.toList());
-        }
+
+        patients = filterPatientsByAge(patients, minAge, maxAge);
         List<Integer> filteredPatientIds = getPatientIds(patients);
 
-        List<Vaccination> vaccinations = vaccinationRepository.getVaccinations();
-        Set<Integer> firstVaccinatedPatients = vaccinations.stream()
-                .mapToInt(Vaccination::getPatientId)
-                .collect(HashSet::new, HashSet::add, HashSet::addAll);
-
         Set<Integer> filteredRegisteredPatients = new HashSet<>(filteredPatientIds);
-        Set<Integer> vaccinatedRegisteredPatients = new HashSet<>(firstVaccinatedPatients);
+        Set<Integer> vaccinatedRegisteredPatients = new HashSet<>(getVaccinatedPatientsIds());
         vaccinatedRegisteredPatients.retainAll(filteredRegisteredPatients);
 
         try {
@@ -63,6 +50,10 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
         } catch (ArithmeticException e) {
             return 0.0;
         }
+    }
+
+    public double getFullVaccinatedPercentage(int minAge, int maxAge, boolean chronic, boolean pregnant) {
+        return 0.0;
     }
 
     @Override
@@ -90,16 +81,36 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
         return vaccinationRepository.deleteVaccination(id);
     }
 
-    private List<Patient> chronicPatients(List<Patient> patients) {
+    private List<Patient> getChronicPatients(List<Patient> patients) {
         return patients.stream().filter(Patient::isUnderlyingMedicalCondition).collect(Collectors.toList());
     }
 
-    private List<Patient> pregnantPatients(List<Patient> patients) {
+    private List<Patient> getPregnantPatients(List<Patient> patients) {
         return patients.stream().filter(Patient::isPregnant).collect(Collectors.toList());
     }
 
     private List<Integer> getPatientIds(List<Patient> patients) {
         return patients.stream().mapToInt(Patient::getId).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    }
+
+    private List<Patient> filterPatientsByAge(List<Patient> patients, int minAge, int maxAge) {
+        if (minAge > 0) {
+            patients = patients.stream()
+                    .filter(patient -> patient.getDateOfBirth().isBefore(LocalDate.now().minusYears(minAge)))
+                    .collect(Collectors.toList());
+        }
+        if (maxAge > 0) {
+            patients = patients.stream()
+                    .filter(patient -> patient.getDateOfBirth().isAfter(LocalDate.now().minusYears(maxAge)))
+                    .collect(Collectors.toList());
+        }
+        return patients;
+    }
+
+    private List<Integer> getVaccinatedPatientsIds() {
+        return vaccinationRepository.getVaccinations().stream()
+                .mapToInt(Vaccination::getPatientId)
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 
 }
