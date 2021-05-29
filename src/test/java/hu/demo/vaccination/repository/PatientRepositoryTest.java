@@ -15,8 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static hu.demo.vaccination.config.PatientTestHelper.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @JdbcTest
 class PatientRepositoryTest {
@@ -169,7 +168,7 @@ class PatientRepositoryTest {
 
         patientRepository.deletePatient(PATIENT_1_ID);
 
-        assertEquals(0, patientRepository.getPatients().size());
+        assertTrue(patientRepository.getPatient(data.getId()).isDeleted());
     }
 
 }
