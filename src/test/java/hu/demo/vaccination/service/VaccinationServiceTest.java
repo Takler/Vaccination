@@ -256,4 +256,67 @@ class VaccinationServiceTest {
         Assertions.assertEquals(76.19, result);
     }
 
+    @Test
+    public void getFirstVaccinatedPercentageTest_minAge60() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        double result = vaccinationService.getFirstVaccinatedPercentage(60, 0, false, false);
+        Assertions.assertEquals(71.43, result);
+    }
+
+    @Test
+    public void getFirstVaccinatedPercentageTest_maxAge40() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        double result = vaccinationService.getFirstVaccinatedPercentage(0, 40, false, false);
+        Assertions.assertEquals(77.78, result);
+    }
+
+    @Test
+    public void getFirstVaccinatedPercentageTest_chronicTrue() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        double result = vaccinationService.getFirstVaccinatedPercentage(0, 0, true, false);
+        Assertions.assertEquals(77.78, result);
+    }
+
+    @Test
+    public void getFirstVaccinatedPercentageTest_pregnantTrue() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        double result = vaccinationService.getFirstVaccinatedPercentage(0, 0, false, true);
+        Assertions.assertEquals(80.0, result);
+    }
+
+    @Test
+    public void getFirstVaccinatedPercentageTest_minAge20maxAge65() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        double result = vaccinationService.getFirstVaccinatedPercentage(20, 65, false, false);
+        Assertions.assertEquals(88.89, result);
+    }
+
+    @Test
+    public void getFirstVaccinatedPercentageTest_pregnantTrueChronicTrue() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        double result = vaccinationService.getFirstVaccinatedPercentage(0, 0, true, true);
+        Assertions.assertEquals(100.0, result);
+    }
+
+    @Test
+    public void getFirstVaccinatedPercentageTest_minAge40ChronicTrue() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        double result = vaccinationService.getFirstVaccinatedPercentage(40, 0, true, false);
+        Assertions.assertEquals(71.43, result);
+    }
+
+    @Test
+    public void getFirstVaccinatedPercentageTest_maxAge50PregnantTrue() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        double result = vaccinationService.getFirstVaccinatedPercentage(0, 50, false, true);
+        Assertions.assertEquals(100.0, result);
+    }
 }
