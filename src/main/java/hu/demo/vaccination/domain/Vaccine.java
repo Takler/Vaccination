@@ -16,6 +16,26 @@ public class Vaccine {
     private boolean applicableForPregnant;
     private boolean applicableForChronic;
 
+    public Vaccine() {}
+
+    public Vaccine(int id, String name, String type, int storageTemperature, int ageLimitMin, int ageLimitMax,
+                   int shotsNeeded, int daysUntilNextShot, int nextShotId, int fullyVaccinatedTimePeriod,
+                   boolean applicable, boolean applicableForPregnant, boolean applicableForChronic) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.storageTemperature = storageTemperature;
+        this.ageLimitMin = ageLimitMin;
+        this.ageLimitMax = ageLimitMax;
+        this.shotsNeeded = shotsNeeded;
+        this.daysUntilNextShot = daysUntilNextShot;
+        this.nextShotId = nextShotId;
+        this.fullyVaccinatedTimePeriod = fullyVaccinatedTimePeriod;
+        this.applicable = applicable;
+        this.applicableForPregnant = applicableForPregnant;
+        this.applicableForChronic = applicableForChronic;
+    }
+
     public int getId() {
         return id;
     }

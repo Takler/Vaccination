@@ -24,7 +24,7 @@ public class VaccinationRepository {
     }
 
     public List<Vaccination> getVaccinations() {
-        String sql = "SELECT * FROM vaccination;";
+        String sql = "SELECT * FROM vaccination";
         try {
             return jdbc.query(sql, vaccinationMapper);
         } catch (DataAccessException e) {
@@ -33,7 +33,7 @@ public class VaccinationRepository {
     }
 
     public Vaccination getVaccination(int id) {
-        String sql = "SELECT * FROM vaccination WHERE id = ?;";
+        String sql = "SELECT * FROM vaccination WHERE id = ?";
         try {
             return jdbc.queryForObject(sql, vaccinationMapper, id);
         } catch (DataAccessException e) {

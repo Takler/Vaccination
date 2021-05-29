@@ -2,6 +2,7 @@ package hu.demo.vaccination.service;
 
 import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.domain.Vaccination;
+import hu.demo.vaccination.domain.Vaccine;
 import hu.demo.vaccination.dto.VaccinationCreateData;
 import hu.demo.vaccination.repository.VaccinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,24 +19,20 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
 
     private final VaccinationRepository vaccinationRepository;
     private final PatientService patientService;
+    private final VaccineService vaccineService;
 
     @Autowired
-    public VaccinationService(VaccinationRepository vaccinationRepository, PatientService patientService) {
+    public VaccinationService(VaccinationRepository vaccinationRepository, PatientService patientService,
+                              VaccineService vaccineService) {
         this.vaccinationRepository = vaccinationRepository;
         this.patientService = patientService;
+        this.vaccineService = vaccineService;
     }
 
     public double getFirstVaccinatedPercentage(int minAge, int maxAge, boolean chronic, boolean pregnant) {
         List<Patient> patients = patientService.findAll();
 
-        if (chronic) {
-            patients = getChronicPatients(patients);
-        }
-        if (pregnant) {
-            patients = getPregnantPatients(patients);
-        }
-
-        patients = filterPatientsByAge(patients, minAge, maxAge);
+        patients = filterPatientsByAgeAndCondition(patients, minAge, maxAge, chronic, pregnant);
         List<Integer> filteredPatientIds = getPatientIds(patients);
 
         Set<Integer> filteredRegisteredPatients = new HashSet<>(filteredPatientIds);
@@ -53,7 +47,33 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
     }
 
     public double getFullVaccinatedPercentage(int minAge, int maxAge, boolean chronic, boolean pregnant) {
-        return 0.0;
+        int numberOfFilteredPatients = getPatientIds(filterPatientsByAgeAndCondition(patientService.findAll(),
+                minAge, maxAge, chronic, pregnant)).size();
+        List<Vaccination> vaccinations = vaccinationRepository.getVaccinations();
+
+        Map<Integer, Integer> numberOfShotsNeededPerVaccine = vaccineService.findAll().stream()
+                .collect(Collectors.toMap(
+                        Vaccine::getId,
+                        Vaccine::getShotsNeeded));
+        Map<Integer, Long> countOfVaccinationsPerPatient = vaccinations.stream()
+                .collect(Collectors.groupingBy(
+                        Vaccination::getPatientId,
+                        Collectors.counting()));
+        Map<Integer, Integer> patientIdsVaccinesIds = vaccinations.stream()
+                .collect(Collectors.toMap(
+                        Vaccination::getPatientId,
+                        Vaccination::getVaccineId,
+                        (patient1, patient2) -> patient1));
+
+        int numberOfFullVaccinated = (int) patientIdsVaccinesIds.entrySet().stream()
+                .filter(map -> countOfVaccinationsPerPatient.get(map.getKey()) >= numberOfShotsNeededPerVaccine.get(map.getValue()))
+                .count();
+
+        try {
+            return Math.round(numberOfFullVaccinated * 10000 / (double) numberOfFilteredPatients) / 100.0;
+        } catch (ArithmeticException e) {
+            return 0.0;
+        }
     }
 
     @Override
@@ -111,6 +131,17 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
         return vaccinationRepository.getVaccinations().stream()
                 .mapToInt(Vaccination::getPatientId)
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    }
+
+    private List<Patient> filterPatientsByAgeAndCondition(List<Patient> patients, int minAge, int maxAge,
+                                                          boolean chronic, boolean pregnant) {
+        if (chronic) {
+            patients = getChronicPatients(patients);
+        }
+        if (pregnant) {
+            patients = getPregnantPatients(patients);
+        }
+        return filterPatientsByAge(patients, minAge, maxAge);
     }
 
 }
