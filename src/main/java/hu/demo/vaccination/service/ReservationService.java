@@ -29,7 +29,7 @@ public class ReservationService {
         Reservation reservation = reservationRepository.getReservation(patientReservation.getReservationId());
 
         patientReservation.setCenterName(centerService.getCenter(reservation.getCenterId()).getName());
-        patientReservation.setVaccineName(vaccineService.getVaccine(reservation.getVaccineId()).getName());
+        patientReservation.setVaccineName(vaccineService.getById(reservation.getVaccineId()).getName());
 
         return patientReservation;
     }

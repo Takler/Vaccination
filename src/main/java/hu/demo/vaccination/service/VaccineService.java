@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class VaccineService {
+public class VaccineService implements CrudOperation<Vaccine, VaccineCreateData> {
 
     private final VaccineRepository vaccineRepository;
 
@@ -20,23 +20,28 @@ public class VaccineService {
         this.vaccineRepository = vaccineRepository;
     }
 
-    public List<Vaccine> getVaccines() {
+    @Override
+    public List<Vaccine> findAll() {
         return vaccineRepository.getVaccines();
     }
 
-    public Vaccine getVaccine(int id) {
+    @Override
+    public Vaccine getById(int id) {
         return vaccineRepository.getVaccine(id);
     }
 
-    public boolean createVaccine(VaccineCreateData data) {
+    @Override
+    public boolean save(VaccineCreateData data) {
         return vaccineRepository.createVaccine(data);
     }
 
-    public boolean updateVaccine(int id, VaccineCreateData data) {
+    @Override
+    public boolean update(int id, VaccineCreateData data) {
         return vaccineRepository.updateVaccine(id, data);
     }
 
-    public boolean deleteVaccine(int id) {
+    @Override
+    public boolean delete(int id) {
         return vaccineRepository.deleteVaccine(id);
     }
 }

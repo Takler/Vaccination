@@ -23,13 +23,13 @@ public class VaccineController {
 
     @GetMapping
     public ResponseEntity<List<Vaccine>> getVaccines() {
-        List<Vaccine> vaccines = vaccineService.getVaccines();
+        List<Vaccine> vaccines = vaccineService.findAll();
         return new ResponseEntity<>(vaccines, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Vaccine> getVaccine(@PathVariable int id) {
-        Vaccine vaccine = vaccineService.getVaccine(id);
+        Vaccine vaccine = vaccineService.getById(id);
         if (vaccine != null) {
             return new ResponseEntity<>(vaccine, HttpStatus.OK);
         } else {
@@ -39,7 +39,7 @@ public class VaccineController {
 
     @PostMapping
     public ResponseEntity<Void> createVaccine(@RequestBody VaccineCreateData data) {
-        boolean saveSuccessful = vaccineService.createVaccine(data);
+        boolean saveSuccessful = vaccineService.save(data);
         if (saveSuccessful) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
@@ -49,7 +49,7 @@ public class VaccineController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateVaccine(@PathVariable int id, @RequestBody VaccineCreateData data) {
-        boolean updateSuccessful = vaccineService.updateVaccine(id, data);
+        boolean updateSuccessful = vaccineService.update(id, data);
         if (updateSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -59,7 +59,7 @@ public class VaccineController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVaccine(@PathVariable int id) {
-        boolean deleteSuccessful = vaccineService.deleteVaccine(id);
+        boolean deleteSuccessful = vaccineService.delete(id);
         if (deleteSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
