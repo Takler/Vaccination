@@ -1,5 +1,7 @@
 package hu.demo.vaccination.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 
 public class Reservation {
@@ -10,6 +12,8 @@ public class Reservation {
     private int vaccineId;
     private LocalDate registration;
     private LocalDate nextShot;
+    @JsonIgnore
+    private boolean deleted;
 
     public int getId() {
         return id;
@@ -57,5 +61,13 @@ public class Reservation {
 
     public void setNextShot(LocalDate nextShot) {
         this.nextShot = nextShot;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

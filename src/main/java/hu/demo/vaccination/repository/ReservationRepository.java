@@ -25,6 +25,7 @@ public class ReservationRepository {
         reservation.setVaccineId(resultSet.getInt("vaccine_id"));
         reservation.setRegistration(resultSet.getDate("registration").toLocalDate());
         reservation.setNextShot(resultSet.getDate("next_shot").toLocalDate());
+        reservation.setDeleted(resultSet.getBoolean("deleted"));
         return reservation;
     });
 
@@ -55,7 +56,7 @@ public class ReservationRepository {
     }
 
     public List<Reservation> getReservations() {
-        String sql = "SELECT id, patient_id, center_id, vaccine_id, registration, next_shot " +
+        String sql = "SELECT id, patient_id, center_id, vaccine_id, registration, next_shot, deleted " +
                 "FROM reservation " +
                 "WHERE deleted = false";
         try {
@@ -66,7 +67,7 @@ public class ReservationRepository {
     }
 
     public Reservation getReservation(int id) {
-        String sql = "SELECT id, patient_id, center_id, vaccine_id, registration, next_shot " +
+        String sql = "SELECT id, patient_id, center_id, vaccine_id, registration, next_shot, deleted " +
                 "FROM reservation " +
                 "WHERE id = ? AND deleted = false";
         try {

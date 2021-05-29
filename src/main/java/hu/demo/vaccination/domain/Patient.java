@@ -1,5 +1,7 @@
 package hu.demo.vaccination.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -18,6 +20,8 @@ public class Patient {
     private String telephoneNumber;
     private boolean pregnant;
     private boolean underlyingMedicalCondition;
+    @JsonIgnore
+    private boolean deleted;
 
     public int getId() {
         return id;
@@ -121,6 +125,14 @@ public class Patient {
 
     public void setUnderlyingMedicalCondition(boolean underlyingMedicalCondition) {
         this.underlyingMedicalCondition = underlyingMedicalCondition;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

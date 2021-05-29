@@ -24,7 +24,6 @@ public class PatientRepository {
         patient.setLastName(resultSet.getString("last_name"));
         patient.setMothersName(resultSet.getString("mothers_name"));
         patient.setGender(resultSet.getString("gender"));
-
         patient.setDateOfBirth(resultSet.getDate("date_of_birth").toLocalDate());
         patient.setEmail(resultSet.getString("email"));
         patient.setCity(resultSet.getString("city"));
@@ -33,6 +32,7 @@ public class PatientRepository {
         patient.setTelephoneNumber(resultSet.getString("telephone_number"));
         patient.setPregnant(resultSet.getBoolean("pregnant"));
         patient.setUnderlyingMedicalCondition(resultSet.getBoolean("chronic"));
+        patient.setDeleted(resultSet.getBoolean("deleted"));
         return patient;
     });
 
@@ -65,7 +65,7 @@ public class PatientRepository {
 
     public List<Patient> getPatients() {
         String sql = "SELECT id, first_name, last_name, mothers_name, gender, date_of_birth, " +
-                "email, city, zip_code, address, telephone_number, pregnant, chronic " +
+                "email, city, zip_code, address, telephone_number, pregnant, chronic, deleted " +
                 "FROM patient " +
                 "WHERE deleted = false";
         try {
@@ -77,7 +77,7 @@ public class PatientRepository {
 
     public Patient getPatient(int id) {
         String sqlQuery = "SELECT id, first_name, last_name, mothers_name, gender, date_of_birth, " +
-                "email, city, zip_code, address, telephone_number, pregnant, chronic " +
+                "email, city, zip_code, address, telephone_number, pregnant, chronic, deleted " +
                 "FROM patient " +
                 "WHERE id = ? AND deleted = false";
         try {
