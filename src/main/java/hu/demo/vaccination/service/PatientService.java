@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,12 +32,24 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
 
     @Override
     public List<Patient> findAll() {
-        return patientRepository.getPatients();
+        List<Patient> patients = patientRepository.getPatients();
+        List<Patient> availablePatients = new ArrayList<>();
+        for (Patient patient : patients) {
+            if (!patient.isDeleted()) {
+                availablePatients.add(patient);
+            }
+        }
+        return availablePatients;
     }
 
     @Override
     public Patient getById(int id) {
-        return patientRepository.getPatient(id);
+        Patient patient = patientRepository.getPatient(id);
+        if (!patient.isDeleted()) {
+            return patient;
+        } else {
+            return null;
+        }
     }
 
     @Override
