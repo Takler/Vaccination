@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class VaccinationService {
+public class VaccinationService implements CrudOperation<Vaccination, VaccinationCreateData> {
 
     private final VaccinationRepository vaccinationRepository;
     private final PatientService patientService;
@@ -61,23 +61,28 @@ public class VaccinationService {
         return (double) vaccinatedRegisteredPatients.size() / (double) filteredRegisteredPatients.size();
     }
 
-    public List<Vaccination> getVaccinations() {
+    @Override
+    public List<Vaccination> findAll() {
         return vaccinationRepository.getVaccinations();
     }
 
-    public Vaccination getVaccination(int id) {
+    @Override
+    public Vaccination getById(int id) {
         return vaccinationRepository.getVaccination(id);
     }
 
-    public boolean createVaccination(VaccinationCreateData data) {
+    @Override
+    public boolean save(VaccinationCreateData data) {
         return vaccinationRepository.createVaccination(data);
     }
 
-    public boolean updateVaccination(int id, VaccinationCreateData data) {
+    @Override
+    public boolean update(int id, VaccinationCreateData data) {
         return vaccinationRepository.updateVaccination(id, data);
     }
 
-    public boolean deleteVaccination(int id) {
+    @Override
+    public boolean delete(int id) {
         return vaccinationRepository.deleteVaccination(id);
     }
 
