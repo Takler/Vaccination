@@ -1,8 +1,8 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Reservation;
-import hu.demo.vaccination.dto.reservation.ReservationCreateData;
 import hu.demo.vaccination.dto.reservation.PatientReservationData;
+import hu.demo.vaccination.dto.reservation.ReservationCreateData;
 import hu.demo.vaccination.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,13 +34,13 @@ public class ReservationController {
 
     @GetMapping
     public ResponseEntity<List<Reservation>> getReservations() {
-        List<Reservation> reservations = reservationService.getReservations();
+        List<Reservation> reservations = reservationService.findAll();
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Reservation> getReservation(@PathVariable int id) {
-        Reservation reservation = reservationService.getReservation(id);
+        Reservation reservation = reservationService.getById(id);
         if (reservation != null) {
             return new ResponseEntity<>(reservation, HttpStatus.OK);
         } else {
@@ -50,7 +50,7 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<Void> createReservation(@RequestBody ReservationCreateData data) {
-        boolean saveSuccessful = reservationService.createReservation(data);
+        boolean saveSuccessful = reservationService.save(data);
         if (saveSuccessful) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
@@ -60,7 +60,7 @@ public class ReservationController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateReservation(@PathVariable int id, @RequestBody ReservationCreateData data) {
-        boolean updateSuccessful = reservationService.updateReservation(id, data);
+        boolean updateSuccessful = reservationService.update(id, data);
         if (updateSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -70,7 +70,7 @@ public class ReservationController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable int id) {
-        boolean deleteSuccessful = reservationService.deleteReservation(id);
+        boolean deleteSuccessful = reservationService.delete(id);
         if (deleteSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
