@@ -58,7 +58,11 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
         Set<Integer> vaccinatedRegisteredPatients = new HashSet<>(firstVaccinatedPatients);
         vaccinatedRegisteredPatients.retainAll(filteredRegisteredPatients);
 
-        return Math.round(vaccinatedRegisteredPatients.size() * 10000 / (double) filteredRegisteredPatients.size()) / 100.0;
+        try {
+            return Math.round(vaccinatedRegisteredPatients.size() * 10000 / (double) filteredRegisteredPatients.size()) / 100.0;
+        } catch (ArithmeticException e) {
+            return 0.0;
+        }
     }
 
     @Override
