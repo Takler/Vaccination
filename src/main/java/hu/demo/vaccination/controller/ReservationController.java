@@ -3,6 +3,8 @@ package hu.demo.vaccination.controller;
 import hu.demo.vaccination.domain.Reservation;
 import hu.demo.vaccination.dto.reservation.PatientReservationData;
 import hu.demo.vaccination.dto.reservation.ReservationCreateData;
+import hu.demo.vaccination.dto.reservation.ReservationInfoData;
+import hu.demo.vaccination.dto.reservation.ReservationNameInfoData;
 import hu.demo.vaccination.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,26 @@ public class ReservationController {
         PatientReservationData patientReservation = reservationService.getPatientReservation(patientId);
         if (patientReservation != null) {
             return new ResponseEntity<>(patientReservation, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/info/{id}")
+    public ResponseEntity<ReservationInfoData> getInfo(@PathVariable int id) {
+        ReservationInfoData info = reservationService.getInfo(id);
+        if (info != null) {
+            return new ResponseEntity<>(info, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/nameinfo/{id}")
+    public ResponseEntity<ReservationNameInfoData> getNameInfo(@PathVariable int id) {
+        ReservationNameInfoData nameInfo = reservationService.getNameInfo(id);
+        if (nameInfo != null) {
+            return new ResponseEntity<>(nameInfo, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

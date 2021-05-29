@@ -3,6 +3,8 @@ package hu.demo.vaccination.service;
 import hu.demo.vaccination.domain.Reservation;
 import hu.demo.vaccination.dto.reservation.PatientReservationData;
 import hu.demo.vaccination.dto.reservation.ReservationCreateData;
+import hu.demo.vaccination.dto.reservation.ReservationInfoData;
+import hu.demo.vaccination.dto.reservation.ReservationNameInfoData;
 import hu.demo.vaccination.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,36 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
         patientReservation.setVaccineName(vaccineService.getById(reservation.getVaccineId()).getName());
 
         return patientReservation;
+    }
+
+    public ReservationInfoData getInfo(int id) {
+        Reservation reservation = reservationRepository.getReservation(id);
+
+        ReservationInfoData reservationInfoData = new ReservationInfoData();
+
+        reservationInfoData.setId(id);
+        reservationInfoData.setPatient(patientService.getById(reservation.getPatientId()));
+        reservationInfoData.setCenter(centerService.getCenter(reservation.getCenterId()));
+        reservationInfoData.setVaccine(vaccineService.getById(reservation.getVaccineId()));
+        reservationInfoData.setRegistration(reservation.getRegistration());
+        reservationInfoData.setNextShot(reservation.getNextShot());
+
+        return reservationInfoData;
+    }
+
+    public ReservationNameInfoData getNameInfo(int id) {
+        Reservation reservation = reservationRepository.getReservation(id);
+
+        ReservationNameInfoData reservationNameInfoData = new ReservationNameInfoData();
+
+        reservationNameInfoData.setId(id);
+        reservationNameInfoData.setPatientName(patientService.getName(reservation.getPatientId()));
+        reservationNameInfoData.setCenterName(centerService.getName(reservation.getCenterId()));
+        reservationNameInfoData.setVaccineName(vaccineService.getById(reservation.getVaccineId()).getName());
+        reservationNameInfoData.setRegistration(reservation.getRegistration());
+        reservationNameInfoData.setNextShot(reservation.getNextShot());
+
+        return reservationNameInfoData;
     }
 
     @Override
