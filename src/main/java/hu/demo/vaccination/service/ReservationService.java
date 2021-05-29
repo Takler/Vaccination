@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ReservationService {
+public class ReservationService implements CrudOperation<Reservation, ReservationCreateData> {
     private final ReservationRepository reservationRepository;
     private final CenterService centerService;
     private final VaccineService vaccineService;
@@ -34,23 +34,28 @@ public class ReservationService {
         return patientReservation;
     }
 
-    public List<Reservation> getReservations() {
+    @Override
+    public List<Reservation> findAll() {
         return reservationRepository.getReservations();
     }
 
-    public Reservation getReservation(int id) {
+    @Override
+    public Reservation getById(int id) {
         return reservationRepository.getReservation(id);
     }
 
-    public boolean createReservation(ReservationCreateData data) {
+    @Override
+    public boolean save(ReservationCreateData data) {
         return reservationRepository.createReservation(data);
     }
 
-    public boolean updateReservation(int id, ReservationCreateData data) {
+    @Override
+    public boolean update(int id, ReservationCreateData data) {
         return reservationRepository.updateReservation(id, data);
     }
 
-    public boolean deleteReservation(int id) {
+    @Override
+    public boolean delete(int id) {
         return reservationRepository.deleteReservation(id);
     }
 }
