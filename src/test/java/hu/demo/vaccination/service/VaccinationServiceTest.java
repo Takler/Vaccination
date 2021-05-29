@@ -261,7 +261,7 @@ class VaccinationServiceTest {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
         double result = vaccinationService.getFirstVaccinatedPercentage(60, 0, false, false);
-        Assertions.assertEquals(71.43, result);
+        Assertions.assertEquals(75.0, result);
     }
 
     @Test
@@ -318,5 +318,13 @@ class VaccinationServiceTest {
         Mockito.when(patientService.findAll()).thenReturn(patients);
         double result = vaccinationService.getFirstVaccinatedPercentage(0, 50, false, true);
         Assertions.assertEquals(100.0, result);
+    }
+
+    @Test
+    public void getFirstVaccinatedPercentageTest_emptyResult() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        double result = vaccinationService.getFirstVaccinatedPercentage(150, 0, false, false);
+        Assertions.assertEquals(0.0, result);
     }
 }
