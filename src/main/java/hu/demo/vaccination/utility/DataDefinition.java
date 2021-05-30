@@ -129,7 +129,13 @@ public enum DataDefinition {
             "FOREIGN KEY (center_id) REFERENCES center(id), " +
             "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id))"),
 
-    //INVENTORY_INSERT_SAMPLE_DATA(""),
+    INVENTORY_INSERT_SAMPLE_DATA("INSERT INTO inventory " +
+            "(center_id, vaccine_id, amount) " +
+            "VALUES " +
+            "(12, 1, 1200), " +
+            "(23, 2, 300), " +
+            "(32, 3, 2000), " +
+            "(43, 4, 500)"),
     RESERVATION_INSERT_SAMPLE_DATA("INSERT INTO reservation " +
             "(patient_id, center_id, vaccine_id, registration, next_shot) " +
             "VALUES (157648531,12,1,'2021-05-27','2021-06-05')"),
