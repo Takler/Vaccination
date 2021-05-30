@@ -1,10 +1,14 @@
 package hu.demo.vaccination.controller;
 
+import hu.demo.vaccination.domain.Vaccination;
+import hu.demo.vaccination.dto.VaccinationCreateData;
 import hu.demo.vaccination.service.VaccinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/vaccination")
@@ -15,6 +19,52 @@ public class VaccinationController {
     @Autowired
     public VaccinationController(VaccinationService vaccinationService) {
         this.vaccinationService = vaccinationService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Vaccination>> getVaccinations() {
+        List<Vaccination> vaccinations = vaccinationService.findAll();
+        return new ResponseEntity<>(vaccinations, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Vaccination> getVaccination(@PathVariable int id) {
+        Vaccination vaccination = vaccinationService.getById(id);
+        if (vaccination != null) {
+            return new ResponseEntity<>(vaccination, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> createVaccination(@RequestBody VaccinationCreateData data) {
+        boolean saveSuccessful = vaccinationService.save(data);
+        if (saveSuccessful) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateVaccination(@PathVariable int id, @RequestBody VaccinationCreateData data) {
+        boolean updateSuccessful = vaccinationService.update(id, data);
+        if (updateSuccessful) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVaccination(@PathVariable int id) {
+        boolean deleteSuccessful = vaccinationService.delete(id);
+        if (deleteSuccessful) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/first")
