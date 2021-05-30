@@ -17,9 +17,23 @@ public class VaccinationController {
         this.vaccinationService = vaccinationService;
     }
 
-    @GetMapping
+    @GetMapping("/first")
     @ResponseBody
     public ResponseEntity<Double> getFirstVaccinatedPercentage(@RequestParam(name = "min_age", defaultValue = "0") int minAge,
+                                                               @RequestParam(name = "max_age", defaultValue = "0") int maxAge,
+                                                               @RequestParam(name = "chronic", defaultValue = "false") boolean chronic,
+                                                               @RequestParam(name = "pregnant", defaultValue = "false") boolean pregnant) {
+        if (minAge > maxAge && maxAge != 0) {
+            return new ResponseEntity<>(0.0, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(vaccinationService.getFirstVaccinatedPercentage(minAge, maxAge, chronic, pregnant),
+                    HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/full")
+    @ResponseBody
+    public ResponseEntity<Double> getFullVaccinatedPercentage(@RequestParam(name = "min_age", defaultValue = "0") int minAge,
                                                                @RequestParam(name = "max_age", defaultValue = "0") int maxAge,
                                                                @RequestParam(name = "chronic", defaultValue = "false") boolean chronic,
                                                                @RequestParam(name = "pregnant", defaultValue = "false") boolean pregnant) {
