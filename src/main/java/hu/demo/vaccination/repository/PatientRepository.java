@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,32 +18,6 @@ import java.util.List;
 public class PatientRepository {
 
     private final JdbcTemplate jdbc;
-
-    private final RowMapper<Patient> patientRowMapper = ((resultSet, i) -> {
-        Patient patient = new Patient();
-        patient.setId(resultSet.getInt("id"));
-        patient.setFirstName(resultSet.getString("first_name"));
-        patient.setLastName(resultSet.getString("last_name"));
-        patient.setMothersName(resultSet.getString("mothers_name"));
-        patient.setGender(resultSet.getString("gender"));
-        patient.setDateOfBirth(resultSet.getDate("date_of_birth").toLocalDate());
-        patient.setEmail(resultSet.getString("email"));
-        patient.setCity(resultSet.getString("city"));
-        patient.setZipCode(resultSet.getString("zip_code"));
-        patient.setAddress(resultSet.getString("address"));
-        patient.setTelephoneNumber(resultSet.getString("telephone_number"));
-        patient.setPregnant(resultSet.getBoolean("pregnant"));
-        patient.setUnderlyingMedicalCondition(resultSet.getBoolean("chronic"));
-        patient.setDeleted(resultSet.getBoolean("deleted"));
-        return patient;
-    });
-
-    private final RowMapper<PatientAvailableData> patientDeletedRowMapper = ((resultSet, i) -> {
-        PatientAvailableData patient = new PatientAvailableData();
-        patient.setId(resultSet.getInt("id"));
-        patient.setDeleted(resultSet.getBoolean("deleted"));
-        return patient;
-    });
 
     @Autowired
     public PatientRepository(JdbcTemplate jdbc) {
@@ -68,7 +44,7 @@ public class PatientRepository {
                 "email, city, zip_code, address, telephone_number, pregnant, chronic, deleted " +
                 "FROM patient";
         try {
-            return jdbc.query(sql, patientRowMapper);
+            return jdbc.query(sql, new PatientMapper());
         } catch (DataAccessException e) {
             return Collections.emptyList();
         }
@@ -80,7 +56,7 @@ public class PatientRepository {
                 "FROM patient " +
                 "WHERE id = ?";
         try {
-            return jdbc.queryForObject(sqlQuery, patientRowMapper, id);
+            return jdbc.queryForObject(sqlQuery, new PatientMapper(), id);
         } catch (DataAccessException e) {
             return null;
         }
@@ -187,10 +163,37 @@ public class PatientRepository {
         String sqlQuery = "SELECT id, deleted FROM patient WHERE id = ?";
         try {
             PatientAvailableData patientAvailableData;
-            patientAvailableData = jdbc.queryForObject(sqlQuery, patientDeletedRowMapper, id);
+            patientAvailableData = jdbc.queryForObject(sqlQuery, (resultSet, i) -> {
+                PatientAvailableData patient = new PatientAvailableData();
+                patient.setId(resultSet.getInt("id"));
+                patient.setDeleted(resultSet.getBoolean("deleted"));
+                return patient;
+            }, id);
             return patientAvailableData != null && patientAvailableData.isDeleted();
         } catch (DataAccessException e) {
             return false;
+        }
+    }
+
+    private static class PatientMapper implements RowMapper<Patient> {
+        @Override
+        public Patient mapRow(ResultSet resultSet, int i) throws SQLException {
+            Patient patient = new Patient();
+            patient.setId(resultSet.getInt("id"));
+            patient.setFirstName(resultSet.getString("first_name"));
+            patient.setLastName(resultSet.getString("last_name"));
+            patient.setMothersName(resultSet.getString("mothers_name"));
+            patient.setGender(resultSet.getString("gender"));
+            patient.setDateOfBirth(resultSet.getDate("date_of_birth").toLocalDate());
+            patient.setEmail(resultSet.getString("email"));
+            patient.setCity(resultSet.getString("city"));
+            patient.setZipCode(resultSet.getString("zip_code"));
+            patient.setAddress(resultSet.getString("address"));
+            patient.setTelephoneNumber(resultSet.getString("telephone_number"));
+            patient.setPregnant(resultSet.getBoolean("pregnant"));
+            patient.setUnderlyingMedicalCondition(resultSet.getBoolean("chronic"));
+            patient.setDeleted(resultSet.getBoolean("deleted"));
+            return patient;
         }
     }
 }
