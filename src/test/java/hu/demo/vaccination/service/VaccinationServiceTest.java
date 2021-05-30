@@ -3,6 +3,8 @@ package hu.demo.vaccination.service;
 import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.domain.Vaccine;
+import hu.demo.vaccination.dto.vaccination.AggregatedFieldData;
+import hu.demo.vaccination.dto.vaccination.CountPercentageData;
 import hu.demo.vaccination.repository.VaccinationRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -348,11 +350,28 @@ class VaccinationServiceTest {
         Assertions.assertEquals(0.0, result);
     }
 
-    @Test void getFullVaccinatedPercentageTest_defaultArgs() {
+    @Test
+    void getFullVaccinatedPercentageTest_defaultArgs() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
         Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
         double result = vaccinationService.getFullVaccinatedPercentage(0, 0, false, false);
         Assertions.assertEquals(38.1, result);
+    }
+
+    @Test
+    void getVaccinatedByVaccine() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
+        List<AggregatedFieldData> result = vaccinationService.getVaccinatedByVaccine();
+        Assertions.assertEquals(
+                List.of(
+                        new AggregatedFieldData("Pfizer", new CountPercentageData(5, 31.25)),
+                        new AggregatedFieldData("Moderna", new CountPercentageData(4, 25.0)),
+                        new AggregatedFieldData("AstraZeneca", new CountPercentageData(3, 18.75)),
+                        new AggregatedFieldData("Gamaleja 1st", new CountPercentageData(1, 6.25)),
+                        new AggregatedFieldData("Sinopharm", new CountPercentageData(2, 12.5)),
+                        new AggregatedFieldData("Janssen", new CountPercentageData(1, 6.25))
+                ), result);
     }
 }

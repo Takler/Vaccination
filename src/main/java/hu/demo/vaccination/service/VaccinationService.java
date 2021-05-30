@@ -4,6 +4,8 @@ import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.domain.Vaccine;
 import hu.demo.vaccination.dto.VaccinationCreateData;
+import hu.demo.vaccination.dto.vaccination.AggregatedFieldData;
+import hu.demo.vaccination.dto.vaccination.CountPercentageData;
 import hu.demo.vaccination.repository.VaccinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,18 +78,34 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
         }
     }
 
-//    public List<AggregatedFieldData> getVaccinatedByVaccine() {
-//        List<Vaccination> vaccinations = vaccinationRepository.getVaccinations();
-//        Map<Integer, Long> countOfVaccinationsPerVaccine = vaccinations.stream()
-//                .collect(Collectors.toMap(
-//                        Vaccination::getPatientId,
-//                        Vaccination::getVaccineId,
-//                        (patient1, patient2) -> patient1))
-//                .collect(Collectors.groupingBy(
-//                        Vaccination::getPatientId,
-//                        Collectors.counting()));
-//        return null;
-//    }
+    public List<AggregatedFieldData> getVaccinatedByVaccine() {
+        List<Vaccination> vaccinations = vaccinationRepository.getVaccinations();
+        Map<Integer, Long> countOfVaccinationsPerVaccine = vaccinations.stream()
+                .collect(Collectors.toMap(
+                        Vaccination::getPatientId,
+                        Vaccination::getVaccineId,
+                        (patient1, patient2) -> patient1))
+                .entrySet().stream()
+                .collect(Collectors.groupingBy(
+                        Map.Entry::getValue,
+                        Collectors.counting()));
+
+        int totalCountVaccinated = countOfVaccinationsPerVaccine.values().stream().reduce(0L, Long::sum).intValue();
+
+        Map<Integer, String> vaccineIdName = vaccineService.findAll().stream()
+                .collect(Collectors.toMap(
+                        Vaccine::getId,
+                        Vaccine::getName
+                ));
+
+        List<AggregatedFieldData> result = countOfVaccinationsPerVaccine.entrySet().stream()
+                .map(map -> new AggregatedFieldData(vaccineIdName.get(map.getKey()),
+                        new CountPercentageData(map.getValue().intValue(),
+                                Math.round(countOfVaccinationsPerVaccine.get(map.getKey()) * 10000 / (double) totalCountVaccinated) / 100.0)))
+                .collect(Collectors.toList());
+
+        return result;
+    }
 
     @Override
     public List<Vaccination> findAll() {
