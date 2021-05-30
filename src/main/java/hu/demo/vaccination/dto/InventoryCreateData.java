@@ -1,18 +1,9 @@
 package hu.demo.vaccination.dto;
 
 public class InventoryCreateData {
-    private int id;
     private int centerId;
     private int vaccineId;
     private int amount;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getCenterId() {
         return centerId;

@@ -1,10 +1,14 @@
 package hu.demo.vaccination.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Inventory {
     private int id;
     private int centerId;
     private int vaccineId;
     private int amount;
+    @JsonIgnore
+    private boolean deleted;
 
     public int getId() {
         return id;
@@ -36,5 +40,13 @@ public class Inventory {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }
