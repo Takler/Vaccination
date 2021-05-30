@@ -58,10 +58,10 @@ public enum DataDefinition {
             "deleted BOOLEAN NOT NULL DEFAULT FALSE)"),
 
     DOCTOR_INSERT_SAMPLE_DATA("INSERT INTO doctor (first_name, last_name, email, address, telephone_number) VALUES " +
-            "('Gipsz',  'Jakab',  'jakab.gipsz@gmail.com',   '1111, Budapest Gipsz utca 1',  '+36 11 111-1111'), " +
-            "('Kerek',  'Béla',   'bela.kerek@gmail.com',    '2222, Budapest Kerek utca 2',  '+36 22 222-2222'), " +
-            "('Karcsú', 'Virág',  'virag.karcsu@gmail.com',  '3333, Budapest Karcsú utca 3', '+36 33 333-3333'), " +
-            "('Gipsz',  'Andrea', 'andrea.gipsz@gmail.com',  '4444, Budapest Gipsz utca 4',  '+36 44 444-4444')"),
+            "('Jakab',  'Gipsz',  'jakab.gipsz@gmail.com',   '1111, Budapest Gipsz utca 1',  '+36 11 111-1111'), " +
+            "('Béla',   'Kerek',  'bela.kerek@gmail.com',    '2222, Budapest Kerek utca 2',  '+36 22 222-2222'), " +
+            "('Virág',  'Karcsú', 'virag.karcsu@gmail.com',  '3333, Budapest Karcsú utca 3', '+36 33 333-3333'), " +
+            "('Andrea', 'Gipsz',  'andrea.gipsz@gmail.com',  '4444, Budapest Gipsz utca 4',  '+36 44 444-4444')"),
     VACCINE_INSERT_SAMPLE_DATA("INSERT INTO vaccine " +
             "(name, type, storage_temperature, age_limit_min, age_limit_max, shots_needed, next_shot_id, " +
             "days_until_next_shot, fully_vaccinated_time_period, applicable, applicable_for_pregnant, " +
