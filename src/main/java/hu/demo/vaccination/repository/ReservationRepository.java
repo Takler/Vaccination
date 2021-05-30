@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,18 +18,6 @@ import java.util.List;
 public class ReservationRepository {
 
     private final JdbcTemplate jdbc;
-
-    private final RowMapper<Reservation> reservationRowMapper = ((resultSet, i) -> {
-        Reservation reservation = new Reservation();
-        reservation.setId(resultSet.getInt("id"));
-        reservation.setPatientId(resultSet.getInt("patient_id"));
-        reservation.setCenterId(resultSet.getInt("center_id"));
-        reservation.setVaccineId(resultSet.getInt("vaccine_id"));
-        reservation.setRegistration(resultSet.getDate("registration").toLocalDate());
-        reservation.setNextShot(resultSet.getDate("next_shot").toLocalDate());
-        reservation.setDeleted(resultSet.getBoolean("deleted"));
-        return reservation;
-    });
 
     @Autowired
     public ReservationRepository(JdbcTemplate jdbc) {
@@ -56,7 +46,7 @@ public class ReservationRepository {
                 "FROM reservation " +
                 "WHERE deleted = false";
         try {
-            return jdbc.query(sql, reservationRowMapper);
+            return jdbc.query(sql, new ReservationMapper());
         } catch (DataAccessException e) {
             return Collections.emptyList();
         }
@@ -67,7 +57,7 @@ public class ReservationRepository {
                 "FROM reservation " +
                 "WHERE id = ? AND deleted = false";
         try {
-            return jdbc.queryForObject(sql, reservationRowMapper, id);
+            return jdbc.queryForObject(sql, new ReservationMapper(), id);
         } catch (DataAccessException e) {
             return null;
         }
@@ -126,6 +116,21 @@ public class ReservationRepository {
             return rowsAffected == 1;
         } catch (DataAccessException e) {
             return false;
+        }
+    }
+
+    private static class ReservationMapper implements RowMapper<Reservation> {
+        @Override
+        public Reservation mapRow(ResultSet resultSet, int i) throws SQLException {
+            Reservation reservation = new Reservation();
+            reservation.setId(resultSet.getInt("id"));
+            reservation.setPatientId(resultSet.getInt("patient_id"));
+            reservation.setCenterId(resultSet.getInt("center_id"));
+            reservation.setVaccineId(resultSet.getInt("vaccine_id"));
+            reservation.setRegistration(resultSet.getDate("registration").toLocalDate());
+            reservation.setNextShot(resultSet.getDate("next_shot").toLocalDate());
+            reservation.setDeleted(resultSet.getBoolean("deleted"));
+            return reservation;
         }
     }
 }
