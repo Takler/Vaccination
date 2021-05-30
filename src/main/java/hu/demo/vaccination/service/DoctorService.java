@@ -1,6 +1,6 @@
 package hu.demo.vaccination.service;
 
-import hu.demo.vaccination.dto.DoctorCreate;
+import hu.demo.vaccination.domain.Doctor;
 import hu.demo.vaccination.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,20 +18,20 @@ public class DoctorService {
         this.doctorRepository = doctorRepository;
     }
 
-    public int createDoctor(DoctorCreate doctorCreate) {
-        return doctorRepository.createDoctor(doctorCreate);
+    public int createDoctor(Doctor doctor) {
+        return doctorRepository.createDoctor(doctor);
     }
 
     public List<Map<String, Object>> getDoctorslist() {
         return doctorRepository.getDoctorsList();
     }
 
-    public DoctorCreate getDoctor(int id) {
+    public Doctor getDoctor(int id) {
         return doctorRepository.getDoctor(id);
     }
 
-    public int updateDoctor(DoctorCreate doctorCreate) {
-        return doctorRepository.updateDoctor(doctorCreate);
+    public int updateDoctor(Doctor doctor) {
+        return doctorRepository.updateDoctor(doctor);
     }
 
     public int deletedDoctor(int id) {

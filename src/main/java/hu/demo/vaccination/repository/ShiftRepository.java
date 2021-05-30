@@ -1,10 +1,9 @@
 package hu.demo.vaccination.repository;
 
-import hu.demo.vaccination.dto.shift.ShiftData;
-import hu.demo.vaccination.dto.shift.ShiftInfoData;
+import hu.demo.vaccination.domain.Shift;
 import hu.demo.vaccination.dto.shift.ShiftDateData;
-import hu.demo.vaccination.repository.mapper.ShiftDataMapper;
 import hu.demo.vaccination.repository.mapper.ShiftDateDataMapper;
+import hu.demo.vaccination.repository.mapper.ShiftMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -33,14 +32,14 @@ public class ShiftRepository {
         return shiftDateData;
     }
 
-    public ShiftData getShiftDate(int shiftId) {
-        ShiftData shiftData = new ShiftData();
-        List<ShiftData> shiftDataList = new LinkedList<>();
-        ShiftDataMapper shiftDataMapper = new ShiftDataMapper();
+    public Shift getShift(int shiftId) {
+        Shift shift = new Shift();
+        ShiftMapper shiftMapper = new ShiftMapper();
+        List<Shift> shiftList = new LinkedList<>();
         String id = Integer.toString(shiftId);
         String sqlSelect = "SELECT * FROM shift WHERE id=?";
-        shiftDataList = jdbcTemplate.query(sqlSelect, shiftDataMapper, id);
-        shiftData = shiftDataList.get(0);
-        return shiftData;
+        shiftList = jdbcTemplate.query(sqlSelect, shiftMapper, id);
+        shift = shiftList.get(0);
+        return shift;
     }
 }

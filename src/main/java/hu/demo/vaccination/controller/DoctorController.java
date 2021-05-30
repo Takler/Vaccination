@@ -1,6 +1,6 @@
 package hu.demo.vaccination.controller;
 
-import hu.demo.vaccination.dto.DoctorCreate;
+import hu.demo.vaccination.domain.Doctor;
 import hu.demo.vaccination.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +22,8 @@ public class DoctorController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createDoctor(@RequestBody DoctorCreate doctorCreate) {
-        if (doctorService.createDoctor(doctorCreate) == 1) {
+    public ResponseEntity<Void> createDoctor(@RequestBody Doctor doctor) {
+        if (doctorService.createDoctor(doctor) == 1) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -36,8 +36,8 @@ public class DoctorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DoctorCreate> getDoctor(@PathVariable int id) {
-        DoctorCreate doctor = doctorService.getDoctor(id);
+    public ResponseEntity<Doctor> getDoctor(@PathVariable int id) {
+        Doctor doctor = doctorService.getDoctor(id);
         if (doctor == null) {
             return new ResponseEntity<>(doctor, HttpStatus.EXPECTATION_FAILED);
         } else {
@@ -46,8 +46,8 @@ public class DoctorController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateDoctor(@RequestBody DoctorCreate doctorCreate) {
-        if (doctorService.updateDoctor(doctorCreate) == 1) {
+    public ResponseEntity<Void> updateDoctor(@RequestBody Doctor doctor) {
+        if (doctorService.updateDoctor(doctor) == 1) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -1,23 +1,22 @@
 package hu.demo.vaccination.repository.mapper;
 
-import hu.demo.vaccination.dto.DoctorCreate;
+import hu.demo.vaccination.domain.Doctor;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DoctorMapper implements RowMapper<DoctorCreate> {
+public class DoctorMapper implements RowMapper<Doctor> {
     @Override
-    public DoctorCreate mapRow(ResultSet resultSet, int i) throws SQLException {
-        DoctorCreate doctorCreate = new DoctorCreate();
-        doctorCreate.setId(resultSet.getInt("id"));
-        doctorCreate.setFirstName(resultSet.getString("first_name"));
-        doctorCreate.setLastName(resultSet.getString("last_name"));
-        doctorCreate.setEmail(resultSet.getString("email"));
-        doctorCreate.setAddress(resultSet.getString("address"));
-        doctorCreate.setFirstName(resultSet.getString("telephone_number"));
-        doctorCreate.setType(resultSet.getString("type"));
-        doctorCreate.setDateOfBirth(resultSet.getString("date_of_birth"));
-        return doctorCreate;
+    public Doctor mapRow(ResultSet resultSet, int i) throws SQLException {
+        Doctor doctor = new Doctor();
+        doctor.setId(resultSet.getInt("id"));
+        doctor.setFirstName(resultSet.getString("first_name"));
+        doctor.setLastName(resultSet.getString("last_name"));
+        doctor.setEmail(resultSet.getString("email"));
+        doctor.setAddress(resultSet.getString("address"));
+        doctor.setTelephoneNumber(resultSet.getString("telephone_number"));
+        doctor.setDeleted(resultSet.getBoolean("deleted"));
+        return doctor;
     }
 }

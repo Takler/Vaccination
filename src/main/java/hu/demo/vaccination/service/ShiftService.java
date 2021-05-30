@@ -1,15 +1,15 @@
 package hu.demo.vaccination.service;
 
-import hu.demo.vaccination.dto.DoctorCreate;
-import hu.demo.vaccination.dto.shift.ShiftData;
-import hu.demo.vaccination.dto.shift.ShiftDateData;
-import hu.demo.vaccination.dto.shift.ShiftInfoData;
+import hu.demo.vaccination.domain.Center;
+import hu.demo.vaccination.domain.Doctor;
+import hu.demo.vaccination.domain.Shift;
+import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import hu.demo.vaccination.repository.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ShiftService implements Requestable {
+public class ShiftService implements Requestable, InfoOperation {
 
     private ShiftRepository shiftRepository;
     private DoctorService doctorService;
@@ -22,21 +22,49 @@ public class ShiftService implements Requestable {
         this.centerService = centerService;
     }
 
+    //implement InfoOperation
 
-    public ShiftInfoData getShiftInfo(int shiftId) {
-        ShiftInfoData shiftInfoData = new ShiftInfoData();
-
-        ShiftData shiftData = shiftRepository.getShiftDate(shiftId);
-        shiftInfoData.setStart(shiftData.getStart());
-        shiftInfoData.setEnd(shiftData.getEnd());
-
-        DoctorCreate doctorCreate = doctorService.getDoctor(shiftData.getDoctor_id());
-        shiftInfoData.setDoctorFirstName(doctorCreate.getFirstName());
-        shiftInfoData.setDoctorLastName(doctorCreate.getLastName());
-
-
-        return shiftInfoData;
+    @Override
+    public Object getInfo(int id) {
+        return null;
     }
+
+    @Override
+    public ShiftNameInfoData getNameInfo(int shiftId) {
+        ShiftNameInfoData shiftNameInfoData = new ShiftNameInfoData();
+        Shift shift = shiftRepository.getShift(shiftId);
+        Doctor doctor = doctorService.getDoctor(shift.getDoctor_id());
+        Center center = centerService.getCenter(shift.getCenter_id());
+
+        shiftNameInfoData.setId(shiftId);
+        shiftNameInfoData.setStart(shift.getStart());
+        shiftNameInfoData.setEnd(shift.getEnd());
+        shiftNameInfoData.setDeleted(shift.isDeleted());
+        shiftNameInfoData.setDoctorFirstName(doctor.getFirstName());
+        shiftNameInfoData.setDoctorLastName(doctor.getLastName());
+        shiftNameInfoData.setCenterName(center.getName());
+        return shiftNameInfoData;
+    }
+//        Field[] fields = shift.getClass().getFields();
+//        for (int i = 0; i < fields.length; i++) {
+//            shiftNameInfoData.
+//        }
+
+
+//    public ShiftNameInfoData getShiftNameInfo(int shiftId) {
+//
+//
+//        Shift shift = shiftRepository.getShift(shiftId);
+//        shiftInfoData.setStart(shift.getStart());
+//        shiftInfoData.setEnd(shift.getEnd());
+//
+//        DoctorCreate doctorCreate = doctorService.getDoctor(shift.getDoctor_id());
+//        shiftInfoData.setDoctorFirstName(doctorCreate.getFirstName());
+//        shiftInfoData.setDoctorLastName(doctorCreate.getLastName());
+//
+//
+//        return shiftInfoData;
+//    }
 
     @Override
     public String getName(int id) {

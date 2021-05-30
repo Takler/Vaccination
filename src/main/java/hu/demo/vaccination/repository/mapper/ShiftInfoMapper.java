@@ -1,16 +1,16 @@
 package hu.demo.vaccination.repository.mapper;
 
-import hu.demo.vaccination.dto.shift.ShiftInfoData;
+import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ShiftInfoMapper implements RowMapper<ShiftInfoData> {
+public class ShiftInfoMapper implements RowMapper<ShiftNameInfoData> {
 
     @Override
-    public ShiftInfoData mapRow(ResultSet resultSet, int i) throws SQLException {
-        ShiftInfoData shiftData = new ShiftInfoData();
+    public ShiftNameInfoData mapRow(ResultSet resultSet, int i) throws SQLException {
+        ShiftNameInfoData shiftData = new ShiftNameInfoData();
         shiftData.setId(resultSet.getInt("id"));
 
 

@@ -1,16 +1,17 @@
 package hu.demo.vaccination.dto.shift;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
-public class ShiftInfoData {
+public class ShiftNameInfoData {
     private int id;
     private Timestamp start;
     private Timestamp end;
+    private boolean deleted;
     private String doctorFirstName;
     private String doctorLastName;
     private String centerName;
-    private String city;
+    //private String city;
+
 
     public int getId() {
         return id;
@@ -36,6 +37,14 @@ public class ShiftInfoData {
         this.end = end;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     public String getDoctorFirstName() {
         return doctorFirstName;
     }
@@ -58,13 +67,5 @@ public class ShiftInfoData {
 
     public void setCenterName(String centerName) {
         this.centerName = centerName;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 }

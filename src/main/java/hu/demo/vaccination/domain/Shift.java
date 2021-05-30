@@ -1,8 +1,8 @@
-package hu.demo.vaccination.dto.shift;
+package hu.demo.vaccination.domain;
 
 import java.sql.Timestamp;
 
-public class ShiftData {
+public class Shift {
     private int id;
     private int center_id;
     private int doctor_id;

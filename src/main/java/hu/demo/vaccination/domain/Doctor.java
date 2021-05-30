@@ -1,6 +1,6 @@
-package hu.demo.vaccination.dto;
+package hu.demo.vaccination.domain;
 
-public class DoctorCreate {
+public class Doctor {
 
     private int id;
     private String firstName;
@@ -8,10 +8,9 @@ public class DoctorCreate {
     private String email;
     private String address;
     private String telephoneNumber;
-    private String type;
-    private String dateOfBirth;
+    private boolean deleted;
 
-    public DoctorCreate() {
+    public Doctor() {
     }
 
     public int getId() {
@@ -62,19 +61,11 @@ public class DoctorCreate {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public String getType() {
-        return type;
+    public boolean isDeleted() {
+        return deleted;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

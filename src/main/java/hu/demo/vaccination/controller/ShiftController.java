@@ -1,6 +1,6 @@
 package hu.demo.vaccination.controller;
 
-import hu.demo.vaccination.dto.shift.ShiftInfoData;
+import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import hu.demo.vaccination.service.ShiftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,9 @@ public class ShiftController {
         this.shiftService = shiftService;
     }
 
-    @GetMapping("/info/{id}")
-    public ResponseEntity<ShiftInfoData> getShiftInfo(@PathVariable int id){
-        return new ResponseEntity<>(shiftService.getShiftInfo(id),HttpStatus.OK);
+    @GetMapping("/nameinfo/{shiftId}")
+    public ResponseEntity<ShiftNameInfoData> getNameInfo(@PathVariable int shiftId) {
+        return new ResponseEntity<>(shiftService.getNameInfo(shiftId), HttpStatus.OK);
     }
 
     @GetMapping
