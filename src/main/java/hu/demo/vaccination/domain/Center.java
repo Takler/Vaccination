@@ -1,5 +1,7 @@
 package hu.demo.vaccination.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 
 public class Center {
@@ -9,6 +11,7 @@ public class Center {
     private String email;
     private String telephoneNumber;
     private int dailyCapacity;
+    @JsonIgnore
     private boolean deleted;
 
     public int getId() {
