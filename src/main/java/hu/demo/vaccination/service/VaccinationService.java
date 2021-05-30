@@ -76,6 +76,19 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
         }
     }
 
+//    public List<AggregatedFieldData> getVaccinatedByVaccine() {
+//        List<Vaccination> vaccinations = vaccinationRepository.getVaccinations();
+//        Map<Integer, Long> countOfVaccinationsPerVaccine = vaccinations.stream()
+//                .collect(Collectors.toMap(
+//                        Vaccination::getPatientId,
+//                        Vaccination::getVaccineId,
+//                        (patient1, patient2) -> patient1))
+//                .collect(Collectors.groupingBy(
+//                        Vaccination::getPatientId,
+//                        Collectors.counting()));
+//        return null;
+//    }
+
     @Override
     public List<Vaccination> findAll() {
         return vaccinationRepository.getVaccinations();
