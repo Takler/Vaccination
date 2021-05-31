@@ -1,6 +1,7 @@
 package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Reservation;
+import hu.demo.vaccination.dto.reservation.PatientReservationData;
 import hu.demo.vaccination.dto.reservation.ReservationCreateData;
 import hu.demo.vaccination.utility.DataDefinition;
 import org.junit.jupiter.api.AfterEach;
@@ -13,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @JdbcTest
 class ReservationRepositoryTest {
@@ -44,6 +46,22 @@ class ReservationRepositoryTest {
     @AfterEach
     void destruct() {
         jdbc.execute(DataDefinition.RESERVATION_DROP_TABLE.getDefinition());
+    }
+
+    @Test
+    void test_getPatientReservation_correctDataReceived() {
+        ReservationCreateData originalData = getSampleReservationCreateData();
+
+        reservationRepository.save(originalData);
+        PatientReservationData result = reservationRepository.getPatientReservation(originalData.getPatientId());
+
+        assertEquals(1, result.getReservationId());
+        assertEquals(originalData.getRegistration(), result.getRegistration());
+        assertEquals(originalData.getNextShot(), result.getNextShot());
+        assertNull(result.getPatientName());
+        assertNull(result.getCenterName());
+        assertNull(result.getVaccineName());
+
     }
 
     @Test
