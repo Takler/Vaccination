@@ -35,7 +35,7 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
         patientReservation.setPatientId(patientId);
         patientReservation.setPatientName(patientService.getName(patientId));
         patientReservation.setCenterName(centerService.getName(reservation.getCenterId()));
-        patientReservation.setVaccineName(vaccineService.getById(reservation.getVaccineId()).getName());
+        patientReservation.setVaccineName(vaccineService.getName(reservation.getVaccineId()));
 
         return patientReservation;
     }
@@ -65,7 +65,7 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
         reservationNameInfoData.setId(id);
         reservationNameInfoData.setPatientName(patientService.getName(reservation.getPatientId()));
         reservationNameInfoData.setCenterName(centerService.getName(reservation.getCenterId()));
-        reservationNameInfoData.setVaccineName(vaccineService.getById(reservation.getVaccineId()).getName());
+        reservationNameInfoData.setVaccineName(vaccineService.getName(reservation.getVaccineId()));
         reservationNameInfoData.setRegistration(reservation.getRegistration());
         reservationNameInfoData.setNextShot(reservation.getNextShot());
 
