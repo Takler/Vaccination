@@ -55,13 +55,13 @@ public class ReservationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Reservation>> getReservations() {
+    public ResponseEntity<List<Reservation>> findAll() {
         List<Reservation> reservations = reservationService.findAll();
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Reservation> getReservation(@PathVariable int id) {
+    public ResponseEntity<Reservation> getById(@PathVariable int id) {
         Reservation reservation = reservationService.getById(id);
         if (reservation != null) {
             return new ResponseEntity<>(reservation, HttpStatus.OK);
@@ -71,7 +71,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createReservation(@RequestBody ReservationCreateData data) {
+    public ResponseEntity<Void> save(@RequestBody ReservationCreateData data) {
         boolean saveSuccessful = reservationService.save(data);
         if (saveSuccessful) {
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -81,7 +81,7 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateReservation(@PathVariable int id, @RequestBody ReservationCreateData data) {
+    public ResponseEntity<Void> update(@PathVariable int id, @RequestBody ReservationCreateData data) {
         boolean updateSuccessful = reservationService.update(id, data);
         if (updateSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -91,7 +91,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReservation(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable int id) {
         boolean deleteSuccessful = reservationService.delete(id);
         if (deleteSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);

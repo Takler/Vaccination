@@ -22,13 +22,13 @@ public class PatientController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Patient>> getPatients() {
+    public ResponseEntity<List<Patient>> findAll() {
         List<Patient> patients = patientService.findAll();
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getPatient(@PathVariable int id) {
+    public ResponseEntity<Patient> getById(@PathVariable int id) {
         Patient patient = patientService.getById(id);
         if (patient != null) {
             return new ResponseEntity<>(patient, HttpStatus.OK);
@@ -38,7 +38,7 @@ public class PatientController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPatient(@RequestBody PatientCreateData data) {
+    public ResponseEntity<Void> save(@RequestBody PatientCreateData data) {
         boolean saveSuccessful = patientService.save(data);
         if (saveSuccessful) {
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -48,7 +48,7 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePatient(@PathVariable int id, @RequestBody PatientCreateData data) {
+    public ResponseEntity<Void> update(@PathVariable int id, @RequestBody PatientCreateData data) {
         boolean updateSuccessful = patientService.update(id, data);
         if (updateSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -58,7 +58,7 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePatient(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable int id) {
         boolean deleteSuccessful = patientService.delete(id);
         if (deleteSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);

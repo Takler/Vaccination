@@ -1,11 +1,14 @@
 package hu.demo.vaccination.service;
 
+import hu.demo.vaccination.domain.Doctor;
 import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.domain.Vaccine;
 import hu.demo.vaccination.dto.VaccinationCreateData;
 import hu.demo.vaccination.dto.vaccination.AggregatedFieldData;
 import hu.demo.vaccination.dto.vaccination.CountPercentageData;
+import hu.demo.vaccination.dto.vaccination.VaccinationInfoData;
+import hu.demo.vaccination.dto.vaccination.VaccinationNameInfoData;
 import hu.demo.vaccination.repository.VaccinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,18 +20,25 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class VaccinationService implements CrudOperation<Vaccination, VaccinationCreateData> {
+public class VaccinationService implements CrudOperation<Vaccination, VaccinationCreateData>, InfoOperation<VaccinationInfoData, VaccinationNameInfoData> {
 
     private final VaccinationRepository vaccinationRepository;
     private final PatientService patientService;
     private final VaccineService vaccineService;
+    private final ShiftService shiftService;
+    private final CenterService centerService;
+    private final DoctorService doctorService;
 
     @Autowired
     public VaccinationService(VaccinationRepository vaccinationRepository, PatientService patientService,
-                              VaccineService vaccineService) {
+                              VaccineService vaccineService, ShiftService shiftService, CenterService centerService,
+                              DoctorService doctorService) {
         this.vaccinationRepository = vaccinationRepository;
         this.patientService = patientService;
         this.vaccineService = vaccineService;
+        this.shiftService = shiftService;
+        this.centerService = centerService;
+        this.doctorService = doctorService;
     }
 
     public double getFirstVaccinatedPercentage(int minAge, int maxAge, boolean chronic, boolean pregnant) {
@@ -174,5 +184,33 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
         }
         return filterPatientsByAge(patients, minAge, maxAge);
     }
+
+    @Override
+    public VaccinationInfoData getInfo(int id) {
+        VaccinationInfoData vaccinationInfoData = new VaccinationInfoData();
+        Vaccination vaccination = getById(id);
+        vaccinationInfoData.setId(vaccination.getId());
+        vaccinationInfoData.setVaccine(vaccineService.getById(vaccination.getVaccineId()));
+        vaccinationInfoData.setShift(shiftService.getInfo(vaccination.getShiftId()));
+        vaccinationInfoData.setDate(vaccination.getDate());
+        vaccinationInfoData.setDeleted(vaccination.isDeleted());
+        return vaccinationInfoData;
+    }
+
+    @Override
+    public VaccinationNameInfoData getNameInfo(int id) {
+        VaccinationNameInfoData vaccinationNameInfoData = new VaccinationNameInfoData();
+        Vaccination vaccination = getById(id);
+        vaccinationNameInfoData.setId(vaccination.getId());
+        vaccinationNameInfoData.setVaccineName(vaccineService.getById(vaccination.getVaccineId()).getName());
+        vaccinationNameInfoData.setPatientName(patientService.getName(vaccination.getPatientId()));
+        vaccinationNameInfoData.setCenterName(centerService.getName(shiftService.getInfo(vaccination.getShiftId()).getId()));
+        Doctor doctor = doctorService.getById(shiftService.getInfo(vaccination.getShiftId()).getDoctor().getId());
+        vaccinationNameInfoData.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
+        vaccinationNameInfoData.setDate(vaccination.getDate());
+        vaccinationNameInfoData.setDeleted(vaccination.isDeleted());
+        return vaccinationNameInfoData;
+    }
+
 
 }

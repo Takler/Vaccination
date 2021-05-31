@@ -31,30 +31,26 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
 
     @Override
     public List<Patient> findAll() {
-        return patientRepository.getPatients();
+        return patientRepository.findAll();
     }
 
     @Override
     public Patient getById(int id) {
-        return patientRepository.getPatient(id);
+        return patientRepository.getById(id);
     }
 
     @Override
     public boolean save(PatientCreateData data) {
-        int id = data.getId();
-        if (patientRepository.isPatientDeleted(id)) {
-            return patientRepository.unDeletePatient(id) && patientRepository.updatePatient(id, data);
-        }
-        return patientRepository.createPatient(data);
+        return patientRepository.save(data);
     }
 
     @Override
     public boolean update(int id, PatientCreateData data) {
-        return patientRepository.updatePatient(id, data);
+        return patientRepository.update(id, data);
     }
 
     @Override
     public boolean delete(int id) {
-        return patientRepository.deletePatient(id);
+        return patientRepository.delete(id);
     }
 }

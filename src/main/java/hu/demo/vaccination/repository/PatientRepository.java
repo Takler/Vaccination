@@ -1,7 +1,6 @@
 package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Patient;
-import hu.demo.vaccination.dto.patient.PatientAvailableData;
 import hu.demo.vaccination.dto.patient.PatientCreateData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -39,7 +38,7 @@ public class PatientRepository {
         }, id);
     }
 
-    public List<Patient> getPatients() {
+    public List<Patient> findAll() {
         String sql = "SELECT * FROM patient WHERE deleted = false";
         try {
             return jdbc.query(sql, new PatientMapper());
@@ -48,7 +47,7 @@ public class PatientRepository {
         }
     }
 
-    public Patient getPatient(int id) {
+    public Patient getById(int id) {
         String sqlQuery = "SELECT * FROM patient WHERE id = ? AND deleted = false";
         try {
             return jdbc.queryForObject(sqlQuery, new PatientMapper(), id);
@@ -57,7 +56,7 @@ public class PatientRepository {
         }
     }
 
-    public boolean createPatient(PatientCreateData data) {
+    public boolean save(PatientCreateData data) {
         String sql = "INSERT INTO patient (" +
                 "id, " +
                 "first_name, " +
@@ -95,7 +94,7 @@ public class PatientRepository {
         }
     }
 
-    public boolean updatePatient(int id, PatientCreateData data) {
+    public boolean update(int id, PatientCreateData data) {
         String sql = "UPDATE patient SET " +
                 "id = ?, " +
                 "first_name = ?, " +
@@ -134,37 +133,11 @@ public class PatientRepository {
         }
     }
 
-    public boolean deletePatient(int id) {
+    public boolean delete(int id) {
         String sql = "UPDATE patient SET deleted = ? WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql, true, id);
             return rowsAffected == 1;
-        } catch (DataAccessException e) {
-            return false;
-        }
-    }
-
-    public boolean unDeletePatient(int id) {
-        String sql = "UPDATE patient SET deleted = ? WHERE id = ?";
-        try {
-            int rowsAffected = jdbc.update(sql, false, id);
-            return rowsAffected == 1;
-        } catch (DataAccessException e) {
-            return false;
-        }
-    }
-
-    public boolean isPatientDeleted(int id) {
-        String sqlQuery = "SELECT id, deleted FROM patient WHERE id = ?";
-        try {
-            PatientAvailableData patientAvailableData;
-            patientAvailableData = jdbc.queryForObject(sqlQuery, (resultSet, i) -> {
-                PatientAvailableData patient = new PatientAvailableData();
-                patient.setId(resultSet.getInt("id"));
-                patient.setDeleted(resultSet.getBoolean("deleted"));
-                return patient;
-            }, id);
-            return patientAvailableData != null && patientAvailableData.isDeleted();
         } catch (DataAccessException e) {
             return false;
         }

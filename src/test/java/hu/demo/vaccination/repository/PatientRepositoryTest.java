@@ -43,7 +43,7 @@ class PatientRepositoryTest {
         PatientCreateData data = getPatientOneCreateData();
         String expectedName = data.getFirstName() + " " + data.getLastName();
 
-        patientRepository.createPatient(data);
+        patientRepository.save(data);
 
         assertEquals(expectedName, patientRepository.getName(data.getId()));
     }
@@ -52,51 +52,51 @@ class PatientRepositoryTest {
     void test_getLastName_getCorrectNames() {
         PatientCreateData data = getPatientOneCreateData();
 
-        patientRepository.createPatient(data);
+        patientRepository.save(data);
 
         assertEquals(data.getLastName(), patientRepository.getLastName(data.getFirstName()).get(0));
     }
 
     @Test
-    void test_getPatients_noPatientsExists_returnsEmptyList() {
-        assertEquals(0, patientRepository.getPatients().size());
+    void test_findAll_noPatientsExists_returnsEmptyList() {
+        assertEquals(0, patientRepository.findAll().size());
     }
 
     @Test
-    void test_getPatients_twoPatientsExists_returnsTwoElementList() {
+    void test_findAll_twoPatientsExists_returnsTwoElementList() {
         PatientCreateData firstData = getPatientOneCreateData();
         PatientCreateData secondData = getPatientTwoCreateData();
 
-        patientRepository.createPatient(firstData);
-        patientRepository.createPatient(secondData);
+        patientRepository.save(firstData);
+        patientRepository.save(secondData);
 
-        assertEquals(2, patientRepository.getPatients().size());
+        assertEquals(2, patientRepository.findAll().size());
     }
 
     @Test
-    void test_createPatient_samePatientDataReceived() {
+    void test_save_samePatientDataReceived() {
         PatientCreateData data = getPatientOneCreateData();
         Patient originalPatient = getPatientOne();
 
-        patientRepository.createPatient(data);
+        patientRepository.save(data);
 
-        Patient resultPatient = patientRepository.getPatient(PATIENT_1_ID);
+        Patient resultPatient = patientRepository.getById(PATIENT_1_ID);
 
         assertEquals(originalPatient, resultPatient);
     }
 
     @Test
-    void test_createPatient_twoPatientsCreated_samePatientsDataReceived() {
+    void test_save_twoPatientsCreated_samePatientsDataReceived() {
         PatientCreateData firstData = getPatientOneCreateData();
         PatientCreateData secondData = getPatientTwoCreateData();
         Patient originalFirstPatient = getPatientOne();
         Patient originalSecondPatient = getPatientTwo();
 
 
-        patientRepository.createPatient(firstData);
-        patientRepository.createPatient(secondData);
+        patientRepository.save(firstData);
+        patientRepository.save(secondData);
 
-        List<Patient> patients = patientRepository.getPatients();
+        List<Patient> patients = patientRepository.findAll();
         Patient firstPatient;
         Patient secondPatient;
 
@@ -115,7 +115,7 @@ class PatientRepositoryTest {
     }
 
     @Test
-    void test_updatePatient_modifiedDataReceived() {
+    void test_update_modifiedDataReceived() {
         final int MODIFIED_ID = 111111111;
         final String MODIFIED_TEST_TEXT = "modified";
         final LocalDate MODIFIED_TEST_DATE = Date.valueOf("2000-01-01").toLocalDate();
@@ -138,13 +138,13 @@ class PatientRepositoryTest {
         data.setPregnant(MODIFIED_TEST_BOOLEAN);
         data.setUnderlyingMedicalCondition(MODIFIED_TEST_BOOLEAN);
 
-        patientRepository.createPatient(data);
+        patientRepository.save(data);
 
-        patientRepository.updatePatient(PATIENT_2_ID, modifiedData);
+        patientRepository.update(PATIENT_2_ID, modifiedData);
 
-        Patient modifiedPatient = patientRepository.getPatient(MODIFIED_ID);
+        Patient modifiedPatient = patientRepository.getById(MODIFIED_ID);
 
-        assertNull(patientRepository.getPatient(PATIENT_2_ID));
+        assertNull(patientRepository.getById(PATIENT_2_ID));
         assertEquals(MODIFIED_ID, modifiedPatient.getId());
 
         assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getFirstName());
@@ -162,14 +162,14 @@ class PatientRepositoryTest {
     }
 
     @Test
-    void test_deletePatient_deleteFieldModified_noResultFromGets() {
+    void test_delete_deleteFieldModified_noResultFromGets() {
         PatientCreateData data = getPatientOneCreateData();
 
-        patientRepository.createPatient(data);
+        patientRepository.save(data);
 
-        patientRepository.deletePatient(PATIENT_1_ID);
+        patientRepository.delete(PATIENT_1_ID);
 
-        assertEquals(0, patientRepository.getPatients().size());
+        assertEquals(0, patientRepository.findAll().size());
     }
 
 }

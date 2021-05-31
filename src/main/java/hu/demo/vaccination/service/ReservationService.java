@@ -30,19 +30,19 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
 
     public PatientReservationData getPatientReservation(int patientId) {
         PatientReservationData patientReservation = reservationRepository.getPatientReservation(patientId);
-        Reservation reservation = reservationRepository.getReservation(patientReservation.getReservationId());
+        Reservation reservation = reservationRepository.getById(patientReservation.getReservationId());
 
         patientReservation.setPatientId(patientId);
         patientReservation.setPatientName(patientService.getName(patientId));
         patientReservation.setCenterName(centerService.getName(reservation.getCenterId()));
-        patientReservation.setVaccineName(vaccineService.getById(reservation.getVaccineId()).getName());
+        patientReservation.setVaccineName(vaccineService.getName(reservation.getVaccineId()));
 
         return patientReservation;
     }
 
     @Override
     public ReservationInfoData getInfo(int id) {
-        Reservation reservation = reservationRepository.getReservation(id);
+        Reservation reservation = reservationRepository.getById(id);
 
         ReservationInfoData reservationInfoData = new ReservationInfoData();
 
@@ -58,14 +58,14 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
 
     @Override
     public ReservationNameInfoData getNameInfo(int id) {
-        Reservation reservation = reservationRepository.getReservation(id);
+        Reservation reservation = reservationRepository.getById(id);
 
         ReservationNameInfoData reservationNameInfoData = new ReservationNameInfoData();
 
         reservationNameInfoData.setId(id);
         reservationNameInfoData.setPatientName(patientService.getName(reservation.getPatientId()));
         reservationNameInfoData.setCenterName(centerService.getName(reservation.getCenterId()));
-        reservationNameInfoData.setVaccineName(vaccineService.getById(reservation.getVaccineId()).getName());
+        reservationNameInfoData.setVaccineName(vaccineService.getName(reservation.getVaccineId()));
         reservationNameInfoData.setRegistration(reservation.getRegistration());
         reservationNameInfoData.setNextShot(reservation.getNextShot());
 
@@ -74,26 +74,26 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
 
     @Override
     public List<Reservation> findAll() {
-        return reservationRepository.getReservations();
+        return reservationRepository.findAll();
     }
 
     @Override
     public Reservation getById(int id) {
-        return reservationRepository.getReservation(id);
+        return reservationRepository.getById(id);
     }
 
     @Override
     public boolean save(ReservationCreateData data) {
-        return reservationRepository.createReservation(data);
+        return reservationRepository.save(data);
     }
 
     @Override
     public boolean update(int id, ReservationCreateData data) {
-        return reservationRepository.updateReservation(id, data);
+        return reservationRepository.update(id, data);
     }
 
     @Override
     public boolean delete(int id) {
-        return reservationRepository.deleteReservation(id);
+        return reservationRepository.delete(id);
     }
 }

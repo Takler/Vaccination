@@ -24,22 +24,27 @@ public class CenterService implements CrudOperation<Center, CenterCreateData>, R
         return centerRepository.getName(id);
     }
 
+    @Override
     public List<Center> findAll() {
         return centerRepository.getCenters();
     }
 
+    @Override
     public Center getById(int id) {
         return centerRepository.getCenter(id);
     }
 
+    @Override
     public boolean save(CenterCreateData data) {
         return centerRepository.createCenter(data);
     }
 
+    @Override
     public boolean update(int id, CenterCreateData data) {
         return centerRepository.updateCenter(id, data);
     }
 
+    @Override
     public boolean delete(int id) {
         return centerRepository.deleteCenter(id);
     }
