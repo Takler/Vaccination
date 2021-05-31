@@ -45,8 +45,7 @@ public class ShiftService implements Requestable, InfoOperation {
     public ShiftNameInfoData getNameInfo(int shiftId) {
         ShiftNameInfoData shiftNameInfoData = new ShiftNameInfoData();
         Shift shift = shiftRepository.getShift(shiftId);
-        Doctor doctor = doctorService.getDoctor(shift.getDoctor_id());
-        Center center = centerService.getCenter(shift.getCenter_id());
+        Doctor doctor = doctorService.getDoctor(shift.getDoctor_id());  //egész rekord kényszer a rossz getNameByID miatt...
 
         shiftNameInfoData.setId(shiftId);
         shiftNameInfoData.setStart(shift.getStart());
@@ -54,7 +53,7 @@ public class ShiftService implements Requestable, InfoOperation {
         shiftNameInfoData.setDeleted(shift.isDeleted());
         shiftNameInfoData.setDoctorFirstName(doctor.getFirstName());
         shiftNameInfoData.setDoctorLastName(doctor.getLastName());
-        shiftNameInfoData.setCenterName(center.getName());
+        shiftNameInfoData.setCenterName(centerService.getName(shift.getCenter_id()));  //nem már getNameById -nak kéne lennie?
         return shiftNameInfoData;
     }
 //        Field[] fields = shift.getClass().getFields();
