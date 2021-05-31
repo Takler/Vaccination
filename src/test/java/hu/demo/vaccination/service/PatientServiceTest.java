@@ -30,7 +30,33 @@ class PatientServiceTest {
     }
 
     @Test
-    void test_getAllPatients_receiveAllPatients() {
+    void test_getLastName_receiveLastName() {
+        String lastName = "Test";
+        String firstName = "Elek";
+        List<String> lastNames = new ArrayList<>();
+        lastNames.add(lastName);
+
+        when(patientRepositoryMock.getLastName(firstName)).thenReturn(lastNames);
+
+        List<String> receivedLastNames = patientService.getLastName(firstName);
+        assertEquals(lastName, receivedLastNames.get(0));
+        verify(patientRepositoryMock, times(1)).getLastName(firstName);
+    }
+
+    @Test
+    void test_getName_receiveName() {
+        String name = "Test Elek";
+        int id = 1;
+
+        when(patientRepositoryMock.getName(id)).thenReturn(name);
+
+        assertEquals(name, patientService.getName(id));
+        verify(patientRepositoryMock, times(1)).getName(id);
+
+    }
+
+    @Test
+    void test_findAll_receiveAllPatients() {
         List<Patient> patients = new ArrayList<>();
         Patient patientOne = getPatientOne();
         Patient patientTwo = getPatientTwo();
@@ -46,7 +72,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void test_getPatientById_receiveCorrectPatient() {
+    void test_getById_receiveCorrectPatient() {
         Patient patient = getPatientOne();
 
         when(patientRepositoryMock.getById(patient.getId())).thenReturn(patient);
@@ -57,7 +83,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void test_addPatient_onceCalled() {
+    void test_save_onceCalled() {
         PatientCreateData patientCreateData = getPatientOneCreateData();
 
         patientService.save(patientCreateData);
@@ -66,7 +92,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void test_deletePatient_onceCalled() {
+    void test_delete_onceCalled() {
         int id = getPatientOne().getId();
 
         patientService.delete(id);
@@ -75,7 +101,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void test_updatePatient_onceCalled() {
+    void test_update_onceCalled() {
         PatientCreateData patientCreateData = getPatientOneCreateData();
 
         patientService.update(patientCreateData.getId(), patientCreateData);
