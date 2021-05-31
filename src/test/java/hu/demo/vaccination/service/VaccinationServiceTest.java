@@ -28,6 +28,8 @@ class VaccinationServiceTest {
     PatientService patientService;
     @Mock
     VaccineService vaccineService;
+    @Mock
+    ShiftService shiftService;
 
     List<Patient> patients;
     List<Vaccination> vaccinations;
@@ -35,7 +37,7 @@ class VaccinationServiceTest {
 
     @BeforeEach
     public void init() {
-        vaccinationService = new VaccinationService(vaccinationRepository, patientService, vaccineService);
+        vaccinationService = new VaccinationService(vaccinationRepository, patientService, vaccineService, shiftService);
 
         patients = new ArrayList<>();
         Patient patient1 = new Patient();

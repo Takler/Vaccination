@@ -1,8 +1,8 @@
 package hu.demo.vaccination.dto.vaccination;
 
 import hu.demo.vaccination.domain.Patient;
-import hu.demo.vaccination.domain.Shift;
 import hu.demo.vaccination.domain.Vaccine;
+import hu.demo.vaccination.dto.shift.ShiftInfoData;
 
 import java.time.LocalDate;
 
@@ -11,7 +11,7 @@ public class VaccinationInfoData {
     private int id;
     private Vaccine vaccine;
     private Patient patient;
-    private Shift shift;
+    private ShiftInfoData shift;
     private LocalDate date;
     private boolean deleted;
 
@@ -39,11 +39,11 @@ public class VaccinationInfoData {
         this.patient = patient;
     }
 
-    public Shift getShift() {
+    public ShiftInfoData getShift() {
         return shift;
     }
 
-    public void setShift(Shift shift) {
+    public void setShift(ShiftInfoData shift) {
         this.shift = shift;
     }
 
