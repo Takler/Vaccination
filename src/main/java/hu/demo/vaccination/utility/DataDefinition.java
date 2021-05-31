@@ -19,8 +19,8 @@ public enum DataDefinition {
             "address VARCHAR(200), " +
             "telephone_number VARCHAR(15), " +
             "deleted BOOLEAN NOT NULL DEFAULT FALSE)"),
-    PATIENT_CREATE_TABLE("CREATE TABLE patient " +
-            "(id INT PRIMARY KEY, " +
+    PATIENT_CREATE_TABLE("CREATE TABLE patient (" +
+            "id INT PRIMARY KEY, " +
             "first_name VARCHAR(250) NOT NULL, " +
             "last_name VARCHAR(250) NOT NULL, " +
             "mothers_name VARCHAR(250) NOT NULL, " +
@@ -117,8 +117,8 @@ public enum DataDefinition {
             "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id), " +
             "FOREIGN KEY (patient_id) REFERENCES patient(id), " +
             "FOREIGN KEY (shift_id) REFERENCES shift(id))"),
-    RESERVATION_CREATE_TABLE("CREATE TABLE reservation " +
-            "(id INT PRIMARY KEY AUTO_INCREMENT, " +
+    RESERVATION_CREATE_TABLE("CREATE TABLE reservation (" +
+            "id INT PRIMARY KEY AUTO_INCREMENT, " +
             "patient_id INT NOT NULL, " +
             "center_id INT NOT NULL, " +
             "vaccine_id INT NOT NULL, " +
