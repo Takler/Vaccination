@@ -2,6 +2,8 @@ package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.dto.VaccinationCreateData;
+import hu.demo.vaccination.dto.vaccination.VaccinationInfoData;
+import hu.demo.vaccination.dto.vaccination.VaccinationNameInfoData;
 import hu.demo.vaccination.service.VaccinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -93,5 +95,15 @@ public class VaccinationController {
             return new ResponseEntity<>(vaccinationService.getFirstVaccinatedPercentage(minAge, maxAge, chronic, pregnant),
                     HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/info/{id}")
+    public ResponseEntity<VaccinationInfoData> getVaccinationFullInfo(@PathVariable int id) {
+        return new ResponseEntity<>(vaccinationService.getInfo(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/name/{id}")
+    public ResponseEntity<VaccinationNameInfoData> getVaccinationNameInfo(@PathVariable int id) {
+        return new ResponseEntity<>(vaccinationService.getNameInfo(id), HttpStatus.OK);
     }
 }
