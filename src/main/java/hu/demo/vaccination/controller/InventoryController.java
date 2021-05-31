@@ -2,6 +2,8 @@ package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Inventory;
 import hu.demo.vaccination.dto.InventoryCreateData;
+import hu.demo.vaccination.dto.inventory.InventoryInfoData;
+import hu.demo.vaccination.dto.inventory.InventoryNameInfoData;
 import hu.demo.vaccination.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,26 @@ public class InventoryController {
     @Autowired
     public InventoryController(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
+    }
+
+    @GetMapping("/info/{id}")
+    public ResponseEntity<InventoryInfoData> getInfo(@PathVariable int id) {
+        InventoryInfoData inventoryInfoData = inventoryService.getInfo(id);
+        if (inventoryInfoData != null) {
+            return new ResponseEntity<>(inventoryInfoData, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/nameinfo/{id}")
+    public ResponseEntity<InventoryNameInfoData> getNameInfo(@PathVariable int id) {
+        InventoryNameInfoData inventoryNameInfoData = inventoryService.getNameInfo(id);
+        if (inventoryNameInfoData != null) {
+            return new ResponseEntity<>(inventoryNameInfoData, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping

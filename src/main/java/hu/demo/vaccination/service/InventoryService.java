@@ -2,6 +2,8 @@ package hu.demo.vaccination.service;
 
 import hu.demo.vaccination.domain.Inventory;
 import hu.demo.vaccination.dto.InventoryCreateData;
+import hu.demo.vaccination.dto.inventory.InventoryInfoData;
+import hu.demo.vaccination.dto.inventory.InventoryNameInfoData;
 import hu.demo.vaccination.repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +13,38 @@ import java.util.List;
 
 @Service
 @Transactional
-public class InventoryService implements CrudOperation<Inventory, InventoryCreateData> {
+public class InventoryService implements CrudOperation<Inventory, InventoryCreateData>, InfoOperation<InventoryInfoData, InventoryNameInfoData> {
     private final InventoryRepository inventoryRepository;
+    private final CenterService centerService;
+    private final VaccineService vaccineService;
 
     @Autowired
-    public InventoryService(InventoryRepository inventoryRepository) {
+    public InventoryService(InventoryRepository inventoryRepository, CenterService centerService, VaccineService vaccineService) {
         this.inventoryRepository = inventoryRepository;
+        this.centerService = centerService;
+        this.vaccineService = vaccineService;
+    }
+
+    @Override
+    public InventoryInfoData getInfo(int id) {
+        Inventory inventory = inventoryRepository.getInventory(id);
+        InventoryInfoData inventoryInfoData = new InventoryInfoData();
+        inventoryInfoData.setId(id);
+        inventoryInfoData.setCenter(centerService.getById(inventory.getCenterId()));
+        inventoryInfoData.setVaccine(vaccineService.getById(inventory.getVaccineId()));
+        inventoryInfoData.setAmount(inventory.getAmount());
+        return inventoryInfoData;
+    }
+
+    @Override
+    public InventoryNameInfoData getNameInfo(int id) {
+        Inventory inventory = inventoryRepository.getInventory(id);
+        InventoryNameInfoData inventoryNameInfoData = new InventoryNameInfoData();
+        inventoryNameInfoData.setId(id);
+        inventoryNameInfoData.setCenterName(centerService.getName(inventory.getCenterId()));
+        inventoryNameInfoData.setVaccineName(vaccineService.getName(inventory.getVaccineId()));
+        inventoryNameInfoData.setAmount(inventory.getAmount());
+        return inventoryNameInfoData;
     }
 
     @Override
