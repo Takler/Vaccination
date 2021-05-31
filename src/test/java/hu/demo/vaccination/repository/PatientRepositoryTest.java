@@ -58,12 +58,12 @@ class PatientRepositoryTest {
     }
 
     @Test
-    void test_getPatients_noPatientsExists_returnsEmptyList() {
+    void test_findAll_noPatientsExists_returnsEmptyList() {
         assertEquals(0, patientRepository.findAll().size());
     }
 
     @Test
-    void test_getPatients_twoPatientsExists_returnsTwoElementList() {
+    void test_findAll_twoPatientsExists_returnsTwoElementList() {
         PatientCreateData firstData = getPatientOneCreateData();
         PatientCreateData secondData = getPatientTwoCreateData();
 
@@ -74,7 +74,7 @@ class PatientRepositoryTest {
     }
 
     @Test
-    void test_createPatient_samePatientDataReceived() {
+    void test_save_samePatientDataReceived() {
         PatientCreateData data = getPatientOneCreateData();
         Patient originalPatient = getPatientOne();
 
@@ -86,7 +86,7 @@ class PatientRepositoryTest {
     }
 
     @Test
-    void test_createPatient_twoPatientsCreated_samePatientsDataReceived() {
+    void test_save_twoPatientsCreated_samePatientsDataReceived() {
         PatientCreateData firstData = getPatientOneCreateData();
         PatientCreateData secondData = getPatientTwoCreateData();
         Patient originalFirstPatient = getPatientOne();
@@ -115,7 +115,7 @@ class PatientRepositoryTest {
     }
 
     @Test
-    void test_updatePatient_modifiedDataReceived() {
+    void test_update_modifiedDataReceived() {
         final int MODIFIED_ID = 111111111;
         final String MODIFIED_TEST_TEXT = "modified";
         final LocalDate MODIFIED_TEST_DATE = Date.valueOf("2000-01-01").toLocalDate();
@@ -162,7 +162,7 @@ class PatientRepositoryTest {
     }
 
     @Test
-    void test_deletePatient_deleteFieldModified_noResultFromGets() {
+    void test_delete_deleteFieldModified_noResultFromGets() {
         PatientCreateData data = getPatientOneCreateData();
 
         patientRepository.save(data);

@@ -65,12 +65,12 @@ class ReservationRepositoryTest {
     }
 
     @Test
-    void test_getReservations_noReservationsExists_returnsEmptyList() {
+    void test_findall_noReservationsExists_returnsEmptyList() {
         assertEquals(0, reservationRepository.findAll().size());
     }
 
     @Test
-    void test_createReservation_sameReservationDataReceived() {
+    void test_getById_sameReservationDataReceived() {
         ReservationCreateData originalData = getSampleReservationCreateData();
 
         reservationRepository.save(originalData);
@@ -84,7 +84,7 @@ class ReservationRepositoryTest {
     }
 
     @Test
-    void test_updateReservation_modifiedDataReceived() {
+    void test_update_modifiedDataReceived() {
         ReservationCreateData originalData = getSampleReservationCreateData();
 
         ReservationCreateData updatedData = new ReservationCreateData();
@@ -108,7 +108,7 @@ class ReservationRepositoryTest {
     }
 
     @Test
-    void test_deleteReservation_DeleteFieldModified_noResultFromGets() {
+    void test_delete_DeleteFieldModified_noResultFromGets() {
         ReservationCreateData originalData = getSampleReservationCreateData();
 
         reservationRepository.save(originalData);
