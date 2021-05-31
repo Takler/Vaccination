@@ -19,6 +19,7 @@ public class InventoryService implements CrudOperation<Inventory, InventoryCreat
         this.inventoryRepository = inventoryRepository;
     }
 
+    @Override
     public List<Inventory> findAll() {
         return inventoryRepository.getInventories();
     }

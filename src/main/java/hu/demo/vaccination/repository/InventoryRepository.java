@@ -22,16 +22,27 @@ public class InventoryRepository {
     }
 
     public List<Inventory> getInventories() {
-        String sql = "SELECT id, center_id, vaccine_id, amount " +
-                "FROM inventory";
-        return jdbcTemplate.query(sql, new InventoryMapper());
+        String sql = "SELECT id, center_id, vaccine_id, amount, deleted " +
+                "FROM inventory " +
+                "WHERE deleted = FALSE ";
+        try {
+            return jdbcTemplate.query(sql, new InventoryMapper());
+        } catch (DataAccessException e) {
+            return null;
+        }
+
     }
 
     public Inventory getInventory(int id) {
-        String sql = "SELECT id, center_id, vaccine_id, amount " +
+        String sql = "SELECT id, center_id, vaccine_id, amount, deleted " +
                 "FROM inventory " +
-                "WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new InventoryMapper(), id);
+                "WHERE id = ? AND deleted = FALSE ";
+        try {
+            return jdbcTemplate.queryForObject(sql, new InventoryMapper(), id);
+        } catch (DataAccessException e) {
+            return null;
+        }
+
     }
 
     public boolean createInventory(InventoryCreateData data) {
@@ -77,6 +88,7 @@ public class InventoryRepository {
             inventory.setCenterId(resultSet.getInt("center_id"));
             inventory.setVaccineId(resultSet.getInt("vaccine_id"));
             inventory.setAmount(resultSet.getInt("amount"));
+            inventory.setDeleted(resultSet.getBoolean("deleted"));
             return inventory;
         }
     }

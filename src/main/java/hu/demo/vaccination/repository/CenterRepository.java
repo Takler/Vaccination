@@ -34,7 +34,7 @@ public class CenterRepository {
     public List<Center> getCenters() {
         String sql = "SELECT id, name, city, email, telephone_number, daily_capacity, deleted " +
                 "FROM center " +
-                "WHERE deleted = false ";
+                "WHERE deleted = FALSE ";
         try {
             return jdbcTemplate.query(sql, centerRowMapper);
         } catch (DataAccessException e) {
