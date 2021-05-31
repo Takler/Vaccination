@@ -40,7 +40,7 @@ public class DoctorService implements CrudOperation {
 
     @Override
     public boolean delete(int id) {
-        return false;
+        return doctorRepository.delete(id);
     }
 
 
@@ -60,7 +60,5 @@ public class DoctorService implements CrudOperation {
         return doctorRepository.updateDoctor(doctor);
     }
 
-    public int deletedDoctor(int id) {
-        return doctorRepository.deleteDoctor(id);
-    }
+
 }
