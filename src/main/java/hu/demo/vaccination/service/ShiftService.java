@@ -3,6 +3,7 @@ package hu.demo.vaccination.service;
 import hu.demo.vaccination.domain.Center;
 import hu.demo.vaccination.domain.Doctor;
 import hu.demo.vaccination.domain.Shift;
+import hu.demo.vaccination.dto.shift.ShiftInfoData;
 import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import hu.demo.vaccination.repository.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,19 @@ public class ShiftService implements Requestable, InfoOperation {
     //implement InfoOperation
 
     @Override
-    public Object getInfo(int id) {
-        return null;
+    public ShiftInfoData getInfo(int shiftId) {
+        ShiftInfoData shiftInfoData = new ShiftInfoData();
+        Shift shift = shiftRepository.getShift(shiftId);
+        Doctor doctor = doctorService.getDoctor(shift.getDoctor_id());
+        Center center = centerService.getCenter(shift.getCenter_id());
+
+        shiftInfoData.setId(shiftId);
+        shiftInfoData.setStart(shift.getStart());
+        shiftInfoData.setEnd(shift.getEnd());
+        shiftInfoData.setDeleted(shift.isDeleted());
+        shiftInfoData.setDoctor(doctor);
+        shiftInfoData.setCenter(center);
+        return shiftInfoData;
     }
 
     @Override
