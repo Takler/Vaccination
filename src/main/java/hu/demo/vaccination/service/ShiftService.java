@@ -29,7 +29,7 @@ public class ShiftService implements Requestable, InfoOperation {
     public ShiftInfoData getInfo(int shiftId) {
         ShiftInfoData shiftInfoData = new ShiftInfoData();
         Shift shift = shiftRepository.getShift(shiftId);
-        Doctor doctor = doctorService.getDoctor(shift.getDoctor_id());
+        Doctor doctor = doctorService.getById(shift.getDoctor_id());
         Center center = centerService.getById(shift.getCenter_id());
 
         shiftInfoData.setId(shiftId);
@@ -45,7 +45,7 @@ public class ShiftService implements Requestable, InfoOperation {
     public ShiftNameInfoData getNameInfo(int shiftId) {
         ShiftNameInfoData shiftNameInfoData = new ShiftNameInfoData();
         Shift shift = shiftRepository.getShift(shiftId);
-        Doctor doctor = doctorService.getDoctor(shift.getDoctor_id());  //egész rekord kényszer a rossz getNameByID miatt...
+        Doctor doctor = doctorService.getById(shift.getDoctor_id());  //egész rekord kényszer a rossz getNameByID miatt...
 
         shiftNameInfoData.setId(shiftId);
         shiftNameInfoData.setStart(shift.getStart());

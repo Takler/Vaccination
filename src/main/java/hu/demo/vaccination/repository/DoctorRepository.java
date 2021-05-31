@@ -49,18 +49,16 @@ public class DoctorRepository {
         return doctors;
     }
 
-    public Doctor getDoctor(int id) {     // List ??
-        List<Doctor> doctor = null;
+    public Doctor getById(int doctorId) {   //null felfelé?
+        Doctor doctor = new Doctor();
         DoctorMapper doctorMapper = new DoctorMapper();
         String sqlSelect = "SELECT * FROM doctor WHERE id=?";
-        String[] sqlValues = new String[1];
-        sqlValues[0] = Integer.toString(id);
         try {
-            doctor = jdbcTemplate.query(sqlSelect, sqlValues, doctorMapper);
+            doctor = jdbcTemplate.queryForObject(sqlSelect, doctorMapper, Integer.toString(doctorId));
         } catch (DataAccessException ex) {
             ex.printStackTrace();
         }
-        return doctor.get(0);
+        return doctor;
     }
 
     public boolean update(Doctor doctor) {

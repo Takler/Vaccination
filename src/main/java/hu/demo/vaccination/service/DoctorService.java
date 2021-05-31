@@ -19,8 +19,8 @@ public class DoctorService implements CrudOperation {
     }
 
     @Override
-    public Object getById(int id) {
-        return null;
+    public Doctor getById(int doctorId) {
+        return doctorRepository.getById(doctorId);
     }
 
     @Override
@@ -29,13 +29,17 @@ public class DoctorService implements CrudOperation {
     }
 
     @Override
-    public boolean save(Object createData) {   //INSERT
-        return doctorRepository.save((Doctor) createData);   // ???????
+    public boolean save(Object createData) {   // OK    //INSERT
+        return doctorRepository.save((Doctor) createData);   // ? cast?
     }
 
     @Override  //...OK, id?
     public boolean update(int id, Object createData) {
         return false;
+    }
+
+    public boolean update(Doctor doctor) {   //OK
+        return doctorRepository.update(doctor);
     }
 
     @Override  //OK
@@ -45,14 +49,6 @@ public class DoctorService implements CrudOperation {
 
     public List<Map<String, Object>> getDoctorslist() {
         return doctorRepository.getDoctorsList();
-    }
-
-    public Doctor getDoctor(int id) {
-        return doctorRepository.getDoctor(id);
-    }
-
-    public boolean update(Doctor doctor) {   //OK
-        return doctorRepository.update(doctor);
     }
 
 

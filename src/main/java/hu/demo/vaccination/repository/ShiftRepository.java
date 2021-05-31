@@ -25,9 +25,8 @@ public class ShiftRepository {
         ShiftDateData shiftDateData = new ShiftDateData();
         List<ShiftDateData> shiftDateDataList = new LinkedList<>();
         ShiftDateDataMapper shiftDateDataMapper = new ShiftDateDataMapper();
-        String id = Integer.toString(shiftId);
         String sqlSelect = "SELECT start, end FROM shift WHERE id=?";
-        shiftDateDataList = jdbcTemplate.query(sqlSelect, shiftDateDataMapper, id);
+        shiftDateDataList = jdbcTemplate.query(sqlSelect, shiftDateDataMapper, Integer.toString(shiftId));
         shiftDateData = shiftDateDataList.get(0);
         return shiftDateData;
     }
@@ -36,9 +35,8 @@ public class ShiftRepository {
         Shift shift = new Shift();
         ShiftMapper shiftMapper = new ShiftMapper();
         List<Shift> shiftList = new LinkedList<>();
-        String id = Integer.toString(shiftId);
         String sqlSelect = "SELECT * FROM shift WHERE id=?";
-        shiftList = jdbcTemplate.query(sqlSelect, shiftMapper, id);
+        shiftList = jdbcTemplate.query(sqlSelect, shiftMapper, Integer.toString(shiftId));
         shift = shiftList.get(0);
         return shift;
     }

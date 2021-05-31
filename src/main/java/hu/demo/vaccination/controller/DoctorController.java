@@ -35,10 +35,10 @@ public class DoctorController {
         return new ResponseEntity<>(doctorService.getDoctorslist(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Doctor> getDoctor(@PathVariable int id) {
-        Doctor doctor = doctorService.getDoctor(id);
-        if (doctor == null) {
+    @GetMapping("/{doctorId}")
+    public ResponseEntity<Doctor> getById(@PathVariable int doctorId) {
+        Doctor doctor = doctorService.getById(doctorId);
+        if (doctor == null) {   // itt akkor null helyett mi?
             return new ResponseEntity<>(doctor, HttpStatus.EXPECTATION_FAILED);
         } else {
             return new ResponseEntity<>(doctor, HttpStatus.OK);
