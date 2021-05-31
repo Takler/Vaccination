@@ -51,6 +51,14 @@ public class ShiftController {     // CRUD interface-t implementálni
         }
     }
 
+    @DeleteMapping("/{shiftId")
+    public ResponseEntity<Void> delete(@PathVariable int shiftId) {
+        if (shiftService.delete(shiftId)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/nameinfo/{shiftId}")
     public ResponseEntity<ShiftNameInfoData> getNameInfo(@PathVariable int shiftId) {

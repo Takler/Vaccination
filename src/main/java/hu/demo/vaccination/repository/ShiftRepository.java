@@ -62,7 +62,6 @@ public class ShiftRepository {
         return false;
     }
 
-
     public boolean update(int shiftId, ShiftCreateData shiftCreateData) {
         String sqlUpdate = "UPDATE shift SET center_id = ?, doctor_id = ?, start = ?, end = ?" +
                 "WHERE id = ?";
@@ -77,10 +76,17 @@ public class ShiftRepository {
         return false;
     }
 
-//    @Override
-//    public boolean delete(int id) {
-//        return false;
-//    }
+    public boolean delete(int shiftId) {
+        String sqlUpdate = "UPDATE shift SET deleted = false WHERE id = ?";
+        try {
+            if (jdbcTemplate.update(sqlUpdate, shiftId) == 1) {
+                return true;
+            }
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
 
     public ShiftDateData getShiftDateData(int shiftId) {

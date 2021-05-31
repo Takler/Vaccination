@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ShiftService implements CrudOperation<Shift, ShiftCreateData>, Requestable, InfoOperation {
+public class ShiftService implements CrudOperation<Shift, ShiftCreateData>, Requestable, InfoOperation { //Requestable???
 
     private ShiftRepository shiftRepository;
     private DoctorService doctorService;
@@ -49,10 +49,9 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateData>, Requ
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public boolean delete(int shiftId) {
+        return shiftRepository.delete(shiftId);
     }
-
 
     //implement InfoOperation
 
