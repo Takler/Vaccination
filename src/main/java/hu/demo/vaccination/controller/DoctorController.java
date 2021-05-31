@@ -22,8 +22,8 @@ public class DoctorController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createDoctor(@RequestBody Doctor doctor) {
-        if (doctorService.createDoctor(doctor) == 1) {
+    public ResponseEntity<Void> save(@RequestBody Doctor doctor) {
+        if (doctorService.save(doctor)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

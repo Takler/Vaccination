@@ -21,17 +21,19 @@ public class DoctorRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int createDoctor(Doctor doctor) {
-        int result = -1;   // clean ??
+    public boolean save(Doctor doctor) {
+        boolean result = false;
         String sqlInsert = "INSERT INTO doctor (id, first_name, last_name, email, address, telephone_number, deleted)" +
-                " VALUES (?,?,?,?,?,?,?,?)";
+                " VALUES (?,?,?,?,?,?,?)";
         // vizsgálatok hiányoznak ...
         try {
-            result = jdbcTemplate.update(sqlInsert, doctor.getId(), doctor.getFirstName(),
+            if (jdbcTemplate.update(sqlInsert, doctor.getId(), doctor.getFirstName(),
                     doctor.getLastName(), doctor.getEmail(), doctor.getAddress(),
-                    doctor.getTelephoneNumber(), doctor.isDeleted());
+                    doctor.getTelephoneNumber(), doctor.isDeleted()) == 1) {
+                result = true;
+            }
         } catch (DataAccessException exception) {
-            return result;
+            exception.printStackTrace();
         }
         return result;
     }
@@ -83,8 +85,7 @@ public class DoctorRepository {
         String sqlDelete = "DELETE FROM doctor WHERE id=?";
         // vizsgálatok hiányoznak ...
         try {
-            if (jdbcTemplate.update(sqlDelete, id) == 1) ;
-            {
+            if (jdbcTemplate.update(sqlDelete, id) == 1) {
                 result = true;
             }
         } catch (DataAccessException exception) {
