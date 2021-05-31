@@ -41,10 +41,6 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
 
     @Override
     public boolean save(PatientCreateData data) {
-        int id = data.getId();
-        if (patientRepository.isPatientDeleted(id)) {
-            return patientRepository.unDeletePatient(id) && patientRepository.update(id, data);
-        }
         return patientRepository.save(data);
     }
 
