@@ -42,9 +42,7 @@ public class ReservationRepository {
     }
 
     public List<Reservation> findAll() {
-        String sql = "SELECT id, patient_id, center_id, vaccine_id, registration, next_shot, deleted " +
-                "FROM reservation " +
-                "WHERE deleted = false";
+        String sql = "SELECT * FROM reservation WHERE deleted = false";
         try {
             return jdbc.query(sql, new ReservationMapper());
         } catch (DataAccessException e) {
@@ -53,9 +51,7 @@ public class ReservationRepository {
     }
 
     public Reservation getById(int id) {
-        String sql = "SELECT id, patient_id, center_id, vaccine_id, registration, next_shot, deleted " +
-                "FROM reservation " +
-                "WHERE id = ? AND deleted = false";
+        String sql = "SELECT * FROM reservation WHERE id = ? AND deleted = false";
         try {
             return jdbc.queryForObject(sql, new ReservationMapper(), id);
         } catch (DataAccessException e) {
