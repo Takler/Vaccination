@@ -1,5 +1,6 @@
 package hu.demo.vaccination.controller;
 
+import hu.demo.vaccination.domain.Shift;
 import hu.demo.vaccination.dto.shift.ShiftInfoData;
 import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import hu.demo.vaccination.service.ShiftService;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/shift")
-public class ShiftController {
+public class ShiftController {     // CRUD interface-t implementálni
 
     private ShiftService shiftService;
 
@@ -21,6 +22,14 @@ public class ShiftController {
     public ShiftController(ShiftService shiftService) {
         this.shiftService = shiftService;
     }
+
+    @GetMapping("/{shiftId}")
+    public ResponseEntity<Shift> getById(int shiftId) {
+        return new ResponseEntity<>(shiftService.getById(shiftId), HttpStatus.OK);
+    }
+
+    @GetMapping("")
+
 
     @GetMapping("/nameinfo/{shiftId}")
     public ResponseEntity<ShiftNameInfoData> getNameInfo(@PathVariable int shiftId) {

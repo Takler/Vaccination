@@ -1,10 +1,12 @@
 package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Shift;
+import hu.demo.vaccination.dto.shift.ShiftCreateData;
 import hu.demo.vaccination.dto.shift.ShiftDateData;
 import hu.demo.vaccination.repository.mapper.ShiftDateDataMapper;
 import hu.demo.vaccination.repository.mapper.ShiftMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,39 @@ public class ShiftRepository {
     public ShiftRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    public Shift getById(int shiftId) {
+        Shift shift = new Shift();
+        ShiftMapper shiftMapper = new ShiftMapper();
+        String sqlSelect = "SELECT * FROM shift WHERE id=? and deleted = false";
+        try {
+            shift = jdbcTemplate.queryForObject(sqlSelect, shiftMapper, Integer.toString(shiftId));
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+        return shift;
+    }
+
+
+    public List<Shift> findAll() {
+        return null;
+    }
+
+    @Override
+    public boolean save(ShiftCreateData shiftCreateData) {      //INSERT
+        return false;
+    }
+
+    @Override
+    public boolean update(int shiftId, ShiftCreateData shiftCreateData) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
 
     public ShiftDateData getShiftDateData(int shiftId) {
         ShiftDateData shiftDateData = new ShiftDateData();

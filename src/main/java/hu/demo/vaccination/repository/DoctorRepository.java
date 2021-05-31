@@ -21,7 +21,7 @@ public class DoctorRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public boolean save(Doctor doctor) {
+    public boolean save(Doctor doctor) {    //INSERT
         boolean result = false;
         String sqlInsert = "INSERT INTO doctor (id, first_name, last_name, email, address, telephone_number, deleted)" +
                 " VALUES (?,?,?,?,?,?,?)";
@@ -38,7 +38,7 @@ public class DoctorRepository {
         return result;
     }
 
-    public List<Map<String, Object>> findAll() {
+    public List<Map<String, Object>> findAll() {   // Selectbe tenni a logikai kiszűrést
         List<Map<String, Object>> doctors = new LinkedList<>();
         String sqlSelect = "SELECT * FROM doctor";
         try {
@@ -78,7 +78,7 @@ public class DoctorRepository {
         return result;
     }
 
-    public boolean delete(int id) {
+    public boolean delete(int id) {   // logikai törlést csinálni csak
         boolean result = false;
         String sqlDelete = "DELETE FROM doctor WHERE id=?";
         // vizsgálatok hiányoznak ...

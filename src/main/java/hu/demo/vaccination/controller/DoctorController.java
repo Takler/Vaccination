@@ -11,10 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/doctor")
-public class DoctorController {
+@RequestMapping("/api/doctor")   //Megnézni a hibát, amit a Józsi mondott Discordon
+public class DoctorController {   // Testeket írni!!
 
     private DoctorService doctorService;
+
+    // deleted JSON kiszedése
 
     @Autowired
     public DoctorController(DoctorService doctorService) {

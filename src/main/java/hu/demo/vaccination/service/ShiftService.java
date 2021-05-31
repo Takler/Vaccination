@@ -3,14 +3,17 @@ package hu.demo.vaccination.service;
 import hu.demo.vaccination.domain.Center;
 import hu.demo.vaccination.domain.Doctor;
 import hu.demo.vaccination.domain.Shift;
+import hu.demo.vaccination.dto.shift.ShiftCreateData;
 import hu.demo.vaccination.dto.shift.ShiftInfoData;
 import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import hu.demo.vaccination.repository.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class ShiftService implements Requestable, InfoOperation {
+public class ShiftService implements CrudOperation<Shift, ShiftCreateData>, Requestable, InfoOperation {
 
     private ShiftRepository shiftRepository;
     private DoctorService doctorService;
@@ -22,6 +25,34 @@ public class ShiftService implements Requestable, InfoOperation {
         this.doctorService = doctorService;
         this.centerService = centerService;
     }
+
+    //implement CrudOperation
+
+    @Override
+    public Shift getById(int shiftId) {
+        return shiftRepository.getById(shiftId);
+    }
+
+    @Override
+    public List<Shift> findAll() {
+        return null;
+    }
+
+    @Override
+    public boolean save(ShiftCreateData shiftCreateData) {      //INSERT
+        return false;
+    }
+
+    @Override
+    public boolean update(int shiftId, ShiftCreateData shiftCreateData) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
 
     //implement InfoOperation
 
