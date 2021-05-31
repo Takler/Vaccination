@@ -1,5 +1,6 @@
 package hu.demo.vaccination.service;
 
+import hu.demo.vaccination.domain.Doctor;
 import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.domain.Vaccine;
@@ -25,14 +26,19 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
     private final PatientService patientService;
     private final VaccineService vaccineService;
     private final ShiftService shiftService;
+    private final CenterService centerService;
+    private final DoctorService doctorService;
 
     @Autowired
     public VaccinationService(VaccinationRepository vaccinationRepository, PatientService patientService,
-                              VaccineService vaccineService, ShiftService shiftService) {
+                              VaccineService vaccineService, ShiftService shiftService, CenterService centerService,
+                              DoctorService doctorService) {
         this.vaccinationRepository = vaccinationRepository;
         this.patientService = patientService;
         this.vaccineService = vaccineService;
         this.shiftService = shiftService;
+        this.centerService = centerService;
+        this.doctorService = doctorService;
     }
 
     public double getFirstVaccinatedPercentage(int minAge, int maxAge, boolean chronic, boolean pregnant) {
@@ -193,7 +199,17 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
 
     @Override
     public VaccinationNameInfoData getNameInfo(int id) {
-        return null;
+        VaccinationNameInfoData vaccinationNameInfoData = new VaccinationNameInfoData();
+        Vaccination vaccination = getById(id);
+        vaccinationNameInfoData.setId(vaccination.getId());
+        vaccinationNameInfoData.setVaccineName(vaccineService.getById(vaccination.getVaccineId()).getName());
+        vaccinationNameInfoData.setPatientName(patientService.getName(vaccination.getPatientId()));
+        vaccinationNameInfoData.setCenterName(centerService.getName(shiftService.getInfo(vaccination.getShiftId()).getId()));
+        Doctor doctor = doctorService.getById(shiftService.getInfo(vaccination.getShiftId()).getDoctor().getId());
+        vaccinationNameInfoData.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
+        vaccinationNameInfoData.setDate(vaccination.getDate());
+        vaccinationNameInfoData.setDeleted(vaccination.isDeleted());
+        return vaccinationNameInfoData;
     }
 
 
