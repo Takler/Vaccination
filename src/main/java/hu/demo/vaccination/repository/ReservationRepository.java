@@ -25,9 +25,9 @@ public class ReservationRepository {
     }
 
     public PatientReservationData getPatientReservation(int patientId) {
-        String sql = "SELECT id, center_id, vaccine_id, registration, next_shot, deleted " +
+        String sql = "SELECT id, center_id, vaccine_id, registration, next_shot " +
                 "FROM reservation " +
-                "WHERE patient_id = ?";
+                "WHERE patient_id = ? AND deleted = false";
         try {
             return jdbc.queryForObject(sql, (resultSet, i) -> {
                 PatientReservationData patientReservation = new PatientReservationData();
