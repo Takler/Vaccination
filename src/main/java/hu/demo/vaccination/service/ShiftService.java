@@ -53,7 +53,7 @@ public class ShiftService implements Requestable, InfoOperation {
         shiftNameInfoData.setDeleted(shift.isDeleted());
         shiftNameInfoData.setDoctorFirstName(doctor.getFirstName());
         shiftNameInfoData.setDoctorLastName(doctor.getLastName());
-        shiftNameInfoData.setCenterName(centerService.getName(shift.getCenter_id()));  //nem már getNameById -nak kéne lennie?
+        shiftNameInfoData.setCenterName(centerService.getName(shift.getCenter_id()));  //getByIdOnlyName -nak kéne lennie?
         return shiftNameInfoData;
     }
 //        Field[] fields = shift.getClass().getFields();

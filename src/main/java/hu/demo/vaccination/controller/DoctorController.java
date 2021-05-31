@@ -15,7 +15,7 @@ import java.util.Map;
 public class DoctorController {
 
     private DoctorService doctorService;
-    private List<String> aa;
+
     @Autowired
     public DoctorController(DoctorService doctorService) {
         this.doctorService = doctorService;

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class DoctorService {
+public class DoctorService implements CrudOperation {
 
     private DoctorRepository doctorRepository;
 
@@ -17,6 +17,32 @@ public class DoctorService {
     public DoctorService(DoctorRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
     }
+
+    @Override
+    public Object getById(int id) {
+        return null;
+    }
+
+    @Override
+    public List findAll() {
+        return null;
+    }
+
+    @Override
+    public boolean save(Object createData) {
+        return false;
+    }
+
+    @Override
+    public boolean update(int id, Object createData) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
 
     public int createDoctor(Doctor doctor) {
         return doctorRepository.createDoctor(doctor);
