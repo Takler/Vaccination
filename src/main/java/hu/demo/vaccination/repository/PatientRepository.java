@@ -40,9 +40,7 @@ public class PatientRepository {
     }
 
     public List<Patient> getPatients() {
-        String sql = "SELECT id, first_name, last_name, mothers_name, gender, date_of_birth, " +
-                "email, city, zip_code, address, telephone_number, pregnant, chronic, deleted " +
-                "FROM patient";
+        String sql = "SELECT * FROM patient WHERE deleted = false";
         try {
             return jdbc.query(sql, new PatientMapper());
         } catch (DataAccessException e) {
@@ -51,10 +49,7 @@ public class PatientRepository {
     }
 
     public Patient getPatient(int id) {
-        String sqlQuery = "SELECT id, first_name, last_name, mothers_name, gender, date_of_birth, " +
-                "email, city, zip_code, address, telephone_number, pregnant, chronic, deleted " +
-                "FROM patient " +
-                "WHERE id = ?";
+        String sqlQuery = "SELECT * FROM patient WHERE id = ? AND deleted = false";
         try {
             return jdbc.queryForObject(sqlQuery, new PatientMapper(), id);
         } catch (DataAccessException e) {

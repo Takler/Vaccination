@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ReservationService implements CrudOperation<Reservation, ReservationCreateData> {
+public class ReservationService implements CrudOperation<Reservation, ReservationCreateData>, InfoOperation<ReservationInfoData, ReservationNameInfoData> {
     private final ReservationRepository reservationRepository;
     private final CenterService centerService;
     private final VaccineService vaccineService;
@@ -40,6 +40,7 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
         return patientReservation;
     }
 
+    @Override
     public ReservationInfoData getInfo(int id) {
         Reservation reservation = reservationRepository.getReservation(id);
 
@@ -55,6 +56,7 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
         return reservationInfoData;
     }
 
+    @Override
     public ReservationNameInfoData getNameInfo(int id) {
         Reservation reservation = reservationRepository.getReservation(id);
 

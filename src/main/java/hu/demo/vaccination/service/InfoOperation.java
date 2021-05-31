@@ -1,8 +1,8 @@
 package hu.demo.vaccination.service;
 
-public interface InfoOperation<T> {
+public interface InfoOperation<T, U> {
 
     T getInfo(int id);
 
-    T getNameInfo(int id);
+    U getNameInfo(int id);
 }
