@@ -30,7 +30,7 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
 
     public PatientReservationData getPatientReservation(int patientId) {
         PatientReservationData patientReservation = reservationRepository.getPatientReservation(patientId);
-        Reservation reservation = reservationRepository.getReservation(patientReservation.getReservationId());
+        Reservation reservation = reservationRepository.getById(patientReservation.getReservationId());
 
         patientReservation.setPatientId(patientId);
         patientReservation.setPatientName(patientService.getName(patientId));
@@ -42,7 +42,7 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
 
     @Override
     public ReservationInfoData getInfo(int id) {
-        Reservation reservation = reservationRepository.getReservation(id);
+        Reservation reservation = reservationRepository.getById(id);
 
         ReservationInfoData reservationInfoData = new ReservationInfoData();
 
@@ -58,7 +58,7 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
 
     @Override
     public ReservationNameInfoData getNameInfo(int id) {
-        Reservation reservation = reservationRepository.getReservation(id);
+        Reservation reservation = reservationRepository.getById(id);
 
         ReservationNameInfoData reservationNameInfoData = new ReservationNameInfoData();
 
@@ -74,26 +74,26 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
 
     @Override
     public List<Reservation> findAll() {
-        return reservationRepository.getReservations();
+        return reservationRepository.findAll();
     }
 
     @Override
     public Reservation getById(int id) {
-        return reservationRepository.getReservation(id);
+        return reservationRepository.getById(id);
     }
 
     @Override
     public boolean save(ReservationCreateData data) {
-        return reservationRepository.createReservation(data);
+        return reservationRepository.save(data);
     }
 
     @Override
     public boolean update(int id, ReservationCreateData data) {
-        return reservationRepository.updateReservation(id, data);
+        return reservationRepository.update(id, data);
     }
 
     @Override
     public boolean delete(int id) {
-        return reservationRepository.deleteReservation(id);
+        return reservationRepository.delete(id);
     }
 }

@@ -48,15 +48,15 @@ class ReservationRepositoryTest {
 
     @Test
     void test_getReservations_noReservationsExists_returnsEmptyList() {
-        assertEquals(0, reservationRepository.getReservations().size());
+        assertEquals(0, reservationRepository.findAll().size());
     }
 
     @Test
     void test_createReservation_sameReservationDataReceived() {
         ReservationCreateData originalData = getSampleReservationCreateData();
 
-        reservationRepository.createReservation(originalData);
-        Reservation result = reservationRepository.getReservation(1);
+        reservationRepository.save(originalData);
+        Reservation result = reservationRepository.getById(1);
 
         assertEquals(originalData.getPatientId(), result.getPatientId());
         assertEquals(originalData.getCenterId(), result.getCenterId());
@@ -78,9 +78,9 @@ class ReservationRepositoryTest {
         updatedData.setRegistration(updatedRegistration);
         updatedData.setNextShot(updatedNextShot);
 
-        reservationRepository.createReservation(originalData);
-        reservationRepository.updateReservation(1, updatedData);
-        Reservation result = reservationRepository.getReservation(1);
+        reservationRepository.save(originalData);
+        reservationRepository.update(1, updatedData);
+        Reservation result = reservationRepository.getById(1);
 
         assertEquals(updatedData.getPatientId(), result.getPatientId());
         assertEquals(updatedData.getCenterId(), result.getCenterId());
@@ -93,10 +93,10 @@ class ReservationRepositoryTest {
     void test_deleteReservation_DeleteFieldModified_noResultFromGets() {
         ReservationCreateData originalData = getSampleReservationCreateData();
 
-        reservationRepository.createReservation(originalData);
-        reservationRepository.deleteReservation(1);
+        reservationRepository.save(originalData);
+        reservationRepository.delete(1);
 
-        assertEquals(0, reservationRepository.getReservations().size());
+        assertEquals(0, reservationRepository.findAll().size());
     }
 
     private ReservationCreateData getSampleReservationCreateData() {

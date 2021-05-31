@@ -38,22 +38,22 @@ class PatientServiceTest {
         patients.add(patientOne);
         patients.add(patientTwo);
 
-        when(patientRepositoryMock.getPatients()).thenReturn(patients);
+        when(patientRepositoryMock.findAll()).thenReturn(patients);
 
         List<Patient> receivedPatients = patientService.findAll();
         assertEquals(2, receivedPatients.size());
-        verify(patientRepositoryMock, times(1)).getPatients();
+        verify(patientRepositoryMock, times(1)).findAll();
     }
 
     @Test
     void test_getPatientById_receiveCorrectPatient() {
         Patient patient = getPatientOne();
 
-        when(patientRepositoryMock.getPatient(patient.getId())).thenReturn(patient);
+        when(patientRepositoryMock.getById(patient.getId())).thenReturn(patient);
 
         Patient receivedPatient = patientService.getById(patient.getId());
         assertEquals(patient, receivedPatient);
-        verify(patientRepositoryMock, times(1)).getPatient(patient.getId());
+        verify(patientRepositoryMock, times(1)).getById(patient.getId());
     }
 
     @Test
@@ -62,7 +62,7 @@ class PatientServiceTest {
 
         patientService.save(patientCreateData);
 
-        verify(patientRepositoryMock, times(1)).createPatient(patientCreateData);
+        verify(patientRepositoryMock, times(1)).save(patientCreateData);
     }
 
     @Test
@@ -71,7 +71,7 @@ class PatientServiceTest {
 
         patientService.delete(id);
 
-        verify(patientRepositoryMock, times(1)).deletePatient(id);
+        verify(patientRepositoryMock, times(1)).delete(id);
     }
 
     @Test
@@ -80,6 +80,6 @@ class PatientServiceTest {
 
         patientService.update(patientCreateData.getId(), patientCreateData);
 
-        verify(patientRepositoryMock, times(1)).updatePatient(patientCreateData.getId(), patientCreateData);
+        verify(patientRepositoryMock, times(1)).update(patientCreateData.getId(), patientCreateData);
     }
 }

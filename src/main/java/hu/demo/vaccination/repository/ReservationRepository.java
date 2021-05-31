@@ -41,7 +41,7 @@ public class ReservationRepository {
         }
     }
 
-    public List<Reservation> getReservations() {
+    public List<Reservation> findAll() {
         String sql = "SELECT id, patient_id, center_id, vaccine_id, registration, next_shot, deleted " +
                 "FROM reservation " +
                 "WHERE deleted = false";
@@ -52,7 +52,7 @@ public class ReservationRepository {
         }
     }
 
-    public Reservation getReservation(int id) {
+    public Reservation getById(int id) {
         String sql = "SELECT id, patient_id, center_id, vaccine_id, registration, next_shot, deleted " +
                 "FROM reservation " +
                 "WHERE id = ? AND deleted = false";
@@ -63,7 +63,7 @@ public class ReservationRepository {
         }
     }
 
-    public boolean createReservation(ReservationCreateData data) {
+    public boolean save(ReservationCreateData data) {
         String sql = "INSERT INTO reservation (" +
                 "patient_id, " +
                 "center_id, " +
@@ -86,7 +86,7 @@ public class ReservationRepository {
 
     }
 
-    public boolean updateReservation(int id, ReservationCreateData data) {
+    public boolean update(int id, ReservationCreateData data) {
         String sql = "UPDATE reservation SET " +
                 "patient_id = ?, " +
                 "center_id = ?, " +
@@ -109,7 +109,7 @@ public class ReservationRepository {
         }
     }
 
-    public boolean deleteReservation(int id) {
+    public boolean delete(int id) {
         String sql = "UPDATE reservation SET deleted = ? WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql, true, id);
