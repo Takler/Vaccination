@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/shift")
 public class ShiftController {     // CRUD interface-t implementálni
@@ -28,8 +30,10 @@ public class ShiftController {     // CRUD interface-t implementálni
         return new ResponseEntity<>(shiftService.getById(shiftId), HttpStatus.OK);
     }
 
-    @GetMapping("")
-
+    @GetMapping
+    public ResponseEntity<List<Shift>> findAll() {
+        return new ResponseEntity<>(shiftService.findAll(), HttpStatus.OK);
+    }
 
     @GetMapping("/nameinfo/{shiftId}")
     public ResponseEntity<ShiftNameInfoData> getNameInfo(@PathVariable int shiftId) {

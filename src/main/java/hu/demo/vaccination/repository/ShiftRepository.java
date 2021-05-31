@@ -25,19 +25,27 @@ public class ShiftRepository {
 
     public Shift getById(int shiftId) {
         Shift shift = new Shift();
-        ShiftMapper shiftMapper = new ShiftMapper();
         String sqlSelect = "SELECT * FROM shift WHERE id=? and deleted = false";
         try {
-            shift = jdbcTemplate.queryForObject(sqlSelect, shiftMapper, Integer.toString(shiftId));
+            shift = jdbcTemplate.queryForObject(sqlSelect, new ShiftMapper(), Integer.toString(shiftId));   // numerikus id megy?
         } catch (DataAccessException ex) {
             ex.printStackTrace();
         }
         return shift;
+
+        //} catch (DataAccessException e) {   Ez nem elég, ha null is visszadhat a jdbcTemplate és külön akarjuk választani...?
+        //    return null;
     }
 
 
     public List<Shift> findAll() {
-        return null;
+        String sqlSelect = "SELECT * FROM shift WHERE deleted = false";
+        try {
+            return jdbcTemplate.query(sqlSelect, new ShiftMapper());          // A queryForList() a ? -nél kell?
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override

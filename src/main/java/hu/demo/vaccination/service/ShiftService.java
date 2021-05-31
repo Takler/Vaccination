@@ -28,14 +28,14 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateData>, Requ
 
     //implement CrudOperation
 
-    @Override
+    @Override  //OK , no test
     public Shift getById(int shiftId) {
         return shiftRepository.getById(shiftId);
     }
 
     @Override
-    public List<Shift> findAll() {
-        return null;
+    public List<Shift> findAll() {      // Interface<Shift> ,miért "eszi" meg?
+        return shiftRepository.findAll();
     }
 
     @Override
