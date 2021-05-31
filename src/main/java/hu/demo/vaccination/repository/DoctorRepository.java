@@ -38,7 +38,7 @@ public class DoctorRepository {
         return result;
     }
 
-    public List<Map<String, Object>> getDoctorsList() {
+    public List<Map<String, Object>> findAll() {
         List<Map<String, Object>> doctors = new LinkedList<>();
         String sqlSelect = "SELECT * FROM doctor";
         try {

@@ -31,8 +31,8 @@ public class DoctorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Map<String, Object>>> getDoctorsList() {    // struktúra??
-        return new ResponseEntity<>(doctorService.getDoctorslist(), HttpStatus.OK);
+    public ResponseEntity<List<Map<String, Object>>> findAll() {    // struktúra??
+        return new ResponseEntity<>(doctorService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{doctorId}")

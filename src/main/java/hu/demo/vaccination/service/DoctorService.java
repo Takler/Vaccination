@@ -19,13 +19,13 @@ public class DoctorService implements CrudOperation {
     }
 
     @Override
-    public Doctor getById(int doctorId) {
+    public Doctor getById(int doctorId) {  // OK
         return doctorRepository.getById(doctorId);
     }
 
     @Override
-    public List findAll() {
-        return null;
+    public List<Map<String, Object>> findAll() {  // OK
+        return doctorRepository.findAll();
     }
 
     @Override
@@ -45,10 +45,6 @@ public class DoctorService implements CrudOperation {
     @Override  //OK
     public boolean delete(int id) {
         return doctorRepository.delete(id);
-    }
-
-    public List<Map<String, Object>> getDoctorslist() {
-        return doctorRepository.getDoctorsList();
     }
 
 
