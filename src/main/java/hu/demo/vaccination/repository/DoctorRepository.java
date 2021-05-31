@@ -63,13 +63,13 @@ public class DoctorRepository {
 
     public boolean update(Doctor doctor) {
         boolean result = false;
-        String sqlUpdate = "UPDATE doctor SET id=?, first_name=?, last_name=?, email=?, address=?, telephone_number=?, " +
+        String sqlUpdate = "UPDATE doctor SET first_name=?, last_name=?, email=?, address=?, telephone_number=?, " +
                 "deleted=? WHERE id=?";
         // vizsgálatok hiányoznak ...
         try {
-            if (jdbcTemplate.update(sqlUpdate, doctor.getId(), doctor.getFirstName(),
+            if (jdbcTemplate.update(sqlUpdate, doctor.getFirstName(),
                     doctor.getLastName(), doctor.getEmail(), doctor.getAddress(),
-                    doctor.getTelephoneNumber(), doctor.isDeleted()) == 1) {
+                    doctor.getTelephoneNumber(), doctor.isDeleted(), doctor.getId()) == 1) {
                 result = true;
             }
         } catch (DataAccessException exception) {
