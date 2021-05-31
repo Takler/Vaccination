@@ -46,8 +46,8 @@ public class DoctorController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateDoctor(@RequestBody Doctor doctor) {
-        if (doctorService.updateDoctor(doctor) == 1) {
+    public ResponseEntity<Void> update(@RequestBody Doctor doctor) {
+        if (doctorService.update(doctor)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
