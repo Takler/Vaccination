@@ -4,6 +4,7 @@ import hu.demo.vaccination.domain.Inventory;
 import hu.demo.vaccination.dto.InventoryCreateData;
 import hu.demo.vaccination.dto.inventory.InventoryInfoData;
 import hu.demo.vaccination.dto.inventory.InventoryNameInfoData;
+import hu.demo.vaccination.dto.inventory.InventoryStockData;
 import hu.demo.vaccination.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,12 @@ public class InventoryController {
     @Autowired
     public InventoryController(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
+    }
+
+    @GetMapping("/centerid/{centerId}")
+    public ResponseEntity<List<InventoryStockData>> getStock(@PathVariable int centerId) {
+        List<InventoryStockData> inventoryStockData = inventoryService.getStock(centerId);
+        return new ResponseEntity<>(inventoryStockData, HttpStatus.OK);
     }
 
     @GetMapping("/info/{id}")
