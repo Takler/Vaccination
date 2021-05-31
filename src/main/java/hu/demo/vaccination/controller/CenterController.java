@@ -22,13 +22,13 @@ public class CenterController {
 
     @GetMapping
     public ResponseEntity<List<Center>> getCenters() {
-        List<Center> centers = centerService.getCenters();
+        List<Center> centers = centerService.findAll();
         return new ResponseEntity<>(centers, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Center> getCenter(@PathVariable int id) {
-        Center center = centerService.getCenter(id);
+        Center center = centerService.getById(id);
         if (center != null) {
             return new ResponseEntity<>(center, HttpStatus.OK);
         } else {
@@ -38,7 +38,7 @@ public class CenterController {
 
     @PostMapping
     public ResponseEntity<Void> createCenter(@RequestBody CenterCreateData data) {
-        boolean saveSuccessful = centerService.createCenter(data);
+        boolean saveSuccessful = centerService.save(data);
         if (saveSuccessful) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
@@ -48,7 +48,7 @@ public class CenterController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateCenter(@PathVariable int id, @RequestBody CenterCreateData data) {
-        boolean updateSuccessful = centerService.updateCenter(id, data);
+        boolean updateSuccessful = centerService.update(id, data);
         if (updateSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -58,7 +58,7 @@ public class CenterController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCenter(@PathVariable int id) {
-        boolean deleteSuccessful = centerService.deleteCenter(id);
+        boolean deleteSuccessful = centerService.delete(id);
         if (deleteSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

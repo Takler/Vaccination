@@ -30,7 +30,7 @@ public class ShiftService implements Requestable, InfoOperation {
         ShiftInfoData shiftInfoData = new ShiftInfoData();
         Shift shift = shiftRepository.getShift(shiftId);
         Doctor doctor = doctorService.getDoctor(shift.getDoctor_id());
-        Center center = centerService.getCenter(shift.getCenter_id());
+        Center center = centerService.getById(shift.getCenter_id());
 
         shiftInfoData.setId(shiftId);
         shiftInfoData.setStart(shift.getStart());

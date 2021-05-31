@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CenterService implements Requestable {
+public class CenterService implements CrudOperation<Center, CenterCreateData>, Requestable {
     private final CenterRepository centerRepository;
 
     @Autowired
@@ -24,23 +24,23 @@ public class CenterService implements Requestable {
         return centerRepository.getName(id);
     }
 
-    public List<Center> getCenters() {
+    public List<Center> findAll() {
         return centerRepository.getCenters();
     }
 
-    public Center getCenter(int id) {
+    public Center getById(int id) {
         return centerRepository.getCenter(id);
     }
 
-    public boolean createCenter(CenterCreateData data) {
+    public boolean save(CenterCreateData data) {
         return centerRepository.createCenter(data);
     }
 
-    public boolean updateCenter(int id, CenterCreateData data) {
+    public boolean update(int id, CenterCreateData data) {
         return centerRepository.updateCenter(id, data);
     }
 
-    public boolean deleteCenter(int id) {
+    public boolean delete(int id) {
         return centerRepository.deleteCenter(id);
     }
 }

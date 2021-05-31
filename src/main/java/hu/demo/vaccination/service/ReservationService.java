@@ -47,7 +47,7 @@ public class ReservationService implements CrudOperation<Reservation, Reservatio
 
         reservationInfoData.setId(id);
         reservationInfoData.setPatient(patientService.getById(reservation.getPatientId()));
-        reservationInfoData.setCenter(centerService.getCenter(reservation.getCenterId()));
+        reservationInfoData.setCenter(centerService.getById(reservation.getCenterId()));
         reservationInfoData.setVaccine(vaccineService.getById(reservation.getVaccineId()));
         reservationInfoData.setRegistration(reservation.getRegistration());
         reservationInfoData.setNextShot(reservation.getNextShot());
