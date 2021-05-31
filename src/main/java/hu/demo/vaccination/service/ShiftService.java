@@ -34,13 +34,13 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateData>, Requ
     }
 
     @Override
-    public List<Shift> findAll() {      // Interface<Shift> ,miért "eszi" meg?
+    public List<Shift> findAll() {  // OK, no test    // Interface<Shift> ,miért "eszi" meg?
         return shiftRepository.findAll();
     }
 
     @Override
     public boolean save(ShiftCreateData shiftCreateData) {      //INSERT
-        return false;
+        return shiftRepository.save(shiftCreateData);
     }
 
     @Override

@@ -138,7 +138,8 @@ public enum DataDefinition {
             "(43, 4, 500)"),
     RESERVATION_INSERT_SAMPLE_DATA("INSERT INTO reservation " +
             "(patient_id, center_id, vaccine_id, registration, next_shot) " +
-            "VALUES (157648531,12,1,'2021-05-27','2021-06-05')"),
+            "VALUES " +
+            "(157648531,12,1,'2021-05-27','2021-06-05')"),
     SHIFT_INSERT_SAMPLE_DATA("INSERT INTO shift (center_id, doctor_id, start, end) " +
             "VALUES (12, 1, '2021-05-28 08:01:12', '2021-05-28 14:02:01')");
     //VACCINATION_INSERT_SAMPLE_DATA("");

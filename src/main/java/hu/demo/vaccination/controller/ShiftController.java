@@ -1,16 +1,14 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Shift;
+import hu.demo.vaccination.dto.shift.ShiftCreateData;
 import hu.demo.vaccination.dto.shift.ShiftInfoData;
 import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import hu.demo.vaccination.service.ShiftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,6 +31,11 @@ public class ShiftController {     // CRUD interface-t implementálni
     @GetMapping
     public ResponseEntity<List<Shift>> findAll() {
         return new ResponseEntity<>(shiftService.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Boolean> save(@RequestBody ShiftCreateData shiftCreateData) {   // B?
+        return new ResponseEntity<>(shiftService.save(shiftCreateData), HttpStatus.OK);
     }
 
     @GetMapping("/nameinfo/{shiftId}")

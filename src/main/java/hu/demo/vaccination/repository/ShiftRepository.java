@@ -37,7 +37,6 @@ public class ShiftRepository {
         //    return null;
     }
 
-
     public List<Shift> findAll() {
         String sqlSelect = "SELECT * FROM shift WHERE deleted = false";
         try {
@@ -48,20 +47,31 @@ public class ShiftRepository {
         }
     }
 
-    @Override
+
     public boolean save(ShiftCreateData shiftCreateData) {      //INSERT
+        String sqlInsert = "INSERT INTO shift (center_id, doctor_id, start, end) " +
+                "VALUES (?, ?, ?, ?)";
+        try {
+            if (jdbcTemplate.update(sqlInsert, shiftCreateData.getCenter_id(), shiftCreateData.getDoctor_id(),
+                    shiftCreateData.getStart(), shiftCreateData.getEnd()) == 1) {
+                return true;
+            }
+            ;
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
         return false;
     }
 
-    @Override
-    public boolean update(int shiftId, ShiftCreateData shiftCreateData) {
-        return false;
-    }
 
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
+//    public boolean update(int shiftId, ShiftCreateData shiftCreateData) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean delete(int id) {
+//        return false;
+//    }
 
 
     public ShiftDateData getShiftDateData(int shiftId) {
