@@ -1,7 +1,9 @@
 package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Inventory;
+import hu.demo.vaccination.dto.InventoryCreateData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -30,6 +32,41 @@ public class InventoryRepository {
                 "FROM inventory " +
                 "WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new InventoryMapper(), id);
+    }
+
+    public boolean createInventory(InventoryCreateData data) {
+        String sql = "INSERT INTO inventory (center_id, vaccine_id, amount) " +
+                "VALUES (?, ?, ?) ";
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, data.getCenterId(), data.getVaccineId(), data.getAmount());
+            return rowsAffected == 1;
+        } catch (DataAccessException e) {
+            return false;
+        }
+    }
+
+    public boolean updateInventory(int id, InventoryCreateData data) {
+        String sql = "UPDATE inventory " +
+                "SET center_id = ?, vaccine_id = ?, amount = ? " +
+                "WHERE id = ? ";
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, data.getCenterId(), data.getVaccineId(), data.getAmount(), id);
+            return rowsAffected == 1;
+        } catch (DataAccessException e) {
+            return false;
+        }
+    }
+
+    public boolean deleteInventory(int id) {
+        String sql = "UPDATE inventory " +
+                "SET deleted = true " +
+                "WHERE id = ? ";
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, id);
+            return rowsAffected == 1;
+        } catch (DataAccessException e) {
+            return false;
+        }
     }
 
     private static final class InventoryMapper implements RowMapper<Inventory> {
