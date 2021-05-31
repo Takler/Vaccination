@@ -4,11 +4,13 @@ import hu.demo.vaccination.domain.Inventory;
 import hu.demo.vaccination.dto.InventoryCreateData;
 import hu.demo.vaccination.dto.inventory.InventoryInfoData;
 import hu.demo.vaccination.dto.inventory.InventoryNameInfoData;
+import hu.demo.vaccination.dto.inventory.InventoryStockData;
 import hu.demo.vaccination.repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +25,20 @@ public class InventoryService implements CrudOperation<Inventory, InventoryCreat
         this.inventoryRepository = inventoryRepository;
         this.centerService = centerService;
         this.vaccineService = vaccineService;
+    }
+
+    public List<InventoryStockData> getStock(int centerId) {
+        List<InventoryStockData> result = new ArrayList<>();
+        List<Inventory> inventories = inventoryRepository.getInventories();
+        for (Inventory inventory : inventories) {
+            if (inventory.getCenterId() == centerId) {
+                InventoryStockData inventoryStockData = new InventoryStockData();
+                inventoryStockData.setAmount(inventory.getAmount());
+                inventoryStockData.setVaccineName(vaccineService.getName(inventory.getVaccineId()));
+                result.add(inventoryStockData);
+            }
+        }
+        return result;
     }
 
     @Override
