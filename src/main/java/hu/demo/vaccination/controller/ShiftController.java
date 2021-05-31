@@ -24,7 +24,7 @@ public class ShiftController {     // CRUD interface-t implementálni
     }
 
     @GetMapping("/{shiftId}")
-    public ResponseEntity<Shift> getById(int shiftId) {
+    public ResponseEntity<Shift> getById(@PathVariable int shiftId) {
         return new ResponseEntity<>(shiftService.getById(shiftId), HttpStatus.OK);
     }
 
@@ -34,8 +34,21 @@ public class ShiftController {     // CRUD interface-t implementálni
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> save(@RequestBody ShiftCreateData shiftCreateData) {   // B?
-        return new ResponseEntity<>(shiftService.save(shiftCreateData), HttpStatus.OK);
+    public ResponseEntity<Void> save(@RequestBody ShiftCreateData shiftCreateData) {   // Boolean  B/b ?,   Void V/v ?
+        if (shiftService.save(shiftCreateData)) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{shiftId}")
+    public ResponseEntity<Void> update(@PathVariable int shiftId, @RequestBody ShiftCreateData shiftCreateData) {
+        if (shiftService.update(shiftId, shiftCreateData)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
     }
 
 

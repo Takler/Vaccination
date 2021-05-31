@@ -56,7 +56,6 @@ public class ShiftRepository {
                     shiftCreateData.getStart(), shiftCreateData.getEnd()) == 1) {
                 return true;
             }
-            ;
         } catch (DataAccessException ex) {
             ex.printStackTrace();
         }
@@ -64,11 +63,20 @@ public class ShiftRepository {
     }
 
 
-//   public boolean update(int shiftId, ShiftCreateData shiftCreateData) {
-//        String sq
-//        return false;
-//    }
-//
+    public boolean update(int shiftId, ShiftCreateData shiftCreateData) {
+        String sqlUpdate = "UPDATE shift SET center_id = ?, doctor_id = ?, start = ?, end = ?" +
+                "WHERE id = ?";
+        try {
+            if (jdbcTemplate.update(sqlUpdate, shiftCreateData.getCenter_id(), shiftCreateData.getDoctor_id(),
+                    shiftCreateData.getStart(), shiftCreateData.getEnd(), shiftId) == 1) {
+                return true;
+            }
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
 //    @Override
 //    public boolean delete(int id) {
 //        return false;

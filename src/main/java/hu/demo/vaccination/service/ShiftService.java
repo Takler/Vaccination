@@ -45,7 +45,7 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateData>, Requ
 
     @Override
     public boolean update(int shiftId, ShiftCreateData shiftCreateData) {
-        return false;
+        return shiftRepository.update(shiftId, shiftCreateData);
     }
 
     @Override
