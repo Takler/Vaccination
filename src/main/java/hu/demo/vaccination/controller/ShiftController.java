@@ -25,7 +25,12 @@ public class ShiftController {     // CRUD interface-t implementálni
 
     @GetMapping("/{shiftId}")
     public ResponseEntity<Shift> getById(@PathVariable int shiftId) {
-        return new ResponseEntity<>(shiftService.getById(shiftId), HttpStatus.OK);
+        Shift shift = shiftService.getById(shiftId);
+        if (shift.getId() != 0) {
+            return new ResponseEntity<>(shift, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping
@@ -43,7 +48,8 @@ public class ShiftController {     // CRUD interface-t implementálni
     }
 
     @PutMapping("/{shiftId}")
-    public ResponseEntity<Void> update(@PathVariable int shiftId, @RequestBody ShiftCreateUpdateData shiftCreateUpdateData) {
+    public ResponseEntity<Void> update(@PathVariable int shiftId,
+                                       @RequestBody ShiftCreateUpdateData shiftCreateUpdateData) {
         if (shiftService.update(shiftId, shiftCreateUpdateData)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

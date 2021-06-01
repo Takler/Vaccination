@@ -32,9 +32,6 @@ public class ShiftRepository {
             ex.printStackTrace();
         }
         return shift;
-
-        //} catch (DataAccessException e) {   Ez nem elég, ha null is visszadhat a jdbcTemplate és külön akarjuk választani...?
-        //    return null;
     }
 
     public List<Shift> findAll() {

@@ -28,7 +28,7 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateUpdateData>
 
     //implement CrudOperation
 
-    @Override  //OK , no test
+    @Override  //OK
     public Shift getById(int shiftId) {
         return shiftRepository.getById(shiftId);
     }
