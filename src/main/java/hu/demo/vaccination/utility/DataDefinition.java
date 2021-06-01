@@ -114,6 +114,8 @@ public enum DataDefinition {
             "vaccine_id INT NOT NULL, " +
             "patient_id INT NOT NULL, " +
             "shift_id INT NOT NULL, " +
+            "date DATE NOT NULL, " +
+            "deleted BOOLEAN, " +
             "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id), " +
             "FOREIGN KEY (patient_id) REFERENCES patient(id), " +
             "FOREIGN KEY (shift_id) REFERENCES shift(id))"),
