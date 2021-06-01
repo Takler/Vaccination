@@ -2,7 +2,7 @@ package hu.demo.vaccination.dto.shift;
 
 import java.sql.Timestamp;
 
-public class ShiftCreateData {
+public class ShiftCreateUpdateData {
     private int center_id;
     private int doctor_id;
     private Timestamp start;

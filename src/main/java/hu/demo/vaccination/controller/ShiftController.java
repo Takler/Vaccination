@@ -1,7 +1,7 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Shift;
-import hu.demo.vaccination.dto.shift.ShiftCreateData;
+import hu.demo.vaccination.dto.shift.ShiftCreateUpdateData;
 import hu.demo.vaccination.dto.shift.ShiftInfoData;
 import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import hu.demo.vaccination.service.ShiftService;
@@ -34,8 +34,8 @@ public class ShiftController {     // CRUD interface-t implementálni
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody ShiftCreateData shiftCreateData) {   // Boolean  B/b ?,   Void V/v ?
-        if (shiftService.save(shiftCreateData)) {
+    public ResponseEntity<Void> save(@RequestBody ShiftCreateUpdateData shiftCreateUpdateData) {   // Boolean  B/b ?,   Void V/v ?
+        if (shiftService.save(shiftCreateUpdateData)) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -43,8 +43,8 @@ public class ShiftController {     // CRUD interface-t implementálni
     }
 
     @PutMapping("/{shiftId}")
-    public ResponseEntity<Void> update(@PathVariable int shiftId, @RequestBody ShiftCreateData shiftCreateData) {
-        if (shiftService.update(shiftId, shiftCreateData)) {
+    public ResponseEntity<Void> update(@PathVariable int shiftId, @RequestBody ShiftCreateUpdateData shiftCreateUpdateData) {
+        if (shiftService.update(shiftId, shiftCreateUpdateData)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);

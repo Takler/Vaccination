@@ -1,5 +1,7 @@
 package hu.demo.vaccination.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 
 public class Shift {
@@ -8,6 +10,7 @@ public class Shift {
     private int doctor_id;
     private Timestamp start;
     private Timestamp end;
+    @JsonIgnore
     private boolean deleted;
 
     public int getId() {
