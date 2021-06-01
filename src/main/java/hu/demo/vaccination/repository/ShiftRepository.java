@@ -27,7 +27,7 @@ public class ShiftRepository {
         Shift shift = new Shift();
         String sqlSelect = "SELECT * FROM shift WHERE id=? and deleted = false";
         try {
-            shift = jdbcTemplate.queryForObject(sqlSelect, new ShiftMapper(), Integer.toString(shiftId));   // numerikus id megy?
+            shift = jdbcTemplate.queryForObject(sqlSelect, new ShiftMapper(), shiftId);   // numerikus id megy?
         } catch (DataAccessException ex) {
             ex.printStackTrace();
         }

@@ -39,7 +39,7 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateUpdateData>
     }
 
     @Override
-    public boolean save(ShiftCreateUpdateData shiftCreateUpdateData) {    // Ok, no test    //INSERT
+    public boolean save(ShiftCreateUpdateData shiftCreateUpdateData) {    // OK   //INSERT
         return shiftRepository.save(shiftCreateUpdateData);
     }
 
