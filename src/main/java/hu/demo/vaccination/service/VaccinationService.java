@@ -88,7 +88,7 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
         }
     }
 
-    public List<AggregatedFieldData> getVaccinatedByVaccine() {
+    public List<AggregatedFieldData> getVaccinatedPerVaccine() {
         List<Vaccination> vaccinations = vaccinationRepository.getVaccinations();
         Map<Integer, Long> countOfVaccinationsPerVaccine = vaccinations.stream()
                 .collect(Collectors.toMap(
@@ -190,6 +190,7 @@ public class VaccinationService implements CrudOperation<Vaccination, Vaccinatio
         VaccinationInfoData vaccinationInfoData = new VaccinationInfoData();
         Vaccination vaccination = getById(id);
         vaccinationInfoData.setId(vaccination.getId());
+        vaccinationInfoData.setPatient(patientService.getById(vaccination.getPatientId()));
         vaccinationInfoData.setVaccine(vaccineService.getById(vaccination.getVaccineId()));
         vaccinationInfoData.setShift(shiftService.getInfo(vaccination.getShiftId()));
         vaccinationInfoData.setDate(vaccination.getDate());

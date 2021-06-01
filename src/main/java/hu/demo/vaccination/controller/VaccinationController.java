@@ -2,6 +2,7 @@ package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.dto.VaccinationCreateData;
+import hu.demo.vaccination.dto.vaccination.AggregatedFieldData;
 import hu.demo.vaccination.dto.vaccination.VaccinationInfoData;
 import hu.demo.vaccination.dto.vaccination.VaccinationNameInfoData;
 import hu.demo.vaccination.service.VaccinationService;
@@ -105,5 +106,10 @@ public class VaccinationController {
     @GetMapping("/name/{id}")
     public ResponseEntity<VaccinationNameInfoData> getVaccinationNameInfo(@PathVariable int id) {
         return new ResponseEntity<>(vaccinationService.getNameInfo(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/vaccine")
+    public ResponseEntity<List<AggregatedFieldData>> getVaccinatedPerVaccine() {
+        return new ResponseEntity<>(vaccinationService.getVaccinatedPerVaccine(), HttpStatus.OK);
     }
 }
