@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class DoctorRepository {
+public class DoctorRepository {   // implements betétele
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -61,7 +61,7 @@ public class DoctorRepository {
         return doctor;
     }
 
-    public boolean update(Doctor doctor) {
+    public boolean update(Doctor doctor) {   // javítani a id paraméter betételét
         boolean result = false;
         String sqlUpdate = "UPDATE doctor SET first_name=?, last_name=?, email=?, address=?, telephone_number=?, " +
                 "deleted=? WHERE id=?";
