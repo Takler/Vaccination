@@ -12,6 +12,7 @@ public class VaccinationMapper implements RowMapper<Vaccination> {
     public Vaccination mapRow(ResultSet resultSet, int i) throws SQLException {
         Vaccination vaccination = new Vaccination();
         vaccination.setId(resultSet.getInt("id"));
+        vaccination.setVaccineId(resultSet.getInt("vaccine_id"));
         vaccination.setPatientId(resultSet.getInt("patient_id"));
         vaccination.setShiftId(resultSet.getInt("shift_id"));
         vaccination.setDate(resultSet.getDate("date").toLocalDate());
