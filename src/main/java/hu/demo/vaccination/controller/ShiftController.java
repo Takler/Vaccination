@@ -57,7 +57,7 @@ public class ShiftController {     // CRUD interface-t implementálni
         }
     }
 
-    @DeleteMapping("/{shiftId")
+    @DeleteMapping("/{shiftId}")
     public ResponseEntity<Void> delete(@PathVariable int shiftId) {
         if (shiftService.delete(shiftId)) {
             return new ResponseEntity(HttpStatus.OK);

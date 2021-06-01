@@ -49,7 +49,7 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateUpdateData>
     }
 
     @Override
-    public boolean delete(int shiftId) {
+    public boolean delete(int shiftId) {   // OK
         return shiftRepository.delete(shiftId);
     }
 

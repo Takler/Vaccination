@@ -74,7 +74,7 @@ public class ShiftRepository {
     }
 
     public boolean delete(int shiftId) {
-        String sqlUpdate = "UPDATE shift SET deleted = false WHERE id = ?";
+        String sqlUpdate = "UPDATE shift SET deleted = true WHERE id = ?";
         try {
             if (jdbcTemplate.update(sqlUpdate, shiftId) == 1) {
                 return true;
