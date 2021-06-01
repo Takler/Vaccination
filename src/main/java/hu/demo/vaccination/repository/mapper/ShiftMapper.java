@@ -11,8 +11,8 @@ public class ShiftMapper implements RowMapper<Shift> {
     public Shift mapRow(ResultSet resultSet, int i) throws SQLException {
         Shift shift = new Shift();
         shift.setId(resultSet.getInt("id"));
-        shift.setCenter_id(resultSet.getInt("center_id"));
-        shift.setDoctor_id(resultSet.getInt("doctor_id"));
+        shift.setCenterId(resultSet.getInt("center_id"));
+        shift.setDoctorId(resultSet.getInt("doctor_id"));
         shift.setStart(resultSet.getTimestamp("start"));
         shift.setEnd(resultSet.getTimestamp("end"));
         shift.setDeleted(resultSet.getBoolean("deleted"));

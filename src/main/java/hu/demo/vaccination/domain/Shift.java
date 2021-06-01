@@ -6,8 +6,8 @@ import java.sql.Timestamp;
 
 public class Shift {
     private int id;
-    private int center_id;
-    private int doctor_id;
+    private int centerId;
+    private int doctorId;
     private Timestamp start;
     private Timestamp end;
     @JsonIgnore
@@ -21,20 +21,20 @@ public class Shift {
         this.id = id;
     }
 
-    public int getCenter_id() {
-        return center_id;
+    public int getCenterId() {
+        return centerId;
     }
 
-    public void setCenter_id(int center_id) {
-        this.center_id = center_id;
+    public void setCenterId(int centerId) {
+        this.centerId = centerId;
     }
 
-    public int getDoctor_id() {
-        return doctor_id;
+    public int getDoctorId() {
+        return doctorId;
     }
 
-    public void setDoctor_id(int doctor_id) {
-        this.doctor_id = doctor_id;
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
     }
 
     public Timestamp getStart() {

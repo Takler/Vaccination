@@ -49,7 +49,7 @@ public class ShiftRepository {
         String sqlInsert = "INSERT INTO shift (center_id, doctor_id, start, end) " +
                 "VALUES (?, ?, ?, ?)";
         try {
-            if (jdbcTemplate.update(sqlInsert, shiftCreateUpdateData.getCenter_id(), shiftCreateUpdateData.getDoctor_id(),
+            if (jdbcTemplate.update(sqlInsert, shiftCreateUpdateData.getCenterId(), shiftCreateUpdateData.getDoctorId(),
                     shiftCreateUpdateData.getStart(), shiftCreateUpdateData.getEnd()) == 1) {
                 return true;
             }
@@ -63,7 +63,7 @@ public class ShiftRepository {
         String sqlUpdate = "UPDATE shift SET center_id = ?, doctor_id = ?, start = ?, end = ?" +
                 "WHERE id = ?";
         try {
-            if (jdbcTemplate.update(sqlUpdate, shiftCreateUpdateData.getCenter_id(), shiftCreateUpdateData.getDoctor_id(),
+            if (jdbcTemplate.update(sqlUpdate, shiftCreateUpdateData.getCenterId(), shiftCreateUpdateData.getDoctorId(),
                     shiftCreateUpdateData.getStart(), shiftCreateUpdateData.getEnd(), shiftId) == 1) {
                 return true;
             }

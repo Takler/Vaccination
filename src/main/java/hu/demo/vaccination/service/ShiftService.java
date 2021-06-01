@@ -59,8 +59,8 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateUpdateData>
     public ShiftInfoData getInfo(int shiftId) {
         ShiftInfoData shiftInfoData = new ShiftInfoData();
         Shift shift = shiftRepository.getShift(shiftId);
-        Doctor doctor = doctorService.getById(shift.getDoctor_id());
-        Center center = centerService.getById(shift.getCenter_id());
+        Doctor doctor = doctorService.getById(shift.getDoctorId());
+        Center center = centerService.getById(shift.getCenterId());
 
         shiftInfoData.setId(shiftId);
         shiftInfoData.setStart(shift.getStart());
@@ -75,7 +75,7 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateUpdateData>
     public ShiftNameInfoData getNameInfo(int shiftId) {
         ShiftNameInfoData shiftNameInfoData = new ShiftNameInfoData();
         Shift shift = shiftRepository.getShift(shiftId);
-        Doctor doctor = doctorService.getById(shift.getDoctor_id());  //egész rekord kényszer a rossz getNameByID miatt...
+        Doctor doctor = doctorService.getById(shift.getDoctorId());  //egész rekord kényszer a rossz getNameByID miatt...
 
         shiftNameInfoData.setId(shiftId);
         shiftNameInfoData.setStart(shift.getStart());
@@ -83,7 +83,7 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateUpdateData>
         shiftNameInfoData.setDeleted(shift.isDeleted());
         shiftNameInfoData.setDoctorFirstName(doctor.getFirstName());
         shiftNameInfoData.setDoctorLastName(doctor.getLastName());
-        shiftNameInfoData.setCenterName(centerService.getName(shift.getCenter_id()));  //getByIdOnlyName -nak kéne lennie?
+        shiftNameInfoData.setCenterName(centerService.getName(shift.getCenterId()));  //getByIdOnlyName -nak kéne lennie?
         return shiftNameInfoData;
     }
 //        Field[] fields = shift.getClass().getFields();
@@ -99,7 +99,7 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateUpdateData>
 //        shiftInfoData.setStart(shift.getStart());
 //        shiftInfoData.setEnd(shift.getEnd());
 //
-//        DoctorCreate doctorCreate = doctorService.getDoctor(shift.getDoctor_id());
+//        DoctorCreate doctorCreate = doctorService.getDoctor(shift.getDoctorId());
 //        shiftInfoData.setDoctorFirstName(doctorCreate.getFirstName());
 //        shiftInfoData.setDoctorLastName(doctorCreate.getLastName());
 //

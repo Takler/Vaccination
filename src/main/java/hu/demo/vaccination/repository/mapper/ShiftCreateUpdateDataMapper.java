@@ -10,8 +10,8 @@ public class ShiftCreateUpdateDataMapper implements RowMapper<ShiftCreateUpdateD
     @Override
     public ShiftCreateUpdateData mapRow(ResultSet resultSet, int i) throws SQLException {
         ShiftCreateUpdateData shiftCreateUpdateData = new ShiftCreateUpdateData();
-        shiftCreateUpdateData.setCenter_id(resultSet.getInt("center_id"));
-        shiftCreateUpdateData.setDoctor_id(resultSet.getInt("doctor_id"));
+        shiftCreateUpdateData.setCenterId(resultSet.getInt("center_id"));
+        shiftCreateUpdateData.setDoctorId(resultSet.getInt("doctor_id"));
         shiftCreateUpdateData.setStart(resultSet.getTimestamp("start"));
         shiftCreateUpdateData.setEnd(resultSet.getTimestamp("end"));
         return shiftCreateUpdateData;
