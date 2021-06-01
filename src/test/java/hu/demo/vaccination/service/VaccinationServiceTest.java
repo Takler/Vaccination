@@ -370,7 +370,7 @@ class VaccinationServiceTest {
     void getVaccinatedByVaccine() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
-        List<AggregatedFieldData> result = vaccinationService.getVaccinatedByVaccine();
+        List<AggregatedFieldData> result = vaccinationService.getVaccinatedPerVaccine();
         Assertions.assertEquals(
                 List.of(
                         new AggregatedFieldData("Pfizer", new CountPercentageData(5, 31.25)),

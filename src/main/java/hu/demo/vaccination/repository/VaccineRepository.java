@@ -93,20 +93,20 @@ public class VaccineRepository {
     }
 
     public boolean updateVaccine(int id, VaccineCreateData data) {
-        String sql = "UPDATE vaccine SET" +
+        String sql = "UPDATE vaccine SET " +
                 "name = ?, " +
                 "type = ?, " +
                 "storage_temperature = ?, " +
                 "age_limit_min = ?, " +
                 "age_limit_max = ?, " +
                 "shots_needed = ?, " +
-                "days_until_next_shot = ?, " +
                 "next_shot_id = ?, " +
+                "days_until_next_shot = ?, " +
                 "fully_vaccinated_time_period = ?, " +
                 "applicable = ?, " +
                 "applicable_for_pregnant = ?, " +
-                "applicable_for_chronic) = ? " +
-                "WHERE id = ?;";
+                "applicable_for_chronic = ? " +
+                "WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql,
                     data.getName(),
@@ -115,8 +115,8 @@ public class VaccineRepository {
                     data.getAgeLimitMin(),
                     data.getAgeLimitMax(),
                     data.getShotsNeeded(),
-                    data.getDaysUntilNextShot(),
                     data.getNextShotId(),
+                    data.getDaysUntilNextShot(),
                     data.getFullyVaccinatedTimePeriod(),
                     data.isApplicable(),
                     data.isApplicableForPregnant(),
