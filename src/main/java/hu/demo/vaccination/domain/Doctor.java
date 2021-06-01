@@ -1,5 +1,7 @@
 package hu.demo.vaccination.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Doctor {
 
     private int id;
@@ -8,6 +10,7 @@ public class Doctor {
     private String email;
     private String address;
     private String telephoneNumber;
+    @JsonIgnore
     private boolean deleted;
 
     public Doctor() {

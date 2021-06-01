@@ -1,7 +1,7 @@
 package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Shift;
-import hu.demo.vaccination.dto.shift.ShiftCreateData;
+import hu.demo.vaccination.dto.shift.ShiftCreateUpdateData;
 import hu.demo.vaccination.dto.shift.ShiftDateData;
 import hu.demo.vaccination.repository.mapper.ShiftDateDataMapper;
 import hu.demo.vaccination.repository.mapper.ShiftMapper;
@@ -48,12 +48,12 @@ public class ShiftRepository {
     }
 
 
-    public boolean save(ShiftCreateData shiftCreateData) {      //INSERT
+    public boolean save(ShiftCreateUpdateData shiftCreateUpdateData) {      //INSERT
         String sqlInsert = "INSERT INTO shift (center_id, doctor_id, start, end) " +
                 "VALUES (?, ?, ?, ?)";
         try {
-            if (jdbcTemplate.update(sqlInsert, shiftCreateData.getCenter_id(), shiftCreateData.getDoctor_id(),
-                    shiftCreateData.getStart(), shiftCreateData.getEnd()) == 1) {
+            if (jdbcTemplate.update(sqlInsert, shiftCreateUpdateData.getCenter_id(), shiftCreateUpdateData.getDoctor_id(),
+                    shiftCreateUpdateData.getStart(), shiftCreateUpdateData.getEnd()) == 1) {
                 return true;
             }
         } catch (DataAccessException ex) {
@@ -62,12 +62,12 @@ public class ShiftRepository {
         return false;
     }
 
-    public boolean update(int shiftId, ShiftCreateData shiftCreateData) {
+    public boolean update(int shiftId, ShiftCreateUpdateData shiftCreateUpdateData) {
         String sqlUpdate = "UPDATE shift SET center_id = ?, doctor_id = ?, start = ?, end = ?" +
                 "WHERE id = ?";
         try {
-            if (jdbcTemplate.update(sqlUpdate, shiftCreateData.getCenter_id(), shiftCreateData.getDoctor_id(),
-                    shiftCreateData.getStart(), shiftCreateData.getEnd(), shiftId) == 1) {
+            if (jdbcTemplate.update(sqlUpdate, shiftCreateUpdateData.getCenter_id(), shiftCreateUpdateData.getDoctor_id(),
+                    shiftCreateUpdateData.getStart(), shiftCreateUpdateData.getEnd(), shiftId) == 1) {
                 return true;
             }
         } catch (DataAccessException ex) {
@@ -88,6 +88,15 @@ public class ShiftRepository {
         return false;
     }
 
+    public Shift getShift(int shiftId) {
+        Shift shift = new Shift();
+        ShiftMapper shiftMapper = new ShiftMapper();
+        List<Shift> shiftList = new LinkedList<>();
+        String sqlSelect = "SELECT * FROM shift WHERE id=?";
+        shiftList = jdbcTemplate.query(sqlSelect, shiftMapper, Integer.toString(shiftId));
+        shift = shiftList.get(0);
+        return shift;
+    }
 
     public ShiftDateData getShiftDateData(int shiftId) {
         ShiftDateData shiftDateData = new ShiftDateData();
@@ -97,15 +106,5 @@ public class ShiftRepository {
         shiftDateDataList = jdbcTemplate.query(sqlSelect, shiftDateDataMapper, Integer.toString(shiftId));
         shiftDateData = shiftDateDataList.get(0);
         return shiftDateData;
-    }
-
-    public Shift getShift(int shiftId) {
-        Shift shift = new Shift();
-        ShiftMapper shiftMapper = new ShiftMapper();
-        List<Shift> shiftList = new LinkedList<>();
-        String sqlSelect = "SELECT * FROM shift WHERE id=?";
-        shiftList = jdbcTemplate.query(sqlSelect, shiftMapper, Integer.toString(shiftId));
-        shift = shiftList.get(0);
-        return shift;
     }
 }

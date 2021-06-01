@@ -3,7 +3,7 @@ package hu.demo.vaccination.service;
 import hu.demo.vaccination.domain.Center;
 import hu.demo.vaccination.domain.Doctor;
 import hu.demo.vaccination.domain.Shift;
-import hu.demo.vaccination.dto.shift.ShiftCreateData;
+import hu.demo.vaccination.dto.shift.ShiftCreateUpdateData;
 import hu.demo.vaccination.dto.shift.ShiftInfoData;
 import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import hu.demo.vaccination.repository.ShiftRepository;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ShiftService implements CrudOperation<Shift, ShiftCreateData>, Requestable, InfoOperation { //Requestable???
+public class ShiftService implements CrudOperation<Shift, ShiftCreateUpdateData>, Requestable, InfoOperation { //Requestable???
 
     private ShiftRepository shiftRepository;
     private DoctorService doctorService;
@@ -34,18 +34,18 @@ public class ShiftService implements CrudOperation<Shift, ShiftCreateData>, Requ
     }
 
     @Override
-    public List<Shift> findAll() {  // OK, no test    // Interface<Shift> ,miért "eszi" meg?
+    public List<Shift> findAll() {  // OK    // Interface<Shift> ,miért "eszi" meg?
         return shiftRepository.findAll();
     }
 
     @Override
-    public boolean save(ShiftCreateData shiftCreateData) {    // Ok, no test    //INSERT
-        return shiftRepository.save(shiftCreateData);
+    public boolean save(ShiftCreateUpdateData shiftCreateUpdateData) {    // Ok, no test    //INSERT
+        return shiftRepository.save(shiftCreateUpdateData);
     }
 
     @Override
-    public boolean update(int shiftId, ShiftCreateData shiftCreateData) {
-        return shiftRepository.update(shiftId, shiftCreateData);
+    public boolean update(int shiftId, ShiftCreateUpdateData shiftCreateUpdateData) {
+        return shiftRepository.update(shiftId, shiftCreateUpdateData);
     }
 
     @Override
