@@ -24,7 +24,7 @@ public class ShiftRepository {
     }
 
     public Shift getById(int shiftId) {
-        Shift shift = new Shift();
+        Shift shift = new Shift();   // Hogy ne null -t dobjunk?!?
         String sqlSelect = "SELECT * FROM shift WHERE id=? and deleted = false";
         try {
             shift = jdbcTemplate.queryForObject(sqlSelect, new ShiftMapper(), shiftId);   // numerikus id megy?

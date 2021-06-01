@@ -40,7 +40,7 @@ public class DoctorRepository {
 
     public List<Map<String, Object>> findAll() {   // Selectbe tenni a logikai kiszűrést
         List<Map<String, Object>> doctors = new LinkedList<>();
-        String sqlSelect = "SELECT * FROM doctor";
+        String sqlSelect = "SELECT * FROM doctor WHERE deleted = false";
         try {
             doctors = jdbcTemplate.queryForList(sqlSelect);     // SQL oszlopnevek vannak ??
         } catch (DataAccessException ex) {                      // ??
@@ -52,9 +52,9 @@ public class DoctorRepository {
     public Doctor getById(int doctorId) {   //null felfelé?
         Doctor doctor = new Doctor();
         DoctorMapper doctorMapper = new DoctorMapper();
-        String sqlSelect = "SELECT * FROM doctor WHERE id=?";
+        String sqlSelect = "SELECT * FROM doctor WHERE id=? and deleted = false";
         try {
-            doctor = jdbcTemplate.queryForObject(sqlSelect, doctorMapper, Integer.toString(doctorId));
+            doctor = jdbcTemplate.queryForObject(sqlSelect, doctorMapper, doctorId);
         } catch (DataAccessException ex) {
             ex.printStackTrace();
         }
