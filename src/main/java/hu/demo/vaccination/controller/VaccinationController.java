@@ -92,7 +92,7 @@ public class VaccinationController {
         if (minAge > maxAge && maxAge != 0) {
             return new ResponseEntity<>(0.0, HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>(vaccinationService.getFirstVaccinatedPercentage(minAge, maxAge, chronic, pregnant),
+            return new ResponseEntity<>(vaccinationService.getFullVaccinatedPercentage(minAge, maxAge, chronic, pregnant),
                     HttpStatus.OK);
         }
     }

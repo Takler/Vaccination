@@ -70,9 +70,9 @@ public enum DataDefinition {
             "('Pfizer', 'mRNA', -70, 16, 999, 2, 1, 28, 42, 1, 1, 1)," +
             "('Moderna', 'mRNA', -20, 18, 999, 2, 2, 28, 42, 1, 1, 1)," +
             "('AstraZeneca', 'adenovirus', 4, 18, 999, 2, 3, 84, 96, 1, 1, 1), " +
-            "('Gamaleja 1st', 'adenovirus', 4, 18, 999, 2, 5, 21, 35, 1, 0, 0), " +
+            "('Gamaleja', 'adenovirus', 4, 18, 999, 2, 5, 21, 35, 1, 0, 0), " +
             "('Gamaleja 2nd', 'adenovirus', 4, 18, 999, 2, -1, 0, 14, 1, 0, 0), " +
-            "('Sinopharm', 'unactivated virus', 4, 18, 999, 2, 6, 28, 42, 1, 0, 0), " +
+            "('Sinopharm', 'inactivated virus', 4, 18, 999, 2, 6, 28, 42, 1, 0, 0), " +
             "('Janssen', 'adenovirus', 4, 18, 999, 1, -1, 0, 14, 1, 0, 1)"),
     PATIENT_INSERT_SAMPLE_DATA("INSERT INTO patient " +
             "(id, first_name, last_name, mothers_name, gender, date_of_birth, " +
@@ -114,6 +114,8 @@ public enum DataDefinition {
             "vaccine_id INT NOT NULL, " +
             "patient_id INT NOT NULL, " +
             "shift_id INT NOT NULL, " +
+            "date DATE NOT NULL, " +
+            "deleted BOOLEAN, " +
             "FOREIGN KEY (vaccine_id) REFERENCES vaccine(id), " +
             "FOREIGN KEY (patient_id) REFERENCES patient(id), " +
             "FOREIGN KEY (shift_id) REFERENCES shift(id))"),
@@ -144,8 +146,11 @@ public enum DataDefinition {
             "VALUES " +
             "(157648531,12,1,'2021-05-27','2021-06-05')"),
     SHIFT_INSERT_SAMPLE_DATA("INSERT INTO shift (center_id, doctor_id, start, end) " +
-            "VALUES (12, 1, '2021-05-28 08:01:12', '2021-05-28 14:02:01')");
-    //VACCINATION_INSERT_SAMPLE_DATA("");
+            "VALUES (12, 1, '2021-05-28 08:01:12', '2021-05-28 14:02:01')"),
+    VACCINATION_INSERT_SAMPLE_DATA("INSERT INTO vaccination (vaccine_id, patient_id, shift_id, date, deleted) " +
+            "VALUES (1, 157648531, 1, '2021-05-28', false), " +
+            "(2, 175684569, 1, '2021-05-28', false), " +
+            "(1, 248248264, 1, '2021-05-28', false)");
 
     private final String definition;
 
