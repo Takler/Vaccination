@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ShiftService implements CrudOperation<Shift, ShiftCreateUpdateData>, Nameable, InfoOperation { //Requestable???
+public class ShiftService implements CrudOperation<Shift, ShiftCreateUpdateData>, InfoOperation { //Requestable???
 
     private ShiftRepository shiftRepository;
     private DoctorService doctorService;
