@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ReservationService implements CrudOperation<Reservation, ReservationCreateData>, InfoOperation<ReservationInfoData, ReservationNameInfoData> {
+public class ReservationService implements InfoOperation<Reservation, ReservationCreateData, ReservationInfoData, ReservationNameInfoData> {
     private final ReservationRepository reservationRepository;
     private final CenterService centerService;
     private final VaccineService vaccineService;
