@@ -147,4 +147,10 @@ public class Patient {
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, mothersName, gender, dateOfBirth, email, city, zipCode, address, telephoneNumber, pregnant, underlyingMedicalCondition);
     }
+
+    public String toCsvFormat() {
+        return  id + ";" + firstName + ";" + lastName + ";" + mothersName + ";" + gender + ";" + dateOfBirth +
+                ";" + email + ";" + city + ";" + zipCode + ";" + address + ";" + telephoneNumber +
+                ";" + pregnant + ";" + underlyingMedicalCondition;
+    }
 }

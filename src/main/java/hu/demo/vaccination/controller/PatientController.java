@@ -1,6 +1,7 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Patient;
+import hu.demo.vaccination.dto.InputCreateData;
 import hu.demo.vaccination.dto.patient.PatientCreateData;
 import hu.demo.vaccination.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,26 @@ public class PatientController {
     @Autowired
     public PatientController(PatientService patientService) {
         this.patientService = patientService;
+    }
+
+    @GetMapping("/savefile")
+    public ResponseEntity<Void> saveFile() {
+        boolean saveSuccessful = patientService.otherFileSave();
+        if (saveSuccessful) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/loadfile")
+    public ResponseEntity<Void> loadFile(@RequestBody InputCreateData input) {
+        boolean loadSuccessful = patientService.otherFileLoad(input);
+        if (loadSuccessful) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping
