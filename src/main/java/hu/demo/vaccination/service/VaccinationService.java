@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class VaccinationService implements CrudOperation<Vaccination, VaccinationCreateData>, InfoOperation<VaccinationInfoData, VaccinationNameInfoData> {
+public class VaccinationService implements InfoOperation<Vaccination, VaccinationCreateData, VaccinationInfoData, VaccinationNameInfoData> {
 
     private final VaccinationRepository vaccinationRepository;
     private final PatientService patientService;
