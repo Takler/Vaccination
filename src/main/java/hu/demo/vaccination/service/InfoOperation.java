@@ -1,8 +1,8 @@
 package hu.demo.vaccination.service;
 
-public interface InfoOperation<T, U> {
+public interface InfoOperation<T, U, V, W> extends CrudOperation<T, U> {
 
-    T getInfo(int id);
+    V getInfo(int id);
 
-    U getNameInfo(int id);
+    W getNameInfo(int id);
 }
