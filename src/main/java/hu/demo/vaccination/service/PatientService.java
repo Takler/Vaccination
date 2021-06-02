@@ -26,8 +26,8 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
         this.patientRepository = patientRepository;
     }
 
-    public boolean otherFileSave() {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get("files/patient/patients.csv")))) {
+    public boolean otherFileSave(InputCreateData input) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get(input.getInput())))) {
             List<Patient> patients = patientRepository.findAll();
             if (!patients.isEmpty()) {
                 for (Patient patient : patients) {

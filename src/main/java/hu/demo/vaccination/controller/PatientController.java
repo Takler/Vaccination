@@ -23,8 +23,8 @@ public class PatientController {
     }
 
     @GetMapping("/savefile")
-    public ResponseEntity<Void> saveFile() {
-        boolean saveSuccessful = patientService.otherFileSave();
+    public ResponseEntity<Void> saveFile(@RequestBody InputCreateData input) {
+        boolean saveSuccessful = patientService.otherFileSave(input);
         if (saveSuccessful) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
