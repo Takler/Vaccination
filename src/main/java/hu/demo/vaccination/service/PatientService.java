@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PatientService implements CrudOperation<Patient, PatientCreateData>, HasLastName {
+public class PatientService implements CrudOperation<Patient, PatientCreateData>, LastNameable {
     private final PatientRepository patientRepository;
 
     @Autowired

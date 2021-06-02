@@ -1,5 +1,5 @@
 package hu.demo.vaccination.service;
 
-public interface Requestable {
+public interface Nameable {
     public String getName(int id);
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CenterService implements CrudOperation<Center, CenterCreateData>, Requestable {
+public class CenterService implements CrudOperation<Center, CenterCreateData>, Nameable {
     private final CenterRepository centerRepository;
 
     @Autowired

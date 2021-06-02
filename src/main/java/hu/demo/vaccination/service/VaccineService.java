@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class VaccineService implements CrudOperation<Vaccine, VaccineCreateData>, Requestable {
+public class VaccineService implements CrudOperation<Vaccine, VaccineCreateData>, Nameable {
 
     private final VaccineRepository vaccineRepository;
 
