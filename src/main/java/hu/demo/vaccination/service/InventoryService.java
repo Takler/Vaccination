@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class InventoryService implements CrudOperation<Inventory, InventoryCreateData>, InfoOperation<InventoryInfoData, InventoryNameInfoData> {
+public class InventoryService implements InfoOperation<Inventory, InventoryCreateData, InventoryInfoData, InventoryNameInfoData> {
     private final InventoryRepository inventoryRepository;
     private final CenterService centerService;
     private final VaccineService vaccineService;
