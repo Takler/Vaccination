@@ -29,8 +29,10 @@ class ReservationServiceTest {
     private static final int PATIENT_ID = 123123123;
     private static final int RESERVATION_ID = 1;
     private static final int OTHER_ID = 1;
+    private static final int CENTER_ID = 1;
+    private static final int VACCINE_ID = 1;
     private static final String CENTER_NAME = "Honvéd Kórház";
-    private static final String VACCINE_NAME = "Pzizer";
+    private static final String VACCINE_NAME = "Pfizer";
     private static final String PATIENT_NAME = "Test Elek";
 
     private ReservationService reservationService;
@@ -60,8 +62,8 @@ class ReservationServiceTest {
 
         when(reservationRepositoryMock.getById(RESERVATION_ID)).thenReturn(originalReservation);
         when(reservationRepositoryMock.getPatientReservation(PATIENT_ID)).thenReturn(originalPatientReservationData);
-        when(centerServiceMock.getName(OTHER_ID)).thenReturn(CENTER_NAME);
-        when(vaccineServiceMock.getName(OTHER_ID)).thenReturn(VACCINE_NAME);
+        when(centerServiceMock.getName(CENTER_ID)).thenReturn(CENTER_NAME);
+        when(vaccineServiceMock.getName(VACCINE_ID)).thenReturn(VACCINE_NAME);
         when(patientServiceMock.getName(PATIENT_ID)).thenReturn(PATIENT_NAME);
 
         PatientReservationData resultData = reservationService.getPatientReservation(PATIENT_ID);
@@ -70,8 +72,8 @@ class ReservationServiceTest {
         assertEquals(VACCINE_NAME, resultData.getVaccineName());
         assertEquals(PATIENT_NAME, resultData.getPatientName());
         verify(reservationRepositoryMock, times(1)).getById(RESERVATION_ID);
-        verify(centerServiceMock, times(1)).getName(OTHER_ID);
-        verify(vaccineServiceMock, times(1)).getName(OTHER_ID);
+        verify(centerServiceMock, times(1)).getName(CENTER_ID);
+        verify(vaccineServiceMock, times(1)).getName(VACCINE_ID);
         verify(patientServiceMock, times(1)).getName(PATIENT_ID);
 
     }
@@ -83,14 +85,14 @@ class ReservationServiceTest {
         samplePatient.setId(PATIENT_ID);
 
         Center sampleCenter = new Center();
-        sampleCenter.setId(1);
-        sampleCenter.setName("Honvéd Kórház");
+        sampleCenter.setId(CENTER_ID);
+        sampleCenter.setName(CENTER_NAME);
         sampleCenter.setCity("Budapest");
         sampleCenter.setEmail("honved@honved.hu");
         sampleCenter.setTelephoneNumber("+3619877651");
         sampleCenter.setDailyCapacity(1000);
 
-        Vaccine sampleVaccine = new Vaccine(1, "Pfizer", "mRNA", -70, 16, 999,
+        Vaccine sampleVaccine = new Vaccine(VACCINE_ID, VACCINE_NAME, "mRNA", -70, 16, 999,
                 2, 1, 28, 42, true, true, true);
 
         when(reservationRepositoryMock.getById(sampleReservation.getId())).thenReturn(sampleReservation);
@@ -114,8 +116,8 @@ class ReservationServiceTest {
 
         when(reservationRepositoryMock.getById(RESERVATION_ID)).thenReturn(sampleReservation);
         when(patientServiceMock.getName(PATIENT_ID)).thenReturn(PATIENT_NAME);
-        when(centerServiceMock.getName(OTHER_ID)).thenReturn(CENTER_NAME);
-        when(vaccineServiceMock.getName(OTHER_ID)).thenReturn(VACCINE_NAME);
+        when(centerServiceMock.getName(CENTER_ID)).thenReturn(CENTER_NAME);
+        when(vaccineServiceMock.getName(VACCINE_ID)).thenReturn(VACCINE_NAME);
 
         ReservationNameInfoData resultData = reservationService.getNameInfo(RESERVATION_ID);
 
@@ -125,8 +127,8 @@ class ReservationServiceTest {
         assertEquals(sampleReservation.getRegistration(), resultData.getRegistration());
         assertEquals(sampleReservation.getNextShot(), resultData.getNextShot());
         verify(reservationRepositoryMock, times(1)).getById(RESERVATION_ID);
-        verify(centerServiceMock, times(1)).getName(OTHER_ID);
-        verify(vaccineServiceMock, times(1)).getName(OTHER_ID);
+        verify(centerServiceMock, times(1)).getName(CENTER_ID);
+        verify(vaccineServiceMock, times(1)).getName(VACCINE_ID);
         verify(patientServiceMock, times(1)).getName(PATIENT_ID);
     }
 
@@ -187,24 +189,13 @@ class ReservationServiceTest {
     }
 
     private Reservation getSampleReservation() {
-        Reservation reservation = new Reservation();
-        reservation.setId(OTHER_ID);
-        reservation.setCenterId(OTHER_ID);
-        reservation.setVaccineId(OTHER_ID);
-        reservation.setPatientId(PATIENT_ID);
-        reservation.setRegistration(LocalDate.now());
-        reservation.setNextShot(LocalDate.now().plusDays(14));
-        return reservation;
+        return new Reservation(RESERVATION_ID, PATIENT_ID, CENTER_ID, VACCINE_ID,
+                LocalDate.now(), LocalDate.now().plusDays(14), false);
     }
 
     private ReservationCreateData getSampleReservationCreateData() {
-        ReservationCreateData data = new ReservationCreateData();
-        data.setCenterId(OTHER_ID);
-        data.setVaccineId(OTHER_ID);
-        data.setPatientId(PATIENT_ID);
-        data.setRegistration(LocalDate.now());
-        data.setNextShot(LocalDate.now().plusDays(14));
-        return data;
+        return new ReservationCreateData(PATIENT_ID, CENTER_ID, VACCINE_ID,
+                LocalDate.now(), LocalDate.now().plusDays(14));
     }
 
 }

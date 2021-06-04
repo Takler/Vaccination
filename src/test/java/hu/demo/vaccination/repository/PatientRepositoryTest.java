@@ -123,20 +123,11 @@ class PatientRepositoryTest {
 
         PatientCreateData data = getPatientTwoCreateData();
 
-        PatientCreateData modifiedData = new PatientCreateData();
-        data.setId(MODIFIED_ID);
-        data.setFirstName(MODIFIED_TEST_TEXT);
-        data.setLastName(MODIFIED_TEST_TEXT);
-        data.setMothersName(MODIFIED_TEST_TEXT);
-        data.setGender(MODIFIED_TEST_TEXT);
-        data.setDateOfBirth(MODIFIED_TEST_DATE);
-        data.setEmail(MODIFIED_TEST_TEXT);
-        data.setCity(MODIFIED_TEST_TEXT);
-        data.setZipCode(MODIFIED_TEST_TEXT);
-        data.setAddress(MODIFIED_TEST_TEXT);
-        data.setTelephoneNumber(MODIFIED_TEST_TEXT);
-        data.setPregnant(MODIFIED_TEST_BOOLEAN);
-        data.setUnderlyingMedicalCondition(MODIFIED_TEST_BOOLEAN);
+        PatientCreateData modifiedData = new PatientCreateData(MODIFIED_ID, MODIFIED_TEST_TEXT,
+                MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT, MODIFIED_TEST_DATE,
+                MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT,
+                MODIFIED_TEST_TEXT, MODIFIED_TEST_BOOLEAN, MODIFIED_TEST_BOOLEAN);
+
 
         patientRepository.save(data);
 
