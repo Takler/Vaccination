@@ -4,6 +4,7 @@ import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.dto.InputCreateData;
 import hu.demo.vaccination.dto.patient.PatientCreateData;
 import hu.demo.vaccination.repository.PatientRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional
 public class PatientService implements CrudOperation<Patient, PatientCreateData>, LastNameable, FileHandler {
@@ -38,6 +40,7 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
             }
             return true;
         } catch (IOException e) {
+            log.error("fileSave exception: " + e.getMessage());
             return false;
         }
     }
@@ -67,7 +70,7 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
                 }
             }
         } catch (IOException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
+            log.error("fileLoad exception: " + e.getMessage());
             return false;
         }
         return true;
