@@ -1,7 +1,10 @@
 package hu.demo.vaccination.dto;
 
+import lombok.*;
+
 import java.time.LocalDate;
 
+@Data
 public class VaccinationCreateData {
 
     private int vaccineId;
@@ -10,43 +13,4 @@ public class VaccinationCreateData {
     private LocalDate date;
     private boolean deleted;
 
-    public int getVaccineId() {
-        return vaccineId;
-    }
-
-    public void setVaccineId(int vaccineId) {
-        this.vaccineId = vaccineId;
-    }
-
-    public int getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
-    }
-
-    public int getShiftId() {
-        return shiftId;
-    }
-
-    public void setShiftId(int shiftId) {
-        this.shiftId = shiftId;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 }
