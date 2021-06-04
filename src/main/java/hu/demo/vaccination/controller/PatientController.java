@@ -22,7 +22,7 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @GetMapping("/savefile")
+    @GetMapping("/file")
     public ResponseEntity<Void> saveFile(@RequestBody InputCreateData input) {
         boolean saveSuccessful = patientService.fileSave(input);
         if (saveSuccessful) {
@@ -32,7 +32,7 @@ public class PatientController {
         }
     }
 
-    @GetMapping("/loadfile")
+    @PostMapping("/file")
     public ResponseEntity<Void> loadFile(@RequestBody InputCreateData input) {
         boolean loadSuccessful = patientService.fileLoad(input);
         if (loadSuccessful) {
