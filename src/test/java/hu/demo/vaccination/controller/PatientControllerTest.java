@@ -73,4 +73,33 @@ class PatientControllerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    @DisplayName("GET /api/patient/748237274 - getById")
+    void test_getById_receiveCorrectPatientData() {
+        Patient patientOne = getPatientOne();
+
+        doReturn(patientOne).when(patientServiceMock).getById(PATIENT_1_ID);
+
+        try {
+            mockMvc.perform(get("/api/patient/748237274"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("id", is(PATIENT_1_ID)))
+                    .andExpect(jsonPath("firstName", is(PATIENT_1_FIRST_NAME)))
+                    .andExpect(jsonPath("lastName", is(PATIENT_1_LAST_NAME)))
+                    .andExpect(jsonPath("mothersName", is(PATIENT_1_MOTHERS_NAME)))
+                    .andExpect(jsonPath("gender", is(PATIENT_1_GENDER)))
+                    .andExpect(jsonPath("dateOfBirth", is(PATIENT_1_BIRTH_DATE.toString())))
+                    .andExpect(jsonPath("email", is(PATIENT_1_EMAIL)))
+                    .andExpect(jsonPath("city", is(PATIENT_1_CITY)))
+                    .andExpect(jsonPath("zipCode", is(PATIENT_1_ZIP_CODE)))
+                    .andExpect(jsonPath("address", is(PATIENT_1_ADDRESS)))
+                    .andExpect(jsonPath("telephoneNumber", is(PATIENT_1_TELEPHONE_NUMBER)))
+                    .andExpect(jsonPath("pregnant", is(PATIENT_1_PREGNANT)))
+                    .andExpect(jsonPath("underlyingMedicalCondition", is(PATIENT_1_CHRONIC)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
