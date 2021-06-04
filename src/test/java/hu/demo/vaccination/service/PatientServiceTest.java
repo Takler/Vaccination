@@ -30,9 +30,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class PatientServiceTest {
 
-    private static final String SAVE_FILE = "patientsSaveTest.csv";
-    private static final String LOAD_FILE = "patientsLoadTest.csv";
-    private static final String TEST_FOLDER = "test";
+    private static final String SAVE_FILE = "TestPatientsSave.csv";
+    private static final String LOAD_FILE = "TestPatientsLoad.csv";
 
     private PatientService patientService;
 
@@ -47,7 +46,7 @@ class PatientServiceTest {
 
     @AfterEach
     void destruct() {
-        initTestFiles();
+        removeTestFiles();
     }
 
     @Test
@@ -108,6 +107,23 @@ class PatientServiceTest {
         assertEquals(patientOne, firstResultPatient);
         assertEquals(patientTwo, secondResultPatient);
         verify(patientRepositoryMock, times(1)).findAll();
+    }
+
+    @Test
+    void test_fileLoad_successfulLoad() {
+        InputCreateData input = new InputCreateData();
+        input.setInput(LOAD_FILE);
+
+        PatientCreateData patientOne = getPatientOneCreateData();
+        PatientCreateData patientTwo = getPatientTwoCreateData();
+
+        when(patientRepositoryMock.save(patientOne)).thenReturn(true);
+        when(patientRepositoryMock.save(patientTwo)).thenReturn(true);
+
+        assertTrue(patientService.fileLoad(input));
+
+        verify(patientRepositoryMock, times(1)).save(patientOne);
+        verify(patientRepositoryMock, times(1)).save(patientTwo);
     }
 
     @Test
@@ -191,18 +207,22 @@ class PatientServiceTest {
     }
 
     private void initTestFiles() {
-        try {
-            Files.deleteIfExists(Path.of(FilePathDefinition.SAVE_PATH.getDefinition(), SAVE_FILE));
-            Files.deleteIfExists(Path.of(FilePathDefinition.SAVE_PATH.getDefinition(), TEST_FOLDER, LOAD_FILE));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        removeTestFiles();
 
-        try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get(FilePathDefinition.SAVE_PATH.getDefinition(), TEST_FOLDER, LOAD_FILE)))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get(FilePathDefinition.SAVE_PATH.getDefinition(), LOAD_FILE)))) {
             bufferedWriter.write("748237274;Frigyes;Csonka;Prohászka Adél;male;1980-01-22;frigyes.csonka@email.com;Ács;2941;Munkácsy Mihály út 14.;0634388544;false;false");
             bufferedWriter.newLine();
             bufferedWriter.write("248248264;Virág;Szakáts;Vörös Hermina;female;1970-06-11;virag70@email.com;Budapest;1149;Árpád fejedelem útja 51.;0618659140;true;true");
             bufferedWriter.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeTestFiles() {
+        try {
+            Files.deleteIfExists(Path.of(FilePathDefinition.SAVE_PATH.getDefinition(), SAVE_FILE));
+            Files.deleteIfExists(Path.of(FilePathDefinition.SAVE_PATH.getDefinition(), LOAD_FILE));
         } catch (IOException e) {
             e.printStackTrace();
         }
