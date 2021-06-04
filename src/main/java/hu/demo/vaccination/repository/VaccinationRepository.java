@@ -24,7 +24,7 @@ public class VaccinationRepository {
     }
 
     public List<Vaccination> getVaccinations() {
-        String sql = "SELECT * FROM vaccination";
+        String sql = "SELECT * FROM vaccination AND deleted = FALSE";
         try {
             return jdbc.query(sql, vaccinationMapper);
         } catch (DataAccessException e) {
@@ -33,7 +33,7 @@ public class VaccinationRepository {
     }
 
     public Vaccination getVaccination(int id) {
-        String sql = "SELECT * FROM vaccination WHERE id = ?";
+        String sql = "SELECT * FROM vaccination WHERE id = ? AND deleted = FALSE";
         try {
             return jdbc.queryForObject(sql, vaccinationMapper, id);
         } catch (DataAccessException e) {
@@ -46,16 +46,14 @@ public class VaccinationRepository {
                 "vaccine_id, " +
                 "patient_id, " +
                 "shift_id, " +
-                "date, " +
-                "deleted) " +
-                "VALUES (?, ?, ?, ?, ?);";
+                "date) " +
+                "VALUES (?, ?, ?, ?)";
         try {
             int rowsAffected = jdbc.update(sql,
                     data.getVaccineId(),
                     data.getPatientId(),
                     data.getShiftId(),
-                    Date.valueOf(data.getDate()),
-                    data.isDeleted()
+                    Date.valueOf(data.getDate())
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
@@ -69,15 +67,13 @@ public class VaccinationRepository {
                 "patient_id = ?, " +
                 "shift_id = ?, " +
                 "date = ?, " +
-                "deleted = ? " +
-                "WHERE id = ?;";
+                "WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql,
                     data.getVaccineId(),
                     data.getPatientId(),
                     data.getShiftId(),
                     Date.valueOf(data.getDate()),
-                    data.isDeleted(),
                     id
             );
             return rowsAffected == 1;

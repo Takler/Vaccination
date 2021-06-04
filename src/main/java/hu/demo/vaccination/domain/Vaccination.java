@@ -1,5 +1,6 @@
 package hu.demo.vaccination.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ public class Vaccination {
     private int patientId;
     private int shiftId;
     private LocalDate date;
+    @JsonIgnore
     private boolean deleted;
 
     public Vaccination() {}

@@ -11,6 +11,5 @@ public class VaccinationCreateData {
     private int patientId;
     private int shiftId;
     private LocalDate date;
-    private boolean deleted;
 
 }
