@@ -137,7 +137,7 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
         vaccinationNameInfoData.setId(vaccination.getId());
         vaccinationNameInfoData.setVaccineName(vaccineService.getById(vaccination.getVaccineId()).getName());
         vaccinationNameInfoData.setPatientName(patientService.getName(vaccination.getPatientId()));
-        vaccinationNameInfoData.setCenterName(centerService.getName(shiftService.getInfo(vaccination.getShiftId()).getId()));
+        vaccinationNameInfoData.setCenterName(centerService.getName(shiftService.getInfo(vaccination.getShiftId()).getCenter().getId()));
         Doctor doctor = doctorService.getById(shiftService.getInfo(vaccination.getShiftId()).getDoctor().getId());
         vaccinationNameInfoData.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
         vaccinationNameInfoData.setDate(vaccination.getDate());

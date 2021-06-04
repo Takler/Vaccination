@@ -24,7 +24,7 @@ public class VaccinationRepository {
     }
 
     public List<Vaccination> getVaccinations() {
-        String sql = "SELECT * FROM vaccination AND deleted = FALSE";
+        String sql = "SELECT * FROM vaccination WHERE deleted = FALSE";
         try {
             return jdbc.query(sql, vaccinationMapper);
         } catch (DataAccessException e) {

@@ -1,6 +1,7 @@
 package hu.demo.vaccination.dto.vaccination;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import java.time.LocalDate;
 
@@ -13,6 +14,7 @@ public class VaccinationNameInfoData {
     private String centerName;
     private String doctorName;
     private LocalDate date;
+    @JsonIgnore
     private boolean deleted;
 
 }
