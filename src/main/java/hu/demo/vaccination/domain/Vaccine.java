@@ -2,6 +2,8 @@ package hu.demo.vaccination.domain;
 
 import lombok.*;
 
+import java.util.Objects;
+
 @Data
 public class Vaccine {
 
@@ -39,4 +41,16 @@ public class Vaccine {
         this.applicableForChronic = applicableForChronic;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vaccine vaccine = (Vaccine) o;
+        return id == vaccine.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

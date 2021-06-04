@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,6 +37,10 @@ public class VaccineRepository {
     @Autowired
     public VaccineRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
+    }
+
+    public VaccineRepository(DataSource dataSource) {
+        this.jdbc = new JdbcTemplate(dataSource);
     }
 
     public List<Vaccine> getVaccines() {
