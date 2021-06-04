@@ -118,6 +118,34 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
     }
 
     @Override
+    public VaccinationInfoData getInfo(int id) {
+        VaccinationInfoData vaccinationInfoData = new VaccinationInfoData();
+        Vaccination vaccination = getById(id);
+        vaccinationInfoData.setId(vaccination.getId());
+        vaccinationInfoData.setPatient(patientService.getById(vaccination.getPatientId()));
+        vaccinationInfoData.setVaccine(vaccineService.getById(vaccination.getVaccineId()));
+        vaccinationInfoData.setShift(shiftService.getInfo(vaccination.getShiftId()));
+        vaccinationInfoData.setDate(vaccination.getDate());
+        vaccinationInfoData.setDeleted(vaccination.isDeleted());
+        return vaccinationInfoData;
+    }
+
+    @Override
+    public VaccinationNameInfoData getNameInfo(int id) {
+        VaccinationNameInfoData vaccinationNameInfoData = new VaccinationNameInfoData();
+        Vaccination vaccination = getById(id);
+        vaccinationNameInfoData.setId(vaccination.getId());
+        vaccinationNameInfoData.setVaccineName(vaccineService.getById(vaccination.getVaccineId()).getName());
+        vaccinationNameInfoData.setPatientName(patientService.getName(vaccination.getPatientId()));
+        vaccinationNameInfoData.setCenterName(centerService.getName(shiftService.getInfo(vaccination.getShiftId()).getId()));
+        Doctor doctor = doctorService.getById(shiftService.getInfo(vaccination.getShiftId()).getDoctor().getId());
+        vaccinationNameInfoData.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
+        vaccinationNameInfoData.setDate(vaccination.getDate());
+        vaccinationNameInfoData.setDeleted(vaccination.isDeleted());
+        return vaccinationNameInfoData;
+    }
+
+    @Override
     public List<Vaccination> findAll() {
         return vaccinationRepository.getVaccinations();
     }
@@ -184,34 +212,5 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
         }
         return filterPatientsByAge(patients, minAge, maxAge);
     }
-
-    @Override
-    public VaccinationInfoData getInfo(int id) {
-        VaccinationInfoData vaccinationInfoData = new VaccinationInfoData();
-        Vaccination vaccination = getById(id);
-        vaccinationInfoData.setId(vaccination.getId());
-        vaccinationInfoData.setPatient(patientService.getById(vaccination.getPatientId()));
-        vaccinationInfoData.setVaccine(vaccineService.getById(vaccination.getVaccineId()));
-        vaccinationInfoData.setShift(shiftService.getInfo(vaccination.getShiftId()));
-        vaccinationInfoData.setDate(vaccination.getDate());
-        vaccinationInfoData.setDeleted(vaccination.isDeleted());
-        return vaccinationInfoData;
-    }
-
-    @Override
-    public VaccinationNameInfoData getNameInfo(int id) {
-        VaccinationNameInfoData vaccinationNameInfoData = new VaccinationNameInfoData();
-        Vaccination vaccination = getById(id);
-        vaccinationNameInfoData.setId(vaccination.getId());
-        vaccinationNameInfoData.setVaccineName(vaccineService.getById(vaccination.getVaccineId()).getName());
-        vaccinationNameInfoData.setPatientName(patientService.getName(vaccination.getPatientId()));
-        vaccinationNameInfoData.setCenterName(centerService.getName(shiftService.getInfo(vaccination.getShiftId()).getId()));
-        Doctor doctor = doctorService.getById(shiftService.getInfo(vaccination.getShiftId()).getDoctor().getId());
-        vaccinationNameInfoData.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
-        vaccinationNameInfoData.setDate(vaccination.getDate());
-        vaccinationNameInfoData.setDeleted(vaccination.isDeleted());
-        return vaccinationNameInfoData;
-    }
-
 
 }
