@@ -24,8 +24,30 @@ public class Patient {
     @JsonIgnore
     private boolean deleted;
 
+    public Patient() {
+    }
+
+    public Patient(int id, String firstName, String lastName, String mothersName, String gender, LocalDate dateOfBirth,
+                   String email, String city, String zipCode, String address, String telephoneNumber, boolean pregnant,
+                   boolean underlyingMedicalCondition, boolean deleted) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.mothersName = mothersName;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.city = city;
+        this.zipCode = zipCode;
+        this.address = address;
+        this.telephoneNumber = telephoneNumber;
+        this.pregnant = pregnant;
+        this.underlyingMedicalCondition = underlyingMedicalCondition;
+        this.deleted = deleted;
+    }
+
     public String toCsvFormat() {
-        return  id + ";" + firstName + ";" + lastName + ";" + mothersName + ";" + gender + ";" + dateOfBirth +
+        return id + ";" + firstName + ";" + lastName + ";" + mothersName + ";" + gender + ";" + dateOfBirth +
                 ";" + email + ";" + city + ";" + zipCode + ";" + address + ";" + telephoneNumber +
                 ";" + pregnant + ";" + underlyingMedicalCondition;
     }

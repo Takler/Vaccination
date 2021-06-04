@@ -17,4 +17,17 @@ public class Reservation {
     @JsonIgnore
     private boolean deleted;
 
+    public Reservation() {
+    }
+
+    public Reservation(int id, int patientId, int centerId, int vaccineId, LocalDate registration,
+                       LocalDate nextShot, boolean deleted) {
+        this.id = id;
+        this.patientId = patientId;
+        this.centerId = centerId;
+        this.vaccineId = vaccineId;
+        this.registration = registration;
+        this.nextShot = nextShot;
+        this.deleted = deleted;
+    }
 }
