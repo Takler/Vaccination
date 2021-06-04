@@ -183,8 +183,9 @@ class PatientServiceTest {
     void test_save_onceCalled() {
         PatientCreateData patientCreateData = getPatientOneCreateData();
 
-        patientService.save(patientCreateData);
+        when(patientRepositoryMock.save(patientCreateData)).thenReturn(true);
 
+        assertTrue(patientService.save(patientCreateData));
         verify(patientRepositoryMock, times(1)).save(patientCreateData);
     }
 
@@ -192,17 +193,20 @@ class PatientServiceTest {
     void test_delete_onceCalled() {
         int id = getPatientOne().getId();
 
-        patientService.delete(id);
+        when(patientRepositoryMock.delete(id)).thenReturn(true);
 
+        assertTrue(patientService.delete(id));
         verify(patientRepositoryMock, times(1)).delete(id);
     }
 
     @Test
     void test_update_onceCalled() {
         PatientCreateData patientCreateData = getPatientOneCreateData();
+        int id = patientCreateData.getId();
 
-        patientService.update(patientCreateData.getId(), patientCreateData);
+        when(patientRepositoryMock.update(id, patientCreateData)).thenReturn(true);
 
+        assertTrue(patientService.update(id, patientCreateData));
         verify(patientRepositoryMock, times(1)).update(patientCreateData.getId(), patientCreateData);
     }
 
