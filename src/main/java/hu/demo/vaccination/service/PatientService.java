@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PatientService implements CrudOperation<Patient, PatientCreateData>, LastNameable, FileHandler<PatientCreateData, InputCreateData> {
+public class PatientService implements CrudOperation<Patient, PatientCreateData>, LastNameable, FileHandler {
     private final PatientRepository patientRepository;
 
     @Autowired
@@ -26,7 +26,8 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
         this.patientRepository = patientRepository;
     }
 
-    public boolean otherFileSave(InputCreateData input) {
+    @Override
+    public boolean fileSave(InputCreateData input) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get(input.getInput())))) {
             List<Patient> patients = patientRepository.findAll();
             if (!patients.isEmpty()) {
@@ -41,7 +42,8 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
         }
     }
 
-    public boolean otherFileLoad(InputCreateData input) {
+    @Override
+    public boolean fileLoad(InputCreateData input) {
         try (BufferedReader bufferedReader = new BufferedReader(Files.newBufferedReader(Paths.get(input.getInput())))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -69,18 +71,6 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
             return false;
         }
         return true;
-    }
-
-    @Override
-    public boolean fileSave(PatientCreateData createData) {
-        //TODO refactor interface for otherFileSave() method
-        return false;
-    }
-
-    @Override
-    public PatientCreateData fileLoad(InputCreateData input) {
-        //TODO refactor interface for otherFileLoad() method
-        return null;
     }
 
     @Override

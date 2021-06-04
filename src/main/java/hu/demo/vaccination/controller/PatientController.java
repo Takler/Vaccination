@@ -24,7 +24,7 @@ public class PatientController {
 
     @GetMapping("/savefile")
     public ResponseEntity<Void> saveFile(@RequestBody InputCreateData input) {
-        boolean saveSuccessful = patientService.otherFileSave(input);
+        boolean saveSuccessful = patientService.fileSave(input);
         if (saveSuccessful) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
@@ -34,7 +34,7 @@ public class PatientController {
 
     @GetMapping("/loadfile")
     public ResponseEntity<Void> loadFile(@RequestBody InputCreateData input) {
-        boolean loadSuccessful = patientService.otherFileLoad(input);
+        boolean loadSuccessful = patientService.fileLoad(input);
         if (loadSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

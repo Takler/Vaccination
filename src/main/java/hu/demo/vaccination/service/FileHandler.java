@@ -1,7 +1,11 @@
 package hu.demo.vaccination.service;
 
-public interface FileHandler<U, T> {
-    boolean fileSave(U createData);
+import hu.demo.vaccination.dto.InputCreateData;
 
-    U fileLoad(T input);
+public interface FileHandler {
+
+    boolean fileSave(InputCreateData input);
+
+    boolean fileLoad(InputCreateData input);
+
 }

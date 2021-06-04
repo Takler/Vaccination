@@ -62,7 +62,7 @@ class PatientServiceTest {
 
         when(patientRepositoryMock.findAll()).thenReturn(patients);
 
-        assertTrue(patientService.otherFileSave(input));
+        assertTrue(patientService.fileSave(input));
 
         List<Patient> resultPatients = new ArrayList<>();
 
