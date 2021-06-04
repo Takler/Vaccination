@@ -4,6 +4,7 @@ import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.dto.InputCreateData;
 import hu.demo.vaccination.dto.patient.PatientCreateData;
 import hu.demo.vaccination.repository.PatientRepository;
+import hu.demo.vaccination.utility.FilePathDefinition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
 
     @Override
     public boolean fileSave(InputCreateData input) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get(input.getInput())))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get(FilePathDefinition.SAVE_PATH.getDefinition(), input.getInput())))) {
             List<Patient> patients = patientRepository.findAll();
             if (!patients.isEmpty()) {
                 for (Patient patient : patients) {
@@ -47,7 +48,7 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
 
     @Override
     public boolean fileLoad(InputCreateData input) {
-        try (BufferedReader bufferedReader = new BufferedReader(Files.newBufferedReader(Paths.get(input.getInput())))) {
+        try (BufferedReader bufferedReader = new BufferedReader(Files.newBufferedReader(Paths.get(FilePathDefinition.SAVE_PATH.getDefinition(), input.getInput())))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 PatientCreateData data = new PatientCreateData();

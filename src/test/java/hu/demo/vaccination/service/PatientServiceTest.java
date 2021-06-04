@@ -4,6 +4,7 @@ import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.dto.InputCreateData;
 import hu.demo.vaccination.dto.patient.PatientCreateData;
 import hu.demo.vaccination.repository.PatientRepository;
+import hu.demo.vaccination.utility.FilePathDefinition;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,8 +30,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class PatientServiceTest {
 
-    private static final String SAVE_FILE_INPUT = "src/test/java/hu/demo/vaccination/files/patient/patientsSaveTest.csv";
-    private static final String LOAD_FILE_INPUT = "src/test/java/hu/demo/vaccination/files/patient/patientsLoadTest.csv";
+    private static final String SAVE_FILE = "patientsSaveTest.csv";
+    private static final String LOAD_FILE = "patientsLoadTest.csv";
+    private static final String TEST_FOLDER = "test";
 
     private PatientService patientService;
 
@@ -51,7 +53,7 @@ class PatientServiceTest {
     @Test
     void test_fileSave_successfulSave() {
         InputCreateData input = new InputCreateData();
-        input.setInput(SAVE_FILE_INPUT);
+        input.setInput(SAVE_FILE);
 
         List<Patient> patients = new ArrayList<>();
         Patient patientOne = getPatientOne();
@@ -66,7 +68,7 @@ class PatientServiceTest {
 
         List<Patient> resultPatients = new ArrayList<>();
 
-        try (BufferedReader bufferedReader = new BufferedReader(Files.newBufferedReader(Paths.get(SAVE_FILE_INPUT)))) {
+        try (BufferedReader bufferedReader = new BufferedReader(Files.newBufferedReader(Paths.get(FilePathDefinition.SAVE_PATH.getDefinition(), SAVE_FILE)))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 Patient readPatient = new Patient();
@@ -190,13 +192,13 @@ class PatientServiceTest {
 
     private void initTestFiles() {
         try {
-            Files.deleteIfExists(Path.of(SAVE_FILE_INPUT));
-            Files.deleteIfExists(Path.of(LOAD_FILE_INPUT));
+            Files.deleteIfExists(Path.of(FilePathDefinition.SAVE_PATH.getDefinition(), SAVE_FILE));
+            Files.deleteIfExists(Path.of(FilePathDefinition.SAVE_PATH.getDefinition(), TEST_FOLDER, LOAD_FILE));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get(LOAD_FILE_INPUT)))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get(FilePathDefinition.SAVE_PATH.getDefinition(), TEST_FOLDER, LOAD_FILE)))) {
             bufferedWriter.write("748237274;Frigyes;Csonka;Prohászka Adél;male;1980-01-22;frigyes.csonka@email.com;Ács;2941;Munkácsy Mihály út 14.;0634388544;false;false");
             bufferedWriter.newLine();
             bufferedWriter.write("248248264;Virág;Szakáts;Vörös Hermina;female;1970-06-11;virag70@email.com;Budapest;1149;Árpád fejedelem útja 51.;0618659140;true;true");
