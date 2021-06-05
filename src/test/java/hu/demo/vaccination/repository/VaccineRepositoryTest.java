@@ -47,4 +47,14 @@ public class VaccineRepositoryTest {
         Assertions.assertNull(vaccineRepository.getVaccine(564));
     }
 
+    @Test
+    void deleteVaccine_success() {
+        Assertions.assertTrue(vaccineRepository.deleteVaccine(3));
+        Assertions.assertFalse(vaccineRepository.getVaccine(3).isApplicable());
+    }
+
+    @Test
+    void deleteVaccine_fail() {
+        Assertions.assertFalse(vaccineRepository.deleteVaccine(897));
+    }
 }

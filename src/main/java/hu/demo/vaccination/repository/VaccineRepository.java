@@ -136,7 +136,7 @@ public class VaccineRepository {
 
     public boolean deleteVaccine(int id) {
         String sql = "UPDATE vaccine " +
-                "SET is_available = FALSE " +
+                "SET applicable = FALSE " +
                 "WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql, id);
