@@ -1,7 +1,7 @@
 package hu.demo.vaccination.service;
 
 import hu.demo.vaccination.domain.Inventory;
-import hu.demo.vaccination.dto.InventoryCreateData;
+import hu.demo.vaccination.dto.inventory.InventoryCreateData;
 import hu.demo.vaccination.dto.inventory.InventoryInfoData;
 import hu.demo.vaccination.dto.inventory.InventoryNameInfoData;
 import hu.demo.vaccination.dto.inventory.InventoryStockData;
