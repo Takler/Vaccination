@@ -1,5 +1,6 @@
 package hu.demo.vaccination.controller;
 
+import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.domain.Vaccine;
 import hu.demo.vaccination.dto.VaccineCreateData;
 import hu.demo.vaccination.service.VaccineService;
@@ -65,5 +66,10 @@ public class VaccineController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/patient")
+    public ResponseEntity<List<Vaccine>> getVaccineForPatient(@RequestBody Patient patient) {
+        return new ResponseEntity<>(vaccineService.getVaccineForPatient(patient), HttpStatus.OK);
     }
 }
