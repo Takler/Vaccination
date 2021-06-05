@@ -42,6 +42,4 @@ public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateDa
     public boolean delete(int doctorId) {
         return doctorRepository.delete(doctorId);
     }
-
-
 }

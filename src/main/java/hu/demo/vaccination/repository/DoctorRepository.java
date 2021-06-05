@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @Repository
-public class DoctorRepository {   // implements betétele
+public class DoctorRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -60,7 +60,7 @@ public class DoctorRepository {   // implements betétele
 
     public boolean update(int doctorId, DoctorCreateUpdateData doctorCreateUpdateData) {
         String sqlUpdate = "UPDATE doctor SET first_name = ?, last_name = ?, email = ?, address = ?, " +
-                "telephone_number = ?, WHERE id = ?";
+                "telephone_number = ? WHERE id = ?";
         try {
             if (jdbcTemplate.update(sqlUpdate, doctorCreateUpdateData.getFirstName(),
                     doctorCreateUpdateData.getLastName(), doctorCreateUpdateData.getEmail(),

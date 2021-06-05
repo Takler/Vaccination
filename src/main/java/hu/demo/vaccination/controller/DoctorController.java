@@ -53,7 +53,6 @@ public class DoctorController {   // TODO Testeket írni!!
         }
     }
 
-
     @PutMapping("/{doctorId}")
     public ResponseEntity<Void> update(@PathVariable int doctorId,
                                        @RequestBody DoctorCreateUpdateData doctorCreateUpdateData) {
