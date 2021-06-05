@@ -3,6 +3,7 @@ package hu.demo.vaccination.controller;
 import hu.demo.vaccination.domain.Reservation;
 import hu.demo.vaccination.dto.reservation.PatientReservationData;
 import hu.demo.vaccination.dto.reservation.ReservationInfoData;
+import hu.demo.vaccination.dto.reservation.ReservationNameInfoData;
 import hu.demo.vaccination.service.ReservationService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static hu.demo.vaccination.config.PatientTestHelper.*;
 import static hu.demo.vaccination.config.ReservationTestHelper.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -23,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ReservationControllerTest {
+class ReservationControllerTest {
 
     @MockBean
     private ReservationService reservationServiceMock;
@@ -66,11 +68,43 @@ public class ReservationControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("id", is(RESERVATION_NAME_INFO_1_ID)))
-                    .andExpect(jsonPath("patientName", is(RESERVATION_NAME_INFO_1_PATIENT_NAME)))
-                    .andExpect(jsonPath("centerName", is(RESERVATION_NAME_INFO_1_CENTER_NAME)))
-                    .andExpect(jsonPath("vaccineName", is(RESERVATION_NAME_INFO_1_VACCINE_NAME)))
-                    .andExpect(jsonPath("registration", is(RESERVATION_NAME_INFO_1_REGISTRATION.toString())))
-                    .andExpect(jsonPath("nextShot", is(RESERVATION_NAME_INFO_1_NEXT_SHOT.toString())));
+                    .andExpect(jsonPath("patient.id", is(PATIENT_1_ID)))
+                    .andExpect(jsonPath("patient.firstName", is(PATIENT_1_FIRST_NAME)))
+                    .andExpect(jsonPath("patient.lastName", is(PATIENT_1_LAST_NAME)))
+                    .andExpect(jsonPath("patient.mothersName", is(PATIENT_1_MOTHERS_NAME)))
+                    .andExpect(jsonPath("patient.gender", is(PATIENT_1_GENDER)))
+                    .andExpect(jsonPath("patient.dateOfBirth", is(PATIENT_1_BIRTH_DATE.toString())))
+                    .andExpect(jsonPath("patient.email", is(PATIENT_1_EMAIL)))
+                    .andExpect(jsonPath("patient.city", is(PATIENT_1_CITY)))
+                    .andExpect(jsonPath("patient.zipCode", is(PATIENT_1_ZIP_CODE)))
+                    .andExpect(jsonPath("patient.address", is(PATIENT_1_ADDRESS)))
+                    .andExpect(jsonPath("patient.telephoneNumber", is(PATIENT_1_TELEPHONE_NUMBER)))
+                    .andExpect(jsonPath("patient.pregnant", is(PATIENT_1_PREGNANT)))
+                    .andExpect(jsonPath("patient.underlyingMedicalCondition", is(PATIENT_1_CHRONIC)))
+
+                    .andExpect(jsonPath("center.id", is(reservationInfoData.getCenter().getId())))
+                    .andExpect(jsonPath("center.name", is(reservationInfoData.getCenter().getName())))
+                    .andExpect(jsonPath("center.city", is(reservationInfoData.getCenter().getCity())))
+                    .andExpect(jsonPath("center.email", is(reservationInfoData.getCenter().getEmail())))
+                    .andExpect(jsonPath("center.telephoneNumber", is(reservationInfoData.getCenter().getTelephoneNumber())))
+                    .andExpect(jsonPath("center.dailyCapacity", is(reservationInfoData.getCenter().getDailyCapacity())))
+
+                    .andExpect(jsonPath("vaccine.id", is(reservationInfoData.getVaccine().getId())))
+                    .andExpect(jsonPath("vaccine.name", is(reservationInfoData.getVaccine().getName())))
+                    .andExpect(jsonPath("vaccine.type", is(reservationInfoData.getVaccine().getType())))
+                    .andExpect(jsonPath("vaccine.storageTemperature", is(reservationInfoData.getVaccine().getStorageTemperature())))
+                    .andExpect(jsonPath("vaccine.ageLimitMin", is(reservationInfoData.getVaccine().getAgeLimitMin())))
+                    .andExpect(jsonPath("vaccine.ageLimitMax", is(reservationInfoData.getVaccine().getAgeLimitMax())))
+                    .andExpect(jsonPath("vaccine.shotsNeeded", is(reservationInfoData.getVaccine().getShotsNeeded())))
+                    .andExpect(jsonPath("vaccine.daysUntilNextShot", is(reservationInfoData.getVaccine().getDaysUntilNextShot())))
+                    .andExpect(jsonPath("vaccine.nextShotId", is(reservationInfoData.getVaccine().getNextShotId())))
+                    .andExpect(jsonPath("vaccine.fullyVaccinatedTimePeriod", is(reservationInfoData.getVaccine().getFullyVaccinatedTimePeriod())))
+                    .andExpect(jsonPath("vaccine.applicable", is(reservationInfoData.getVaccine().isApplicable())))
+                    .andExpect(jsonPath("vaccine.applicableForPregnant", is(reservationInfoData.getVaccine().isApplicableForPregnant())))
+                    .andExpect(jsonPath("vaccine.applicableForChronic", is(reservationInfoData.getVaccine().isApplicableForChronic())))
+
+                    .andExpect(jsonPath("registration", is(RESERVATION_INFO_1_REGISTRATION.toString())))
+                    .andExpect(jsonPath("nextShot", is(RESERVATION_INFO_1_NEXT_SHOT.toString())));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,7 +113,23 @@ public class ReservationControllerTest {
     @Test
     @DisplayName("GET /api/reservation/nameinfo/1 - getNameInfo")
     void test_getNameInfo_receiveCorrectInfoData() {
-       //TODO
+        ReservationNameInfoData nameInfoData = getReservationNameInfoDataOne();
+
+        doReturn(nameInfoData).when(reservationServiceMock).getNameInfo(RESERVATION_NAME_INFO_1_ID);
+
+        try {
+            mockMvc.perform(get("/api/reservation/nameinfo/1"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("id", is(RESERVATION_NAME_INFO_1_ID)))
+                    .andExpect(jsonPath("patientName", is(RESERVATION_NAME_INFO_1_PATIENT_NAME)))
+                    .andExpect(jsonPath("centerName", is(RESERVATION_NAME_INFO_1_CENTER_NAME)))
+                    .andExpect(jsonPath("vaccineName", is(RESERVATION_NAME_INFO_1_VACCINE_NAME)))
+                    .andExpect(jsonPath("registration", is(RESERVATION_NAME_INFO_1_REGISTRATION.toString())))
+                    .andExpect(jsonPath("nextShot", is(RESERVATION_NAME_INFO_1_NEXT_SHOT.toString())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
