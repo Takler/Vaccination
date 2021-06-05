@@ -28,7 +28,7 @@ public class ReservationTestHelper {
 
     public static Reservation getReservationTwo() {
         return new Reservation(RESERVATION_2_ID, RESERVATION_2_PATIENT_ID, RESERVATION_2_CENTER_ID, RESERVATION_2_VACCINE_ID,
-                RESERVATION_2_REGISTRATION, LocalDate.now().plusDays(14), false);
+                RESERVATION_2_REGISTRATION, RESERVATION_2_NEXT_SHOT, false);
     }
 
     public static ReservationCreateData getReservationOneCreateData() {
