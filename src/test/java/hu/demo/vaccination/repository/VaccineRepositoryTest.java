@@ -48,6 +48,11 @@ public class VaccineRepositoryTest {
     }
 
     @Test
+    void createVaccine_success() {
+        //Vaccine vaccine = new VaccineCreateData("BrandNewVaccine", "mRNA", 0, 18, 65, 1, 35, -1, 49, true, false, false);
+    }
+
+    @Test
     void deleteVaccine_success() {
         Assertions.assertTrue(vaccineRepository.deleteVaccine(3));
         Assertions.assertFalse(vaccineRepository.getVaccine(3).isApplicable());
