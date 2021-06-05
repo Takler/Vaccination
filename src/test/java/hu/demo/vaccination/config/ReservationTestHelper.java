@@ -28,9 +28,9 @@ public class ReservationTestHelper {
     public static final LocalDate RESERVATION_2_NEXT_SHOT = LocalDate.now().plusDays(10);
 
     public static final int RESERVATION_NAME_INFO_1_ID = 1;
-    public static final String RESERVATION_NAME_INFO_1_PATIENT_NAME = "Borbély Barnabás";
+    public static final String RESERVATION_NAME_INFO_1_PATIENT_NAME = "Frigyes Csonka";
     public static final String RESERVATION_NAME_INFO_1_CENTER_NAME = "Honvéd Kórház";
-    public static final String RESERVATION_NAME_INFO_1_VACCINE_NAME = "Sinopharm";
+    public static final String RESERVATION_NAME_INFO_1_VACCINE_NAME = "Moderna";
     public static final LocalDate RESERVATION_NAME_INFO_1_REGISTRATION = LocalDate.now();
     public static final LocalDate RESERVATION_NAME_INFO_1_NEXT_SHOT = LocalDate.now().plusDays(28);
 
