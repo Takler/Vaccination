@@ -1,6 +1,7 @@
 package hu.demo.vaccination.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import hu.demo.vaccination.dto.VaccinationCreateData;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -26,6 +27,15 @@ public class Vaccination {
         this.shiftId = shiftId;
         this.date = date;
         this.deleted = deleted;
+    }
+
+    public Vaccination(int id, VaccinationCreateData vaccinationCreateData) {
+        this.id = id;
+        this.vaccineId = vaccinationCreateData.getVaccineId();
+        this.patientId = vaccinationCreateData.getPatientId();
+        this.shiftId = vaccinationCreateData.getShiftId();
+        this.date = vaccinationCreateData.getDate();
+        this.deleted = false;
     }
 
     @Override

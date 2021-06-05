@@ -2,6 +2,7 @@ package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.config.VaccinationTestHelper;
 import hu.demo.vaccination.domain.Vaccination;
+import hu.demo.vaccination.dto.VaccinationCreateData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,25 @@ public class VaccinationRepositoryTest {
     @Test
     void getVaccinationTest_fail() {
         Assertions.assertNull(vaccinationRepository.getVaccination(876));
+    }
+
+    @Test
+    void createVaccinationTest_success() {
+        VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(3, 20, 8, LocalDate.of(2021, 5, 28));
+        Vaccination vaccination = new Vaccination(24, vaccinationCreateData);
+        Assertions.assertTrue(vaccinationRepository.createVaccination(vaccinationCreateData));
+        Assertions.assertEquals(vaccination, vaccinationRepository.getVaccination(24));
+        Assertions.assertEquals(vaccination.getVaccineId(), vaccinationRepository.getVaccination(24).getVaccineId());
+        Assertions.assertEquals(vaccination.getPatientId(), vaccinationRepository.getVaccination(24).getPatientId());
+        Assertions.assertEquals(vaccination.getShiftId(), vaccinationRepository.getVaccination(24).getShiftId());
+        Assertions.assertEquals(vaccination.getDate(), vaccinationRepository.getVaccination(24).getDate());
+        Assertions.assertEquals(vaccination.isDeleted(), vaccinationRepository.getVaccination(24).isDeleted());
+    }
+
+    @Test
+    void createVaccinationTest_fail() {
+        VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(123, 20, 8, LocalDate.of(2021, 5, 28));
+        Assertions.assertFalse(vaccinationRepository.createVaccination(vaccinationCreateData));
     }
 
     @Test
