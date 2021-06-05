@@ -1,29 +1,18 @@
-package hu.demo.vaccination.domain;
+package hu.demo.vaccination.dto.doctor;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+public class DoctorCreateUpdateData {
 
-public class Doctor {
-
-    private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String address;
     private String telephoneNumber;
-    @JsonIgnore
-    private boolean deleted;
 
-    public Doctor() {
+    public DoctorCreateUpdateData() {
     }
 
     // TODO @DATA
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -65,11 +54,5 @@ public class Doctor {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 }

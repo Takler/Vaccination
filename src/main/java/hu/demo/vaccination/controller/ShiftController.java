@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/shift")
-public class ShiftController {     // CRUD interface-t implementálni
+public class ShiftController {
 
     private ShiftService shiftService;
 
@@ -23,23 +23,30 @@ public class ShiftController {     // CRUD interface-t implementálni
         this.shiftService = shiftService;
     }
 
-    @GetMapping("/{shiftId}")
-    public ResponseEntity<Shift> getById(@PathVariable int shiftId) {
-        Shift shift = shiftService.getById(shiftId);
-        if (shift.getId() != 0) {
-            return new ResponseEntity<>(shift, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+    // @GetMapping("/file")
+    // @PostMapping("/file")
 
     @GetMapping
     public ResponseEntity<List<Shift>> findAll() {
-        return new ResponseEntity<>(shiftService.findAll(), HttpStatus.OK);
+        List<Shift> shiftList = shiftService.findAll();
+        if (!shiftList.isEmpty()) {
+            return new ResponseEntity<>(shiftList, HttpStatus.OK);
+        } else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/{shiftId}")
+    public ResponseEntity<Shift> getById(@PathVariable int shiftId) {
+        Shift shift = shiftService.getById(shiftId);
+        if (shift != null) {
+            return new ResponseEntity<>(shift, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody ShiftCreateUpdateData shiftCreateUpdateData) {   // Boolean  B/b ?,   Void V/v ?
+    public ResponseEntity<Void> save(@RequestBody ShiftCreateUpdateData shiftCreateUpdateData) {   // TODO Boolean  B/b ?,   Void V/v ?
         if (shiftService.save(shiftCreateUpdateData)) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
@@ -53,7 +60,7 @@ public class ShiftController {     // CRUD interface-t implementálni
         if (shiftService.update(shiftId, shiftCreateUpdateData)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

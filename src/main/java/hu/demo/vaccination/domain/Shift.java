@@ -5,14 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.sql.Timestamp;
 
 public class Shift {
+
     private int id;
     private int centerId;
     private int doctorId;
-    private Timestamp start;
+    private Timestamp start;  //TODO dátumformátum
     private Timestamp end;
     @JsonIgnore
     private boolean deleted;
 
+    public Shift() {
+    }
+
+    // TODO @DATA
     public int getId() {
         return id;
     }

@@ -1,15 +1,15 @@
 package hu.demo.vaccination.service;
 
 import hu.demo.vaccination.domain.Doctor;
+import hu.demo.vaccination.dto.doctor.DoctorCreateUpdateData;
 import hu.demo.vaccination.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
-public class DoctorService implements CrudOperation {
+public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateData> {
 
     private DoctorRepository doctorRepository;
 
@@ -19,32 +19,28 @@ public class DoctorService implements CrudOperation {
     }
 
     @Override
-    public Doctor getById(int doctorId) {  // OK
-        return doctorRepository.getById(doctorId);
-    }
-
-    @Override
-    public List<Map<String, Object>> findAll() {  // OK
+    public List<Doctor> findAll() {
         return doctorRepository.findAll();
     }
 
     @Override
-    public boolean save(Object createData) {   // OK    //INSERT
-        return doctorRepository.save((Doctor) createData);   // ? cast?
+    public Doctor getById(int doctorId) {
+        return doctorRepository.getById(doctorId);
     }
 
-    @Override  //...OK, id?
-    public boolean update(int id, Object createData) {
-        return false;
+    @Override
+    public boolean save(DoctorCreateUpdateData doctorCreateUpdateData) {
+        return doctorRepository.save(doctorCreateUpdateData);
     }
 
-    public boolean update(Doctor doctor) {   //OK
-        return doctorRepository.update(doctor);
+    @Override   // TODO Miért adjuk meg külön az id -t?
+    public boolean update(int doctorId, DoctorCreateUpdateData doctorCreateUpdateData) {
+        return doctorRepository.update(doctorId, doctorCreateUpdateData);
     }
 
-    @Override  //OK
-    public boolean delete(int id) {
-        return doctorRepository.delete(id);
+    @Override
+    public boolean delete(int doctorId) {
+        return doctorRepository.delete(doctorId);
     }
 
 
