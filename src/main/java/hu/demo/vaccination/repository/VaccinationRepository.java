@@ -62,16 +62,17 @@ public class VaccinationRepository {
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            e.printStackTrace();
             return false;
         }
     }
 
     public boolean updateVaccination(int id, VaccinationCreateData data) {
-        String sql = "UPDATE vaccination SET" +
+        String sql = "UPDATE vaccination SET " +
                 "vaccine_id = ?, " +
                 "patient_id = ?, " +
                 "shift_id = ?, " +
-                "date = ?, " +
+                "date = ? " +
                 "WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql,
@@ -83,6 +84,7 @@ public class VaccinationRepository {
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            e.printStackTrace();
             return false;
         }
     }

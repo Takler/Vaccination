@@ -53,20 +53,45 @@ public class VaccinationRepositoryTest {
     @Test
     void createVaccinationTest_success() {
         VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(3, 20, 8, LocalDate.of(2021, 5, 28));
-        Vaccination vaccination = new Vaccination(24, vaccinationCreateData);
+        Vaccination expected = new Vaccination(24, vaccinationCreateData);
         Assertions.assertTrue(vaccinationRepository.createVaccination(vaccinationCreateData));
-        Assertions.assertEquals(vaccination, vaccinationRepository.getVaccination(24));
-        Assertions.assertEquals(vaccination.getVaccineId(), vaccinationRepository.getVaccination(24).getVaccineId());
-        Assertions.assertEquals(vaccination.getPatientId(), vaccinationRepository.getVaccination(24).getPatientId());
-        Assertions.assertEquals(vaccination.getShiftId(), vaccinationRepository.getVaccination(24).getShiftId());
-        Assertions.assertEquals(vaccination.getDate(), vaccinationRepository.getVaccination(24).getDate());
-        Assertions.assertEquals(vaccination.isDeleted(), vaccinationRepository.getVaccination(24).isDeleted());
+        Assertions.assertEquals(expected, vaccinationRepository.getVaccination(24));
+        Assertions.assertEquals(expected.getVaccineId(), vaccinationRepository.getVaccination(24).getVaccineId());
+        Assertions.assertEquals(expected.getPatientId(), vaccinationRepository.getVaccination(24).getPatientId());
+        Assertions.assertEquals(expected.getShiftId(), vaccinationRepository.getVaccination(24).getShiftId());
+        Assertions.assertEquals(expected.getDate(), vaccinationRepository.getVaccination(24).getDate());
+        Assertions.assertEquals(expected.isDeleted(), vaccinationRepository.getVaccination(24).isDeleted());
     }
 
     @Test
     void createVaccinationTest_fail() {
         VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(123, 20, 8, LocalDate.of(2021, 5, 28));
         Assertions.assertFalse(vaccinationRepository.createVaccination(vaccinationCreateData));
+    }
+
+    @Test
+    void updateVaccinationTest_success() {
+        VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(2, 20, 7, LocalDate.of(2021, 5, 27));
+        Vaccination expected = new Vaccination(3, vaccinationCreateData);
+        Assertions.assertTrue(vaccinationRepository.updateVaccination(3, vaccinationCreateData));
+        Assertions.assertEquals(expected, vaccinationRepository.getVaccination(3));
+        Assertions.assertEquals(expected.getVaccineId(), vaccinationRepository.getVaccination(3).getVaccineId());
+        Assertions.assertEquals(expected.getPatientId(), vaccinationRepository.getVaccination(3).getPatientId());
+        Assertions.assertEquals(expected.getShiftId(), vaccinationRepository.getVaccination(3).getShiftId());
+        Assertions.assertEquals(expected.getDate(), vaccinationRepository.getVaccination(3).getDate());
+        Assertions.assertEquals(expected.isDeleted(), vaccinationRepository.getVaccination(3).isDeleted());
+    }
+
+    @Test
+    void updateVaccinationTest_idFail() {
+        VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(2, 20, 7, LocalDate.of(2021, 5, 27));
+        Assertions.assertFalse(vaccinationRepository.updateVaccination(987, vaccinationCreateData));
+    }
+
+    @Test
+    void updateVaccinationTest_vaccineFail() {
+        VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(102, 20, 7, LocalDate.of(2021, 5, 27));
+        Assertions.assertFalse(vaccinationRepository.updateVaccination(3, vaccinationCreateData));
     }
 
     @Test
