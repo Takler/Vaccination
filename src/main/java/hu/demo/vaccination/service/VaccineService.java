@@ -66,8 +66,8 @@ public class VaccineService implements CrudOperation<Vaccine, VaccineCreateData>
                 .collect(Collectors.toList());
         vaccines = vaccines.stream()
                 .filter(vaccine ->
-                        LocalDate.now().minusYears(vaccine.getAgeLimitMin()).isBefore(patient.getDateOfBirth()) &&
-                                LocalDate.now().minusYears(vaccine.getAgeLimitMax()).isAfter(patient.getDateOfBirth()))
+                        LocalDate.now().minusYears(vaccine.getAgeLimitMin()).isAfter(patient.getDateOfBirth()) &&
+                                LocalDate.now().minusYears(vaccine.getAgeLimitMax()).isBefore(patient.getDateOfBirth()))
                 .filter(vaccine -> !patient.isPregnant() || vaccine.isApplicableForPregnant())
                 .filter(vaccine -> !patient.isUnderlyingMedicalCondition() || vaccine.isApplicableForChronic())
                 .collect(Collectors.toList());
