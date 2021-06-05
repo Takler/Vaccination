@@ -48,11 +48,8 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
         Set<Integer> vaccinatedRegisteredPatients = new HashSet<>(getVaccinatedPatientsIds());
         vaccinatedRegisteredPatients.retainAll(filteredRegisteredPatients);
 
-        try {
-            return Math.round(vaccinatedRegisteredPatients.size() * 10000 / (double) filteredRegisteredPatients.size()) / 100.0;
-        } catch (ArithmeticException e) {
-            return 0.0;
-        }
+        return Math.round(vaccinatedRegisteredPatients.size() * 10000 / (double) filteredRegisteredPatients.size()) / 100.0;
+
     }
 
     public double getFullVaccinatedPercentage(int minAge, int maxAge, boolean chronic, boolean pregnant) {
@@ -78,11 +75,7 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
                 .filter(map -> countOfVaccinationsPerPatient.get(map.getKey()) >= numberOfShotsNeededPerVaccine.get(map.getValue()))
                 .count();
 
-        try {
-            return Math.round(numberOfFullVaccinated * 10000 / (double) numberOfFilteredPatients) / 100.0;
-        } catch (ArithmeticException e) {
-            return 0.0;
-        }
+        return Math.round(numberOfFullVaccinated * 10000 / (double) numberOfFilteredPatients) / 100.0;
     }
 
     public List<AggregatedFieldData> getVaccinatedPerVaccine() {
@@ -105,13 +98,11 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
                         Vaccine::getName
                 ));
 
-        List<AggregatedFieldData> result = countOfVaccinationsPerVaccine.entrySet().stream()
+        return countOfVaccinationsPerVaccine.entrySet().stream()
                 .map(map -> new AggregatedFieldData(vaccineIdName.get(map.getKey()),
                         new CountPercentageData(map.getValue().intValue(),
                                 Math.round(countOfVaccinationsPerVaccine.get(map.getKey()) * 10000 / (double) totalCountVaccinated) / 100.0)))
                 .collect(Collectors.toList());
-
-        return result;
     }
 
     @Override
