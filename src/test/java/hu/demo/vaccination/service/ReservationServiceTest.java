@@ -16,9 +16,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.util.List;
 
+import static hu.demo.vaccination.config.ReservationTestHelper.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -26,11 +26,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ReservationServiceTest {
 
-    private static final int PATIENT_ID = 123123123;
-    private static final int RESERVATION_ID = 1;
-    private static final int OTHER_ID = 1;
-    private static final int CENTER_ID = 1;
-    private static final int VACCINE_ID = 1;
     private static final String CENTER_NAME = "Honvéd Kórház";
     private static final String VACCINE_NAME = "Pfizer";
     private static final String PATIENT_NAME = "Test Elek";
@@ -186,16 +181,6 @@ class ReservationServiceTest {
 
         assertTrue(reservationService.delete(OTHER_ID));
         verify(reservationRepositoryMock, times(1)).delete(OTHER_ID);
-    }
-
-    private Reservation getSampleReservation() {
-        return new Reservation(RESERVATION_ID, PATIENT_ID, CENTER_ID, VACCINE_ID,
-                LocalDate.now(), LocalDate.now().plusDays(14), false);
-    }
-
-    private ReservationCreateData getSampleReservationCreateData() {
-        return new ReservationCreateData(PATIENT_ID, CENTER_ID, VACCINE_ID,
-                LocalDate.now(), LocalDate.now().plusDays(14));
     }
 
 }
