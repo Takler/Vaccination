@@ -34,7 +34,7 @@ public class VaccinationRepositoryTest {
     }
 
     @Test
-    void getVaccination_success() {
+    void getVaccinationTest_success() {
         Vaccination expected = new Vaccination(10, 3, 12, 4, LocalDate.of(2021, 5, 23), false);
         Assertions.assertEquals(expected, vaccinationRepository.getVaccination(10));
         Assertions.assertEquals(expected.getVaccineId(), vaccinationRepository.getVaccination(10).getVaccineId());
@@ -45,7 +45,18 @@ public class VaccinationRepositoryTest {
     }
 
     @Test
-    void getVaccination_fail() {
+    void getVaccinationTest_fail() {
         Assertions.assertNull(vaccinationRepository.getVaccination(876));
+    }
+
+    @Test
+    void deleteVaccinationTest_success() {
+        Assertions.assertTrue(vaccinationRepository.deleteVaccination(5));
+        Assertions.assertNull(vaccinationRepository.getVaccination(5));
+    }
+
+    @Test
+    void deleteVaccinationTest_fail() {
+        Assertions.assertFalse(vaccinationRepository.deleteVaccination(987));
     }
 }

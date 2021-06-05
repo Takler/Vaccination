@@ -89,7 +89,7 @@ public class VaccinationRepository {
 
     public boolean deleteVaccination(int id) {
         String sql = "UPDATE vaccination " +
-                "SET deleted = FALSE " +
+                "SET deleted = TRUE " +
                 "WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql, id);
