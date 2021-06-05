@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
@@ -152,5 +153,29 @@ class VaccinationServiceTest {
                         new AggregatedFieldData("Sinopharm", new CountPercentageData(2, 12.5)),
                         new AggregatedFieldData("Janssen", new CountPercentageData(1, 6.25))
                 ), result);
+    }
+
+    @Test
+    void getNumberOfVaccinationsForPeriod_thisWeek() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Assertions.assertEquals(14, vaccinationService.getNumberOfVaccinationsForPeriod(LocalDate.now().minusDays(7), LocalDate.now()));
+    }
+
+    @Test
+    void getNumberOfVaccinationsForPeriod_twoDaysAgo() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Assertions.assertEquals(3, vaccinationService.getNumberOfVaccinationsForPeriod(LocalDate.now().minusDays(2), LocalDate.now().minusDays(2)));
+    }
+
+    @Test
+    void getNumberOfVaccinationsForPeriod_wrongDate() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Assertions.assertEquals(0, vaccinationService.getNumberOfVaccinationsForPeriod(LocalDate.now().minusDays(5), LocalDate.now().minusDays(6)));
+    }
+
+    @Test
+    void getNumberOfVaccinationsForPeriod_lastWeek() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Assertions.assertEquals(11, vaccinationService.getNumberOfVaccinationsForPeriod(LocalDate.now().minusDays(14), LocalDate.now().minusDays(7)));
     }
 }
