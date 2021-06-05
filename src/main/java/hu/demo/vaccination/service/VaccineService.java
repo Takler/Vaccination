@@ -1,6 +1,7 @@
 package hu.demo.vaccination.service;
 
 import hu.demo.vaccination.domain.Patient;
+import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.domain.Vaccine;
 import hu.demo.vaccination.dto.VaccineCreateData;
 import hu.demo.vaccination.repository.VaccineRepository;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +30,27 @@ public class VaccineService implements CrudOperation<Vaccine, VaccineCreateData>
     }
 
     public List<Vaccine> getVaccineForPatient(Patient patient) {
-        return null;
+        List<Vaccination> vaccinationsOfPatient = vaccinationService.getVaccinationsByPatient(patient.getId());
+        List<Vaccine> applicableVaccinesForPatient = getAllApplicableVaccineForPatient(patient);
+        if (!vaccinationsOfPatient.isEmpty()) {
+            int numberOfDosesGot = vaccinationsOfPatient.size();
+            Vaccination latestVaccination = vaccinationsOfPatient.stream()
+                    .max(Comparator.comparing(Vaccination::getDate))
+                    .get();
+            Vaccine lastVaccineDose = applicableVaccinesForPatient.stream()
+                    .filter(vaccine -> vaccine.getId() == latestVaccination.getVaccineId())
+                    .findAny()
+                    .orElse(new Vaccine());
+            if (numberOfDosesGot >= lastVaccineDose.getShotsNeeded()) {
+                return Collections.emptyList();
+            } else {
+                return applicableVaccinesForPatient.stream()
+                        .filter(vaccine -> vaccine.getId() == lastVaccineDose.getNextShotId())
+                        .collect(Collectors.toList());
+            }
+        } else {
+            return applicableVaccinesForPatient;
+        }
     }
 
     @Override
