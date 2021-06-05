@@ -3,6 +3,7 @@ package hu.demo.vaccination.service;
 import hu.demo.vaccination.domain.Center;
 import hu.demo.vaccination.domain.Doctor;
 import hu.demo.vaccination.domain.Shift;
+import hu.demo.vaccination.dto.InputCreateData;
 import hu.demo.vaccination.dto.shift.ShiftCreateUpdateData;
 import hu.demo.vaccination.dto.shift.ShiftInfoData;
 import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData, Object, ShiftNameInfoData> { //TODO: Requestable??? Object is a placeholder for ShiftNameData
+public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData, ShiftInfoData, ShiftNameInfoData>, FileHandler { //TODO: Requestable??? Object is a placeholder for ShiftNameData
+
+    //TODO   dátumkezelés beállítása, számít implenets<> -ben a típussorrend?
 
     private ShiftRepository shiftRepository;
     private DoctorService doctorService;
@@ -26,34 +29,34 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
         this.centerService = centerService;
     }
 
-    //implement CrudOperation
+    // implement CrudOperation methods
 
-    @Override  //OK
+    @Override
+    public List<Shift> findAll() {      // TODO Interface<Shift> ,miért "eszi" meg?
+        return shiftRepository.findAll();
+    }
+
+    @Override
     public Shift getById(int shiftId) {
         return shiftRepository.getById(shiftId);
     }
 
     @Override
-    public List<Shift> findAll() {  // OK    // Interface<Shift> ,miért "eszi" meg?
-        return shiftRepository.findAll();
-    }
-
-    @Override
-    public boolean save(ShiftCreateUpdateData shiftCreateUpdateData) {    // OK   //INSERT
+    public boolean save(ShiftCreateUpdateData shiftCreateUpdateData) {
         return shiftRepository.save(shiftCreateUpdateData);
     }
 
     @Override
-    public boolean update(int shiftId, ShiftCreateUpdateData shiftCreateUpdateData) {  // OK
+    public boolean update(int shiftId, ShiftCreateUpdateData shiftCreateUpdateData) {
         return shiftRepository.update(shiftId, shiftCreateUpdateData);
     }
 
     @Override
-    public boolean delete(int shiftId) {   // OK
+    public boolean delete(int shiftId) {
         return shiftRepository.delete(shiftId);
     }
 
-    //implement InfoOperation
+    // implement InfoOperation methods
 
     @Override
     public ShiftInfoData getInfo(int shiftId) {
@@ -86,26 +89,14 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
         shiftNameInfoData.setCenterName(centerService.getName(shift.getCenterId()));  //getByIdOnlyName -nak kéne lennie?
         return shiftNameInfoData;
     }
-//        Field[] fields = shift.getClass().getFields();
-//        for (int i = 0; i < fields.length; i++) {
-//            shiftNameInfoData.
-//        }
 
+    @Override
+    public boolean fileSave(InputCreateData input) {
+        return false;
+    }
 
-//    public ShiftNameInfoData getShiftNameInfo(int shiftId) {
-//
-//
-//        Shift shift = shiftRepository.getShift(shiftId);
-//        shiftInfoData.setStart(shift.getStart());
-//        shiftInfoData.setEnd(shift.getEnd());
-//
-//        DoctorCreate doctorCreate = doctorService.getDoctor(shift.getDoctorId());
-//        shiftInfoData.setDoctorFirstName(doctorCreate.getFirstName());
-//        shiftInfoData.setDoctorLastName(doctorCreate.getLastName());
-//
-//
-//        return shiftInfoData;
-//    }
-
-
+    @Override
+    public boolean fileLoad(InputCreateData input) {
+        return false;
+    }
 }
