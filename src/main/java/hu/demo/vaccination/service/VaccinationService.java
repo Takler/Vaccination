@@ -1,9 +1,6 @@
 package hu.demo.vaccination.service;
 
-import hu.demo.vaccination.domain.Doctor;
-import hu.demo.vaccination.domain.Patient;
-import hu.demo.vaccination.domain.Vaccination;
-import hu.demo.vaccination.domain.Vaccine;
+import hu.demo.vaccination.domain.*;
 import hu.demo.vaccination.dto.VaccinationCreateData;
 import hu.demo.vaccination.dto.vaccination.AggregatedFieldData;
 import hu.demo.vaccination.dto.vaccination.CountPercentageData;
@@ -157,12 +154,20 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
 
     @Override
     public boolean save(VaccinationCreateData data) {
-        return vaccinationRepository.createVaccination(data);
+        if(validateData(data)) {
+            return vaccinationRepository.createVaccination(data);
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean update(int id, VaccinationCreateData data) {
-        return vaccinationRepository.updateVaccination(id, data);
+        if(validateData(data)) {
+            return vaccinationRepository.updateVaccination(id, data);
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -211,6 +216,28 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
             patients = getPregnantPatients(patients);
         }
         return filterPatientsByAge(patients, minAge, maxAge);
+    }
+
+    private boolean validateData(VaccinationCreateData data) {
+        boolean isVaccineValid = vaccineService.findAll().stream()
+                .filter(Vaccine::isApplicable)
+                .mapToInt(Vaccine::getId)
+                .boxed()
+                .collect(Collectors.toList())
+                .contains(data.getVaccineId());
+        boolean isPatientValid = patientService.findAll().stream()
+                .mapToInt(Patient::getId)
+                .boxed()
+                .collect(Collectors.toList())
+                .contains(data.getPatientId());
+        boolean isShiftValid = shiftService.findAll().stream()
+                .mapToInt(Shift::getId)
+                .boxed()
+                .collect(Collectors.toList())
+                .contains(data.getShiftId());
+        boolean isDateValid = !data.getDate().isAfter(LocalDate.now());
+
+        return isVaccineValid && isPatientValid && isShiftValid && isDateValid;
     }
 
 }
