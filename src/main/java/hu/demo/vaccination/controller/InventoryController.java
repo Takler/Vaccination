@@ -26,7 +26,11 @@ public class InventoryController {
     @GetMapping("/centerid/{centerId}")
     public ResponseEntity<List<InventoryStockData>> getStock(@PathVariable int centerId) {
         List<InventoryStockData> inventoryStockData = inventoryService.getStock(centerId);
-        return new ResponseEntity<>(inventoryStockData, HttpStatus.OK);
+        if (inventoryStockData.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(inventoryStockData, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/info/{id}")
