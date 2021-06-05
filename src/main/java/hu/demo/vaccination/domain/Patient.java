@@ -46,6 +46,15 @@ public class Patient {
         this.deleted = deleted;
     }
 
+    public Patient(int id, String gender, LocalDate dateOfBirth, String zipCode, boolean pregnant, boolean underlyingMedicalCondition) {
+        this.id = id;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.zipCode = zipCode;
+        this.pregnant = pregnant;
+        this.underlyingMedicalCondition = underlyingMedicalCondition;
+    }
+
     public String toCsvFormat() {
         return id + ";" + firstName + ";" + lastName + ";" + mothersName + ";" + gender + ";" + dateOfBirth +
                 ";" + email + ";" + city + ";" + zipCode + ";" + address + ";" + telephoneNumber +
