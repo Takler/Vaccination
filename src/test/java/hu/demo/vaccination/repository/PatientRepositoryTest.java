@@ -128,6 +128,11 @@ class PatientRepositoryTest {
                 MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT,
                 MODIFIED_TEST_TEXT, MODIFIED_TEST_BOOLEAN, MODIFIED_TEST_BOOLEAN);
 
+        Patient exceptedModifiedPatient = new Patient(MODIFIED_ID, MODIFIED_TEST_TEXT,
+                MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT, MODIFIED_TEST_DATE,
+                MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT, MODIFIED_TEST_TEXT,
+                MODIFIED_TEST_TEXT, MODIFIED_TEST_BOOLEAN, MODIFIED_TEST_BOOLEAN, false);
+
 
         patientRepository.save(data);
 
@@ -136,20 +141,7 @@ class PatientRepositoryTest {
         Patient modifiedPatient = patientRepository.getById(MODIFIED_ID);
 
         assertNull(patientRepository.getById(PATIENT_2_ID));
-        assertEquals(MODIFIED_ID, modifiedPatient.getId());
-
-        assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getFirstName());
-        assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getLastName());
-        assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getMothersName());
-        assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getGender());
-        assertEquals(MODIFIED_TEST_DATE, modifiedPatient.getDateOfBirth());
-        assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getEmail());
-        assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getCity());
-        assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getZipCode());
-        assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getAddress());
-        assertEquals(MODIFIED_TEST_TEXT, modifiedPatient.getTelephoneNumber());
-        assertEquals(MODIFIED_TEST_BOOLEAN, modifiedPatient.isPregnant());
-        assertEquals(MODIFIED_TEST_BOOLEAN, modifiedPatient.isUnderlyingMedicalCondition());
+        assertEquals(exceptedModifiedPatient, modifiedPatient);
     }
 
     @Test
