@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -111,5 +112,11 @@ public class VaccinationController {
     @GetMapping("/vaccine")
     public ResponseEntity<List<AggregatedFieldData>> getVaccinatedPerVaccine() {
         return new ResponseEntity<>(vaccinationService.getVaccinatedPerVaccine(), HttpStatus.OK);
+    }
+
+    @GetMapping("/period")
+    public ResponseEntity<Integer> getNumberOfVaccinationsForPeriod(@RequestParam LocalDate start,
+                                                                    @RequestParam LocalDate end) {
+        return new ResponseEntity<>(vaccinationService.getNumberOfVaccinationsForPeriod(start, end), HttpStatus.OK);
     }
 }
