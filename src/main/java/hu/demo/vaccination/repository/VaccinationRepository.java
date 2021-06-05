@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +22,10 @@ public class VaccinationRepository {
     @Autowired
     public VaccinationRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
+    }
+
+    public VaccinationRepository(DataSource dataSource) {
+        this.jdbc = new JdbcTemplate(dataSource);
     }
 
     public List<Vaccination> getVaccinations() {
@@ -57,16 +62,17 @@ public class VaccinationRepository {
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            e.printStackTrace();
             return false;
         }
     }
 
     public boolean updateVaccination(int id, VaccinationCreateData data) {
-        String sql = "UPDATE vaccination SET" +
+        String sql = "UPDATE vaccination SET " +
                 "vaccine_id = ?, " +
                 "patient_id = ?, " +
                 "shift_id = ?, " +
-                "date = ?, " +
+                "date = ? " +
                 "WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql,
@@ -78,13 +84,14 @@ public class VaccinationRepository {
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            e.printStackTrace();
             return false;
         }
     }
 
     public boolean deleteVaccination(int id) {
         String sql = "UPDATE vaccination " +
-                "SET deleted = FALSE " +
+                "SET deleted = TRUE " +
                 "WHERE id = ?";
         try {
             int rowsAffected = jdbc.update(sql, id);

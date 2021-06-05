@@ -1,5 +1,6 @@
 package hu.demo.vaccination.domain;
 
+import hu.demo.vaccination.dto.VaccineCreateData;
 import lombok.*;
 
 import java.util.Objects;
@@ -39,6 +40,22 @@ public class Vaccine {
         this.applicable = applicable;
         this.applicableForPregnant = applicableForPregnant;
         this.applicableForChronic = applicableForChronic;
+    }
+
+    public Vaccine(int id, VaccineCreateData vaccineCreateData) {
+        this.id = id;
+        this.name = vaccineCreateData.getName();
+        this.type = vaccineCreateData.getType();
+        this.storageTemperature = vaccineCreateData.getStorageTemperature();
+        this.ageLimitMin = vaccineCreateData.getAgeLimitMin();
+        this.ageLimitMax = vaccineCreateData.getAgeLimitMax();
+        this.shotsNeeded = vaccineCreateData.getShotsNeeded();
+        this.daysUntilNextShot = vaccineCreateData.getDaysUntilNextShot();
+        this.nextShotId = vaccineCreateData.getNextShotId();
+        this.fullyVaccinatedTimePeriod = vaccineCreateData.getFullyVaccinatedTimePeriod();
+        this.applicable = vaccineCreateData.isApplicable();
+        this.applicableForPregnant = vaccineCreateData.isApplicableForPregnant();
+        this.applicableForChronic = vaccineCreateData.isApplicableForChronic();
     }
 
     @Override

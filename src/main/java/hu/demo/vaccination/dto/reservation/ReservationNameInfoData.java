@@ -14,4 +14,16 @@ public class ReservationNameInfoData {
     private LocalDate registration;
     private LocalDate nextShot;
 
+    public ReservationNameInfoData() {
+    }
+
+    public ReservationNameInfoData(int id, String patientName, String centerName, String vaccineName,
+                                   LocalDate registration, LocalDate nextShot) {
+        this.id = id;
+        this.patientName = patientName;
+        this.centerName = centerName;
+        this.vaccineName = vaccineName;
+        this.registration = registration;
+        this.nextShot = nextShot;
+    }
 }

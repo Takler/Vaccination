@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDate;
 
+import static hu.demo.vaccination.config.ReservationTestHelper.getReservationTwoCreateData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -50,7 +51,7 @@ class ReservationRepositoryTest {
 
     @Test
     void test_getPatientReservation_correctDataReceived() {
-        ReservationCreateData originalData = getSampleReservationCreateData();
+        ReservationCreateData originalData = getReservationTwoCreateData();
 
         reservationRepository.save(originalData);
         PatientReservationData result = reservationRepository.getPatientReservation(originalData.getPatientId());
@@ -61,7 +62,6 @@ class ReservationRepositoryTest {
         assertNull(result.getPatientName());
         assertNull(result.getCenterName());
         assertNull(result.getVaccineName());
-
     }
 
     @Test
@@ -71,7 +71,7 @@ class ReservationRepositoryTest {
 
     @Test
     void test_getById_sameReservationDataReceived() {
-        ReservationCreateData originalData = getSampleReservationCreateData();
+        ReservationCreateData originalData = getReservationTwoCreateData();
 
         reservationRepository.save(originalData);
         Reservation result = reservationRepository.getById(1);
@@ -85,16 +85,12 @@ class ReservationRepositoryTest {
 
     @Test
     void test_update_modifiedDataReceived() {
-        ReservationCreateData originalData = getSampleReservationCreateData();
+        ReservationCreateData originalData = getReservationTwoCreateData();
 
-        ReservationCreateData updatedData = new ReservationCreateData();
-        updatedData.setPatientId(248248264);
-        updatedData.setCenterId(23);
-        updatedData.setVaccineId(2);
         LocalDate updatedRegistration = originalData.getRegistration().plusDays(20);
         LocalDate updatedNextShot = originalData.getNextShot().plusDays(20);
-        updatedData.setRegistration(updatedRegistration);
-        updatedData.setNextShot(updatedNextShot);
+        ReservationCreateData updatedData = new ReservationCreateData(248248264, 23, 2,
+                updatedRegistration, updatedNextShot);
 
         reservationRepository.save(originalData);
         reservationRepository.update(1, updatedData);
@@ -109,7 +105,7 @@ class ReservationRepositoryTest {
 
     @Test
     void test_delete_DeleteFieldModified_noResultFromGets() {
-        ReservationCreateData originalData = getSampleReservationCreateData();
+        ReservationCreateData originalData = getReservationTwoCreateData();
 
         reservationRepository.save(originalData);
         reservationRepository.delete(1);
@@ -117,13 +113,5 @@ class ReservationRepositoryTest {
         assertEquals(0, reservationRepository.findAll().size());
     }
 
-    private ReservationCreateData getSampleReservationCreateData() {
-        ReservationCreateData data = new ReservationCreateData();
-        data.setPatientId(157648531);
-        data.setCenterId(12);
-        data.setVaccineId(1);
-        data.setRegistration(LocalDate.now());
-        data.setNextShot(LocalDate.now().plusDays(10));
-        return data;
-    }
+
 }

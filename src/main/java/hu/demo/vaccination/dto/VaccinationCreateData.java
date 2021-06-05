@@ -12,4 +12,13 @@ public class VaccinationCreateData {
     private int shiftId;
     private LocalDate date;
 
+    public VaccinationCreateData() {
+    }
+
+    public VaccinationCreateData(int vaccineId, int patientId, int shiftId, LocalDate date) {
+        this.vaccineId = vaccineId;
+        this.patientId = patientId;
+        this.shiftId = shiftId;
+        this.date = date;
+    }
 }
