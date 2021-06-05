@@ -3,7 +3,6 @@ package hu.demo.vaccination.repository;
 import hu.demo.vaccination.config.VaccineTestHelper;
 import hu.demo.vaccination.domain.Vaccine;
 import hu.demo.vaccination.dto.VaccineCreateData;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,11 +26,6 @@ public class VaccineRepositoryTest {
                 .build();
 
         vaccineRepository = new VaccineRepository(dataSource);
-    }
-
-    @AfterEach
-    void destruct() {
-        dataSource = null;
     }
 
     @Test

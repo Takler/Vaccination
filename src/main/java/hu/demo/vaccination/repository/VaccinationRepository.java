@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +22,10 @@ public class VaccinationRepository {
     @Autowired
     public VaccinationRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
+    }
+
+    public VaccinationRepository(DataSource dataSource) {
+        this.jdbc = new JdbcTemplate(dataSource);
     }
 
     public List<Vaccination> getVaccinations() {
