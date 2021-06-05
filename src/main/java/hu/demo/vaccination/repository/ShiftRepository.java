@@ -46,8 +46,8 @@ public class ShiftRepository {
         }
     }
 
-    public boolean save(ShiftCreateUpdateData shiftCreateUpdateData) {      //INSERT
-        String sqlInsert = "INSERT INTO shift (center_id, doctor_id, start, end) VALUES (?, ?, ?, ?)";
+    public boolean save(ShiftCreateUpdateData shiftCreateUpdateData) {
+        String sqlInsert = "INSERT INTO shift (center_id, doctor_id, start, end) VALUES (?,?,?,?)";
         try {
             if (jdbcTemplate.update(sqlInsert, shiftCreateUpdateData.getCenterId(), shiftCreateUpdateData.getDoctorId(),
                     shiftCreateUpdateData.getStart(), shiftCreateUpdateData.getEnd()) == 1) {

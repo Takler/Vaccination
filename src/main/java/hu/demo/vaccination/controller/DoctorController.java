@@ -1,6 +1,7 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Doctor;
+import hu.demo.vaccination.dto.doctor.DoctorCreateUpdateData;
 import hu.demo.vaccination.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,48 +9,55 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/api/doctor")   //Megnézni a hibát, amit a Józsi mondott Discordon
-public class DoctorController {   // Testeket írni!!
+@RequestMapping("/api/doctor")   // TODO Megnézni a hibát, amit a Józsi mondott Discordon
+public class DoctorController {   // TODO Testeket írni!!
 
     private DoctorService doctorService;
-
-    // deleted JSON kiszedése
 
     @Autowired
     public DoctorController(DoctorService doctorService) {
         this.doctorService = doctorService;
     }
 
-    @PostMapping
-    public ResponseEntity<Void> save(@RequestBody Doctor doctor) {
-        if (doctorService.save(doctor)) {
-            return new ResponseEntity<>(HttpStatus.OK);
+    // @GetMapping("/file")
+    // @PostMapping("/file")
+
+    @GetMapping
+    public ResponseEntity<List<Doctor>> findAll() { //TODO Miért public mindegyik?
+        List<Doctor> doctorList = doctorService.findAll();
+        if (!doctorList.isEmpty()) {
+            return new ResponseEntity<>(doctorList, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @GetMapping
-    public ResponseEntity<List<Map<String, Object>>> findAll() {    // struktúra??
-        return new ResponseEntity<>(doctorService.findAll(), HttpStatus.OK);
-    }
-
     @GetMapping("/{doctorId}")
     public ResponseEntity<Doctor> getById(@PathVariable int doctorId) {
         Doctor doctor = doctorService.getById(doctorId);
-        if (doctor == null) {   // itt akkor null helyett mi?
-            return new ResponseEntity<>(doctor, HttpStatus.EXPECTATION_FAILED);
-        } else {
+        if (doctor != null) {
             return new ResponseEntity<>(doctor, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping
-    public ResponseEntity<Void> update(@RequestBody Doctor doctor) {
-        if (doctorService.update(doctor)) {
+    @PostMapping
+    public ResponseEntity<Void> save(@RequestBody DoctorCreateUpdateData doctorCreateUpdateData) {
+        if (doctorService.save(doctorCreateUpdateData)) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @PutMapping("/{doctorId}")
+    public ResponseEntity<Void> update(@PathVariable int doctorId,
+                                       @RequestBody DoctorCreateUpdateData doctorCreateUpdateData) {
+        if (doctorService.update(doctorId, doctorCreateUpdateData)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
