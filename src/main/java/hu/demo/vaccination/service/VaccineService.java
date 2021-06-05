@@ -37,7 +37,7 @@ public class VaccineService implements CrudOperation<Vaccine, VaccineCreateData>
             Vaccination latestVaccination = vaccinationsOfPatient.stream()
                     .max(Comparator.comparing(Vaccination::getDate))
                     .get();
-            Vaccine lastVaccineDose = applicableVaccinesForPatient.stream()
+            Vaccine lastVaccineDose = findAll().stream()
                     .filter(vaccine -> vaccine.getId() == latestVaccination.getVaccineId())
                     .findAny()
                     .orElse(new Vaccine());

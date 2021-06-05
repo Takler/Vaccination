@@ -105,6 +105,13 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
                 .collect(Collectors.toList());
     }
 
+    public int getNumberOfVaccinationsForPeriod(LocalDate start, LocalDate end) {
+        return (int) findAll().stream()
+                .filter(vaccination -> vaccination.getDate().isAfter(start.minusDays(1)))
+                .filter(vaccination -> vaccination.getDate().isBefore(end.plusDays(1)))
+                .count();
+    }
+
     public List<Vaccination> getVaccinationsByPatient(int patientId) {
         return findAll().stream()
                 .filter(vaccination -> vaccination.getPatientId() == patientId)
