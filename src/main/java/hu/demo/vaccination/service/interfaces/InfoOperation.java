@@ -1,4 +1,4 @@
-package hu.demo.vaccination.service;
+package hu.demo.vaccination.service.interfaces;
 
 public interface InfoOperation<T, U, V, W> extends CrudOperation<T, U> {
 

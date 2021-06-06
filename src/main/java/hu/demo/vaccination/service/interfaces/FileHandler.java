@@ -1,4 +1,4 @@
-package hu.demo.vaccination.service;
+package hu.demo.vaccination.service.interfaces;
 
 import hu.demo.vaccination.dto.InputCreateData;
 

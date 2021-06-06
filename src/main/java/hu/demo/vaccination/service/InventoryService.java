@@ -6,6 +6,7 @@ import hu.demo.vaccination.dto.inventory.InventoryInfoData;
 import hu.demo.vaccination.dto.inventory.InventoryNameInfoData;
 import hu.demo.vaccination.dto.inventory.InventoryStockData;
 import hu.demo.vaccination.repository.InventoryRepository;
+import hu.demo.vaccination.service.interfaces.InfoOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

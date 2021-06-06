@@ -6,6 +6,7 @@ import hu.demo.vaccination.dto.reservation.ReservationCreateData;
 import hu.demo.vaccination.dto.reservation.ReservationInfoData;
 import hu.demo.vaccination.dto.reservation.ReservationNameInfoData;
 import hu.demo.vaccination.repository.ReservationRepository;
+import hu.demo.vaccination.service.interfaces.InfoOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package hu.demo.vaccination.service;
+package hu.demo.vaccination.service.interfaces;
 
 import java.util.List;
 

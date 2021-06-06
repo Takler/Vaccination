@@ -5,6 +5,8 @@ import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.domain.Vaccine;
 import hu.demo.vaccination.dto.VaccineCreateData;
 import hu.demo.vaccination.repository.VaccineRepository;
+import hu.demo.vaccination.service.interfaces.CrudOperation;
+import hu.demo.vaccination.service.interfaces.Nameable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

@@ -8,6 +8,8 @@ import hu.demo.vaccination.dto.shift.ShiftCreateUpdateData;
 import hu.demo.vaccination.dto.shift.ShiftInfoData;
 import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import hu.demo.vaccination.repository.ShiftRepository;
+import hu.demo.vaccination.service.interfaces.FileHandler;
+import hu.demo.vaccination.service.interfaces.InfoOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
