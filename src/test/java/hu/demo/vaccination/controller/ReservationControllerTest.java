@@ -15,11 +15,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
+
 import static hu.demo.vaccination.config.PatientTestHelper.*;
 import static hu.demo.vaccination.config.ReservationTestHelper.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -34,7 +37,7 @@ class ReservationControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("GET /api/reservation/patientid/123123123 - getPatientReservation")
+    @DisplayName("GET /api/reservation/patientid/123123123 - getPatientReservation - correct")
     void test_getPatientReservation_receiveCorrectPatientReservationData() {
         PatientReservationData patientReservationData = getPatientReservationDataOne();
 
@@ -54,10 +57,27 @@ class ReservationControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(reservationServiceMock).getPatientReservation(PATIENT_RESERVATION_1_PATIENT_ID);
     }
 
     @Test
-    @DisplayName("GET /api/reservation/info/1 - getInfo")
+    @DisplayName("GET /api/reservation/patientid/123123123 - getPatientReservation - no result")
+    void test_getPatientReservation_noResult() {
+        doReturn(null).when(reservationServiceMock).getPatientReservation(PATIENT_RESERVATION_1_PATIENT_ID);
+
+        try {
+            mockMvc.perform(get("/api/reservation/patientid/123123123"))
+                    .andExpect(status().isBadRequest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(reservationServiceMock).getPatientReservation(PATIENT_RESERVATION_1_PATIENT_ID);
+    }
+
+    @Test
+    @DisplayName("GET /api/reservation/info/1 - getInfo - correct")
     void test_getInfo_receiveCorrectInfoData() {
         ReservationInfoData reservationInfoData = getReservationInfoDataOne();
 
@@ -108,10 +128,27 @@ class ReservationControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(reservationServiceMock).getInfo(RESERVATION_INFO_1_RESERVATION_ID);
     }
 
     @Test
-    @DisplayName("GET /api/reservation/nameinfo/1 - getNameInfo")
+    @DisplayName("GET /api/reservation/info/1 - getInfo - no result")
+    void test_getInfo_noResult() {
+        doReturn(null).when(reservationServiceMock).getInfo(RESERVATION_INFO_1_RESERVATION_ID);
+
+        try {
+            mockMvc.perform(get("/api/reservation/info/1"))
+                    .andExpect(status().isBadRequest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(reservationServiceMock).getInfo(RESERVATION_INFO_1_RESERVATION_ID);
+    }
+
+    @Test
+    @DisplayName("GET /api/reservation/nameinfo/1 - getNameInfo - correct")
     void test_getNameInfo_receiveCorrectInfoData() {
         ReservationNameInfoData nameInfoData = getReservationNameInfoDataOne();
 
@@ -130,10 +167,27 @@ class ReservationControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(reservationServiceMock).getNameInfo(RESERVATION_NAME_INFO_1_ID);
     }
 
     @Test
-    @DisplayName("GET /api/reservation - findall")
+    @DisplayName("GET /api/reservation/nameinfo/1 - getNameInfo - no result")
+    void test_getNameInfo_noResult() {
+        doReturn(null).when(reservationServiceMock).getNameInfo(RESERVATION_NAME_INFO_1_ID);
+
+        try {
+            mockMvc.perform(get("/api/reservation/nameinfo/1"))
+                    .andExpect(status().isBadRequest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(reservationServiceMock).getNameInfo(RESERVATION_NAME_INFO_1_ID);
+    }
+
+    @Test
+    @DisplayName("GET /api/reservation - findall - correct")
     void test_findAll_receiveCorrectReservationData() {
         Reservation reservationOne = getReservationOne();
         Reservation reservationTwo = getReservationTwo();
@@ -161,10 +215,27 @@ class ReservationControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(reservationServiceMock).findAll();
     }
 
     @Test
-    @DisplayName("GET /api/reservation/1 -getById")
+    @DisplayName("GET /api/reservation - findall - no result")
+    void test_findAll_noResult() {
+        doReturn(Collections.emptyList()).when(reservationServiceMock).findAll();
+
+        try {
+            mockMvc.perform(get("/api/reservation"))
+                    .andExpect(status().isBadRequest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(reservationServiceMock).findAll();
+    }
+
+    @Test
+    @DisplayName("GET /api/reservation/1 - getById - correct")
     void test_getById_receiveCorrectReservationData() {
         Reservation reservation = getReservationOne();
 
@@ -183,5 +254,22 @@ class ReservationControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(reservationServiceMock).getById(RESERVATION_1_ID);
+    }
+
+    @Test
+    @DisplayName("GET /api/reservation/1 - getById - no result")
+    void test_getById_noResult() {
+        doReturn(null).when(reservationServiceMock).getById(RESERVATION_1_ID);
+
+        try {
+            mockMvc.perform(get("/api/reservation/1"))
+                    .andExpect(status().isBadRequest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(reservationServiceMock).getById(RESERVATION_1_ID);
     }
 }

@@ -20,12 +20,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static hu.demo.vaccination.config.PatientTestHelper.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PatientServiceTest {
@@ -106,7 +107,15 @@ class PatientServiceTest {
 
         assertEquals(patientOne, firstResultPatient);
         assertEquals(patientTwo, secondResultPatient);
-        verify(patientRepositoryMock, times(1)).findAll();
+        verify(patientRepositoryMock).findAll();
+    }
+
+    @Test
+    void test_fileSave_noResult() {
+        InputCreateData input = new InputCreateData();
+        input.setInput(" BAD/PATH");
+
+        assertFalse(patientService.fileSave(input));
     }
 
     @Test
@@ -122,8 +131,16 @@ class PatientServiceTest {
 
         assertTrue(patientService.fileLoad(input));
 
-        verify(patientRepositoryMock, times(1)).save(patientOne);
-        verify(patientRepositoryMock, times(1)).save(patientTwo);
+        verify(patientRepositoryMock).save(patientOne);
+        verify(patientRepositoryMock).save(patientTwo);
+    }
+
+    @Test
+    void test_fileLoad_noResult() {
+        InputCreateData input = new InputCreateData();
+        input.setInput(" BAD/PATH");
+
+        assertFalse(patientService.fileLoad(input));
     }
 
     @Test
@@ -133,11 +150,19 @@ class PatientServiceTest {
         List<String> lastNames = new ArrayList<>();
         lastNames.add(lastName);
 
-        when(patientRepositoryMock.getLastName(firstName)).thenReturn(lastNames);
+        when(patientRepositoryMock.getLastNames(firstName)).thenReturn(lastNames);
 
         List<String> receivedLastNames = patientService.getLastNames(firstName);
         assertEquals(lastName, receivedLastNames.get(0));
-        verify(patientRepositoryMock, times(1)).getLastName(firstName);
+        verify(patientRepositoryMock).getLastNames(firstName);
+    }
+
+    @Test
+    void test_getLastName_noResult() {
+        when(patientRepositoryMock.getLastNames(PATIENT_1_FIRST_NAME)).thenReturn(Collections.emptyList());
+
+        assertTrue(patientService.getLastNames(PATIENT_1_FIRST_NAME).isEmpty());
+        verify(patientRepositoryMock).getLastNames(PATIENT_1_FIRST_NAME);
     }
 
     @Test
@@ -148,8 +173,12 @@ class PatientServiceTest {
         when(patientRepositoryMock.getName(id)).thenReturn(name);
 
         assertEquals(name, patientService.getName(id));
-        verify(patientRepositoryMock, times(1)).getName(id);
+        verify(patientRepositoryMock).getName(id);
+    }
 
+    @Test
+    void test_getName_noResult() {
+        assertNull(patientService.getName(1));
     }
 
     @Test
@@ -165,7 +194,15 @@ class PatientServiceTest {
 
         List<Patient> receivedPatients = patientService.findAll();
         assertEquals(2, receivedPatients.size());
-        verify(patientRepositoryMock, times(1)).findAll();
+        verify(patientRepositoryMock).findAll();
+    }
+
+    @Test
+    void test_findAll_noResult() {
+        when(patientRepositoryMock.findAll()).thenReturn(Collections.emptyList());
+
+        assertTrue(patientService.findAll().isEmpty());
+        verify(patientRepositoryMock).findAll();
     }
 
     @Test
@@ -176,7 +213,15 @@ class PatientServiceTest {
 
         Patient receivedPatient = patientService.getById(patient.getId());
         assertEquals(patient, receivedPatient);
-        verify(patientRepositoryMock, times(1)).getById(patient.getId());
+        verify(patientRepositoryMock).getById(patient.getId());
+    }
+
+    @Test
+    void test_getById_noResult() {
+        when(patientRepositoryMock.getById(PATIENT_1_ID)).thenReturn(null);
+
+        assertNull(patientService.getById(PATIENT_1_ID));
+        verify(patientRepositoryMock).getById(PATIENT_1_ID);
     }
 
     @Test
@@ -186,7 +231,31 @@ class PatientServiceTest {
         when(patientRepositoryMock.save(patientCreateData)).thenReturn(true);
 
         assertTrue(patientService.save(patientCreateData));
-        verify(patientRepositoryMock, times(1)).save(patientCreateData);
+        verify(patientRepositoryMock).save(patientCreateData);
+    }
+
+    @Test
+    void test_save_notValidEmail() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        patientCreateData.setEmail("aaa");
+
+        assertFalse(patientService.save(patientCreateData));
+    }
+
+    @Test
+    void test_save_notValidSSN_negative() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        patientCreateData.setId(-100);
+
+        assertFalse(patientService.save(patientCreateData));
+    }
+
+    @Test
+    void test_save_notValidSSN_overNineDigits() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        patientCreateData.setId(1_000_000_000);
+
+        assertFalse(patientService.save(patientCreateData));
     }
 
     @Test
@@ -196,7 +265,7 @@ class PatientServiceTest {
         when(patientRepositoryMock.delete(id)).thenReturn(true);
 
         assertTrue(patientService.delete(id));
-        verify(patientRepositoryMock, times(1)).delete(id);
+        verify(patientRepositoryMock).delete(id);
     }
 
     @Test
@@ -207,7 +276,45 @@ class PatientServiceTest {
         when(patientRepositoryMock.update(id, patientCreateData)).thenReturn(true);
 
         assertTrue(patientService.update(id, patientCreateData));
-        verify(patientRepositoryMock, times(1)).update(patientCreateData.getId(), patientCreateData);
+        verify(patientRepositoryMock).update(patientCreateData.getId(), patientCreateData);
+    }
+
+    @Test
+    void test_update_noResult() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        int id = patientCreateData.getId();
+
+        when(patientRepositoryMock.update(id, patientCreateData)).thenReturn(false);
+
+        assertFalse(patientService.update(id, patientCreateData));
+        verify(patientRepositoryMock).update(patientCreateData.getId(), patientCreateData);
+    }
+
+    @Test
+    void test_update_notValidEmail() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        int id = patientCreateData.getId();
+        patientCreateData.setEmail("aaa");
+
+        assertFalse(patientService.update(id, patientCreateData));
+    }
+
+    @Test
+    void test_update_notValidSSN_negative() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        int id = patientCreateData.getId();
+        patientCreateData.setId(-100);
+
+        assertFalse(patientService.update(id, patientCreateData));
+    }
+
+    @Test
+    void test_update_notValidSSN_overNineDigits() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        int id = patientCreateData.getId();
+        patientCreateData.setId(1_000_000_000);
+
+        assertFalse(patientService.update(id, patientCreateData));
     }
 
     private void initTestFiles() {

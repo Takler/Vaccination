@@ -82,7 +82,7 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
 
     @Override
     public List<String> getLastNames(String firstName) {
-        return patientRepository.getLastName(firstName);
+        return patientRepository.getLastNames(firstName);
     }
 
     @Override
@@ -102,16 +102,42 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
 
     @Override
     public boolean save(PatientCreateData data) {
-        return patientRepository.save(data);
+        if (validator(data)) {
+            return patientRepository.save(data);
+        } else {
+            log.error("save validation: bad input data");
+            return false;
+        }
     }
 
     @Override
     public boolean update(int id, PatientCreateData data) {
-        return patientRepository.update(id, data);
+        if (validator(data)) {
+            return patientRepository.update(id, data);
+        } else {
+            log.error("update validation: bad input data");
+            return false;
+        }
     }
 
     @Override
     public boolean delete(int id) {
         return patientRepository.delete(id);
+    }
+
+    private boolean validator(PatientCreateData data) {
+        int id = data.getId();
+        if (id < 0 || id > 999_999_999) {
+            log.error("wrong SSN number");
+            return false;
+        }
+
+        String email = data.getEmail();
+        if (!email.contains("@") || !email.contains(".")) {
+            log.error("wrong e-mail");
+            return false;
+        }
+
+        return true;
     }
 }

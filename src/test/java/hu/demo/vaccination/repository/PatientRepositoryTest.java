@@ -15,8 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static hu.demo.vaccination.config.PatientTestHelper.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @JdbcTest
 class PatientRepositoryTest {
@@ -49,13 +48,24 @@ class PatientRepositoryTest {
     }
 
     @Test
+    void test_getName_noResult() {
+        assertTrue(patientRepository.getName(PATIENT_1_ID).isEmpty());
+    }
+
+    @Test
     void test_getLastName_getCorrectNames() {
         PatientCreateData data = getPatientOneCreateData();
 
         patientRepository.save(data);
 
-        assertEquals(data.getLastName(), patientRepository.getLastName(data.getFirstName()).get(0));
+        assertEquals(data.getLastName(), patientRepository.getLastNames(data.getFirstName()).get(0));
     }
+
+    @Test
+    void test_getLastName_noResult() {
+        assertTrue(patientRepository.getLastNames(PATIENT_1_FIRST_NAME).isEmpty());
+    }
+
 
     @Test
     void test_findAll_noPatientsExists_returnsEmptyList() {
@@ -136,7 +146,7 @@ class PatientRepositoryTest {
 
         patientRepository.save(data);
 
-        patientRepository.update(PATIENT_2_ID, modifiedData);
+        assertTrue(patientRepository.update(PATIENT_2_ID, modifiedData));
 
         Patient modifiedPatient = patientRepository.getById(MODIFIED_ID);
 
@@ -145,14 +155,24 @@ class PatientRepositoryTest {
     }
 
     @Test
+    void test_update_noResult() {
+        assertFalse(patientRepository.update(PATIENT_1_ID, getPatientOneCreateData()));
+    }
+
+    @Test
     void test_delete_deleteFieldModified_noResultFromGets() {
         PatientCreateData data = getPatientOneCreateData();
 
         patientRepository.save(data);
 
-        patientRepository.delete(PATIENT_1_ID);
+        assertTrue(patientRepository.delete(PATIENT_1_ID));
 
         assertEquals(0, patientRepository.findAll().size());
+    }
+
+    @Test
+    void test_delete_noResult() {
+        assertFalse(patientRepository.delete(PATIENT_1_ID));
     }
 
 }

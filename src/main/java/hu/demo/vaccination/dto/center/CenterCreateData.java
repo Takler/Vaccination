@@ -1,4 +1,4 @@
-package hu.demo.vaccination.dto;
+package hu.demo.vaccination.dto.center;
 
 import lombok.Data;
 

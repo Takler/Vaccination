@@ -12,10 +12,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import static hu.demo.vaccination.config.ReservationTestHelper.getReservationTwoCreateData;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static hu.demo.vaccination.config.ReservationTestHelper.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @JdbcTest
 class ReservationRepositoryTest {
@@ -65,7 +65,24 @@ class ReservationRepositoryTest {
     }
 
     @Test
-    void test_findall_noReservationsExists_returnsEmptyList() {
+    void test_getPatientReservation_noResult() {
+        assertNull(reservationRepository.getPatientReservation(PATIENT_RESERVATION_1_PATIENT_ID));
+    }
+
+    @Test
+    void test_findAll_returnsCorrectData() {
+        Reservation expectedReservation = getReservationTwo();
+        expectedReservation.setId(1);
+
+        reservationRepository.save(getReservationTwoCreateData());
+
+        List<Reservation> reservations = reservationRepository.findAll();
+        assertEquals(1, reservations.size());
+        assertEquals(expectedReservation, reservations.get(0));
+    }
+
+    @Test
+    void test_findAll_noReservationsExists_returnsEmptyList() {
         assertEquals(0, reservationRepository.findAll().size());
     }
 
@@ -84,6 +101,11 @@ class ReservationRepositoryTest {
     }
 
     @Test
+    void test_getById_noResult() {
+        assertNull(reservationRepository.getById(1));
+    }
+
+    @Test
     void test_update_modifiedDataReceived() {
         ReservationCreateData originalData = getReservationTwoCreateData();
 
@@ -93,7 +115,7 @@ class ReservationRepositoryTest {
                 updatedRegistration, updatedNextShot);
 
         reservationRepository.save(originalData);
-        reservationRepository.update(1, updatedData);
+        assertTrue(reservationRepository.update(1, updatedData));
         Reservation result = reservationRepository.getById(1);
 
         assertEquals(updatedData.getPatientId(), result.getPatientId());
@@ -104,14 +126,23 @@ class ReservationRepositoryTest {
     }
 
     @Test
+    void test_update_noResult() {
+        assertFalse(reservationRepository.update(1, getReservationTwoCreateData()));
+    }
+
+    @Test
     void test_delete_DeleteFieldModified_noResultFromGets() {
         ReservationCreateData originalData = getReservationTwoCreateData();
 
         reservationRepository.save(originalData);
-        reservationRepository.delete(1);
+        assertTrue(reservationRepository.delete(1));
 
         assertEquals(0, reservationRepository.findAll().size());
     }
 
+    @Test
+    void test_delete_noResult() {
+        assertFalse(reservationRepository.delete(1));
+    }
 
 }

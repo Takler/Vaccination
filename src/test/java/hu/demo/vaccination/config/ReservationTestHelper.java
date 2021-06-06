@@ -83,15 +83,13 @@ public class ReservationTestHelper {
 
     public static ReservationInfoData getReservationInfoDataOne() {
         Patient patient = PatientTestHelper.getPatientOne();
-        Vaccine vaccine = new Vaccine(2, "Moderna", "mRNA", -20, 18, 999,
-                2, 2, 28, 42, true, true, true);
-        Center center = new Center();
-        center.setId(12);
-        center.setName("Honvéd Kórház");
-        center.setCity("Budapest");
-        center.setEmail("honved@honved.hu");
-        center.setTelephoneNumber("+3619877651");
-        center.setDailyCapacity(1000);
+
+        Vaccine vaccine = new Vaccine(2, "Moderna", "mRNA", -20, 18,
+                999, 2, 2, 28, 42, true,
+                true, true);
+
+        Center center = new Center(12, "Honvéd Kórház", "Budapest", "honved@honved.hu",
+                "+3619877651", 1000, false);
 
         return new ReservationInfoData(RESERVATION_INFO_1_RESERVATION_ID, patient, center, vaccine,
                 RESERVATION_INFO_1_REGISTRATION, RESERVATION_INFO_1_NEXT_SHOT);

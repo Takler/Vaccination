@@ -30,7 +30,7 @@ public class ReservationController {
         if (patientReservation != null) {
             return new ResponseEntity<>(patientReservation, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -40,7 +40,7 @@ public class ReservationController {
         if (info != null) {
             return new ResponseEntity<>(info, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -50,14 +50,18 @@ public class ReservationController {
         if (nameInfo != null) {
             return new ResponseEntity<>(nameInfo, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping
     public ResponseEntity<List<Reservation>> findAll() {
         List<Reservation> reservations = reservationService.findAll();
-        return new ResponseEntity<>(reservations, HttpStatus.OK);
+        if (!reservations.isEmpty()) {
+            return new ResponseEntity<>(reservations, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")
@@ -66,14 +70,13 @@ public class ReservationController {
         if (reservation != null) {
             return new ResponseEntity<>(reservation, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody ReservationCreateData data) {
-        boolean saveSuccessful = reservationService.save(data);
-        if (saveSuccessful) {
+        if (reservationService.save(data)) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -82,8 +85,7 @@ public class ReservationController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable int id, @RequestBody ReservationCreateData data) {
-        boolean updateSuccessful = reservationService.update(id, data);
-        if (updateSuccessful) {
+        if (reservationService.update(id, data)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -92,8 +94,7 @@ public class ReservationController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        boolean deleteSuccessful = reservationService.delete(id);
-        if (deleteSuccessful) {
+        if (reservationService.delete(id)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

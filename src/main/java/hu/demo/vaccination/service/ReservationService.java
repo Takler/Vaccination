@@ -7,12 +7,14 @@ import hu.demo.vaccination.dto.reservation.ReservationInfoData;
 import hu.demo.vaccination.dto.reservation.ReservationNameInfoData;
 import hu.demo.vaccination.repository.ReservationRepository;
 import hu.demo.vaccination.service.interfaces.InfoOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional
 public class ReservationService implements InfoOperation<Reservation, ReservationCreateData, ReservationInfoData, ReservationNameInfoData> {
@@ -31,19 +33,31 @@ public class ReservationService implements InfoOperation<Reservation, Reservatio
 
     public PatientReservationData getPatientReservation(int patientId) {
         PatientReservationData patientReservation = reservationRepository.getPatientReservation(patientId);
+        if (patientReservation == null) {
+            log.error("getPatientReservation: Patient Reservation not found");
+            return null;
+        }
+
         Reservation reservation = reservationRepository.getById(patientReservation.getReservationId());
+        if (reservation == null) {
+            log.error("getPatientReservation: Reservation not found");
+            return null;
+        }
 
         patientReservation.setPatientId(patientId);
         patientReservation.setPatientName(patientService.getName(patientId));
         patientReservation.setCenterName(centerService.getName(reservation.getCenterId()));
         patientReservation.setVaccineName(vaccineService.getName(reservation.getVaccineId()));
-
         return patientReservation;
     }
 
     @Override
     public ReservationInfoData getInfo(int id) {
         Reservation reservation = reservationRepository.getById(id);
+        if (reservation == null) {
+            log.error("getInfo: Reservation not found");
+            return null;
+        }
 
         ReservationInfoData reservationInfoData = new ReservationInfoData();
 
@@ -60,6 +74,10 @@ public class ReservationService implements InfoOperation<Reservation, Reservatio
     @Override
     public ReservationNameInfoData getNameInfo(int id) {
         Reservation reservation = reservationRepository.getById(id);
+        if (reservation == null) {
+            log.error("getNameInfo: Reservation not found");
+            return null;
+        }
 
         ReservationNameInfoData reservationNameInfoData = new ReservationNameInfoData();
 

@@ -12,10 +12,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
+
 import static hu.demo.vaccination.config.PatientTestHelper.*;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -30,7 +32,77 @@ class PatientControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("GET /api/patient - findAll")
+    @DisplayName("GET /api/patient/lastnames/albert - getLastNames - correct")
+    void test_getLastNames_getCorrectLastNames() {
+        String firstName = "albert";
+        doReturn(Lists.newArrayList(PATIENT_1_LAST_NAME, PATIENT_2_LAST_NAME))
+                .when(patientServiceMock).getLastNames(firstName);
+
+        try {
+            mockMvc.perform(get("/api/patient/lastnames/albert"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$", hasSize(2)))
+                    .andExpect(jsonPath("$[0]", is(PATIENT_1_LAST_NAME)))
+                    .andExpect(jsonPath("$[1]", is(PATIENT_2_LAST_NAME)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(patientServiceMock).getLastNames(firstName);
+    }
+
+    @Test
+    @DisplayName("GET /api/patient/lastnames/albert - getLastNames - no result")
+    void test_getLastNames_noResult() {
+        String firstName = "albert";
+        doReturn(Lists.emptyList()).when(patientServiceMock).getLastNames(firstName);
+
+        try {
+            mockMvc.perform(get("/api/patient/lastnames/albert"))
+                    .andExpect(status().isBadRequest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(patientServiceMock).getLastNames(firstName);
+    }
+
+    @Test
+    @DisplayName("GET /api/patient/name/748237274 - getName - correct")
+    void test_getName_getCorrectName() {
+        String name = PATIENT_1_FIRST_NAME + " " + PATIENT_1_LAST_NAME;
+
+        doReturn(name).when(patientServiceMock).getName(PATIENT_1_ID);
+
+        try {
+            mockMvc.perform(get("/api/patient/name/748237274"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(containsString(name)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(patientServiceMock).getName(PATIENT_1_ID);
+    }
+
+    @Test
+    @DisplayName("GET /api/patient/name/748237274 - getName - no result")
+    void test_getName_noResult() {
+        doReturn("").when(patientServiceMock).getName(PATIENT_1_ID);
+
+        try {
+            mockMvc.perform(get("/api/patient/name/748237274"))
+                    .andExpect(status().isBadRequest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(patientServiceMock).getName(PATIENT_1_ID);
+    }
+
+    @Test
+    @DisplayName("GET /api/patient - findAll - correct")
     void test_findAll_receiveCorrectPatientData() {
         Patient patientOne = getPatientOne();
         Patient patientTwo = getPatientTwo();
@@ -72,10 +144,27 @@ class PatientControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(patientServiceMock).findAll();
     }
 
     @Test
-    @DisplayName("GET /api/patient/748237274 - getById")
+    @DisplayName("GET /api/patient - findAll - no result")
+    void test_findAll_noResult() {
+        doReturn(Collections.emptyList()).when(patientServiceMock).findAll();
+
+        try {
+            mockMvc.perform(get("/api/patient"))
+                    .andExpect(status().isBadRequest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(patientServiceMock).findAll();
+    }
+
+    @Test
+    @DisplayName("GET /api/patient/748237274 - getById - correct")
     void test_getById_receiveCorrectPatientData() {
         Patient patientOne = getPatientOne();
 
@@ -101,5 +190,22 @@ class PatientControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(patientServiceMock).getById(PATIENT_1_ID);
+    }
+
+    @Test
+    @DisplayName("GET /api/patient/748237274 - getById - no result")
+    void test_getById_noResult() {
+        doReturn(null).when(patientServiceMock).getById(PATIENT_1_ID);
+
+        try {
+            mockMvc.perform(get("/api/patient/748237274"))
+                    .andExpect(status().isBadRequest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        verify(patientServiceMock).getById(PATIENT_1_ID);
     }
 }
