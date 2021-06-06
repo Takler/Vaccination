@@ -24,8 +24,7 @@ public class PatientController {
 
     @GetMapping("/file")
     public ResponseEntity<Void> saveFile(@RequestBody InputCreateData input) {
-        boolean saveSuccessful = patientService.fileSave(input);
-        if (saveSuccessful) {
+        if (patientService.fileSave(input)) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -34,8 +33,7 @@ public class PatientController {
 
     @PostMapping("/file")
     public ResponseEntity<Void> loadFile(@RequestBody InputCreateData input) {
-        boolean loadSuccessful = patientService.fileLoad(input);
-        if (loadSuccessful) {
+        if (patientService.fileLoad(input)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -45,7 +43,11 @@ public class PatientController {
     @GetMapping
     public ResponseEntity<List<Patient>> findAll() {
         List<Patient> patients = patientService.findAll();
-        return new ResponseEntity<>(patients, HttpStatus.OK);   // TODO nem értem? egyszer üres lista van generálva ha rossz, OK -val aztán meg visszamegy?
+        if (!patients.isEmpty()) {
+            return new ResponseEntity<>(patients, HttpStatus.OK);   // TODO nem értem? egyszer üres lista van generálva ha rossz, OK -val aztán meg visszamegy?
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }  // TODO nem értem: akkor meg minek a 47-es sor?
 
     @GetMapping("/{id}")
@@ -54,14 +56,13 @@ public class PatientController {
         if (patient != null) {
             return new ResponseEntity<>(patient, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);  //TODO nem értem?  not found és adatbázis hiba is ezt dobja? -> BAD_REQUEST?
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  //TODO nem értem?  not found és adatbázis hiba is ezt dobja? -> BAD_REQUEST?
         }
     }
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody PatientCreateData data) {
-        boolean saveSuccessful = patientService.save(data);  // TODO nem értem: minek ez a sor?
-        if (saveSuccessful) {
+        if (patientService.save(data)) {// TODO nem értem: minek ez a sor?
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -80,8 +81,7 @@ public class PatientController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        boolean deleteSuccessful = patientService.delete(id);
-        if (deleteSuccessful) {
+        if (patientService.delete(id)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
