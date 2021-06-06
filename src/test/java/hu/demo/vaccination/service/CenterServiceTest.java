@@ -1,6 +1,8 @@
 package hu.demo.vaccination.service;
 
+import hu.demo.vaccination.config.CenterTestHelper;
 import hu.demo.vaccination.domain.Center;
+import hu.demo.vaccination.dto.CenterCreateData;
 import hu.demo.vaccination.repository.CenterRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,6 +32,7 @@ class CenterServiceTest {
     @Test
     void test_getName() {
         Center testCenter = CenterTestHelper.getFirstTestCenter();
+
         when(centerRepositoryMock.getName(testCenter.getId())).thenReturn(testCenter.getName());
 
         assertEquals(testCenter.getName(), centerService.getName(testCenter.getId()));
@@ -60,46 +64,34 @@ class CenterServiceTest {
 
     @Test
     void test_save() {
-        // TODO
+        CenterCreateData testCenterCreateData = CenterTestHelper.getFirstTestCenterCreateData();
+
+        when(centerRepositoryMock.createCenter(testCenterCreateData)).thenReturn(true);
+
+        assertTrue(centerService.save(testCenterCreateData));
+        verify(centerRepositoryMock, times(1)).createCenter(testCenterCreateData);
     }
 
     @Test
     void test_update() {
-        // TODO
+        CenterCreateData testCenterCreateData = CenterTestHelper.getSecondTestCenterCreateData();
+        int id = CenterTestHelper.ID_SECOND;
+
+        when(centerRepositoryMock.updateCenter(id, testCenterCreateData)).thenReturn(true);
+
+        assertTrue(centerService.update(id, testCenterCreateData));
+        verify(centerRepositoryMock, times(1)).updateCenter(id, testCenterCreateData);
     }
 
     @Test
     void test_delete() {
         // TODO
+        Center testCenter = CenterTestHelper.getFirstTestCenter();
+
+        when(centerRepositoryMock.deleteCenter(testCenter.getId())).thenReturn(true);
+
+        assertTrue(centerService.delete(testCenter.getId()));
+        verify(centerRepositoryMock, times(1)).deleteCenter(testCenter.getId());
     }
 
-    private static final class CenterTestHelper {
-
-        private CenterTestHelper() {
-        }
-
-        public static Center getFirstTestCenter() {
-            Center testCenter = new Center();
-            testCenter.setId(1);
-            testCenter.setName("Test Hospital");
-            testCenter.setCity("Testville");
-            testCenter.setEmail("test@hospital.com");
-            testCenter.setTelephoneNumber("003617654321");
-            testCenter.setDailyCapacity(500);
-            testCenter.setDeleted(false);
-            return testCenter;
-        }
-
-        public static Center getSecondTestCenter() {
-            Center testCenter = new Center();
-            testCenter.setId(2);
-            testCenter.setName("Testpital");
-            testCenter.setCity("Tomorrowland");
-            testCenter.setEmail("testpital@test.com");
-            testCenter.setTelephoneNumber("+3611234567");
-            testCenter.setDailyCapacity(800);
-            testCenter.setDeleted(false);
-            return testCenter;
-        }
-    }
 }
