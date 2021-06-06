@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Slf4j
 @Repository
@@ -43,7 +45,7 @@ public class DoctorRepository {
         }
     }
 
-    public boolean save(DoctorCreateUpdateData doctorCreateUpdateData) {
+    public boolean save(DoctorCreateUpdateData doctorCreateUpdateData) {  //TODO miat a @NotNull kint a balszegélyen?
         String sqlInsert = "INSERT INTO doctor (first_name, last_name, email, address, telephone_number) VALUES (?,?,?,?,?)";
         try {
             if (jdbcTemplate.update(sqlInsert, doctorCreateUpdateData.getFirstName(),
@@ -86,4 +88,30 @@ public class DoctorRepository {
         }
         return false;
     }
+
+    public String getName(int doctorId) {
+        Map<String, Object> doctorFirstLastname = new TreeMap<>();
+        String name = "";
+        String sqlSelect = "SELECT first_name, last_name FROM doctor WHERE id = ?";
+        try {
+            doctorFirstLastname = jdbcTemplate.queryForMap(sqlSelect, doctorId);
+            for (Map.Entry<String, Object> item : doctorFirstLastname.entrySet()) {
+                name += String.valueOf(item.getValue() + " ");   //TODO Object.toString...
+            }
+            return name;
+        } catch (DataAccessException ex) {
+            log.error("delete exception " + ex.getMessage());
+        }
+        return "";
+    }
+
+//    public List<String> getLastName(String firstName) {
+//        String sqlSelect = "SELECT first_name, last_name FROM doctor WHERE id = ?";
+//        try {
+//            return jdbcTemplate.queryForMap(sqlSelect,firstName );
+//        }
+//        return null;
+//    }
+// return String.valueOf(((TreeMap<String, Object>) doctor).firstEntry());   //TODO doctor miért van aláhúzva?
+
 }

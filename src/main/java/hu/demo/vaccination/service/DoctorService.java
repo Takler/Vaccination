@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateData> {
+public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateData>, LastNameable {
 
     private DoctorRepository doctorRepository;
 
@@ -41,5 +41,15 @@ public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateDa
     @Override
     public boolean delete(int doctorId) {
         return doctorRepository.delete(doctorId);
+    }
+
+    @Override
+    public String getName(int doctorId) {
+        return doctorRepository.getName(doctorId);
+    }
+
+    @Override
+    public List<String> getLastName(String firstName) {
+        return null;
     }
 }

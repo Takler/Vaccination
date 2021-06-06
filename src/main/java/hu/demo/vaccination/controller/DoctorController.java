@@ -71,4 +71,14 @@ public class DoctorController {   // TODO Testeket írni!!
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/name/{doctorId}")
+    public ResponseEntity<String> getName(@PathVariable int doctorId) {
+        String doctorName = doctorService.getName(doctorId);
+        if (!doctorName.isEmpty()) {
+            return new ResponseEntity<>(doctorName, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
