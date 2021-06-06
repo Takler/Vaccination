@@ -113,4 +113,9 @@ public class DoctorRepository {
         }
         return null;
     }
+
+    public Doctor fileSave() {
+        Doctor doctor = new Doctor();
+        return doctor;
+    }
 }

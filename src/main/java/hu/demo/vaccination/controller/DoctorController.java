@@ -1,6 +1,7 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Doctor;
+import hu.demo.vaccination.dto.InputCreateData;
 import hu.demo.vaccination.dto.doctor.DoctorCreateUpdateData;
 import hu.demo.vaccination.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,6 @@ public class DoctorController {   // TODO Testeket írni!!
     public DoctorController(DoctorService doctorService) {
         this.doctorService = doctorService;
     }
-
-    // @GetMapping("/file")
-    // @PostMapping("/file")
 
     @GetMapping
     public ResponseEntity<List<Doctor>> findAll() { //TODO Miért public mindegyik?
@@ -95,4 +93,16 @@ public class DoctorController {   // TODO Testeket írni!!
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/file")
+    public ResponseEntity<Void> filesave(@RequestBody InputCreateData inputCreateData) {
+        if (doctorService.fileSave(inputCreateData)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    // @PostMapping("/file")
+
 }
