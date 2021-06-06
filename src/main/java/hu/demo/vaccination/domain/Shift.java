@@ -18,4 +18,9 @@ public class Shift {
 
     public Shift() {
     }
+
+    @Override
+    public String toString() {
+        return id + ";" + centerId + ";" + doctorId + ";" + start + ";" + end + ";" + deleted;
+    }
 }
