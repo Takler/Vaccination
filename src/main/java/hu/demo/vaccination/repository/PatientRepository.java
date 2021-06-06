@@ -25,7 +25,7 @@ public class PatientRepository {
         this.jdbc = jdbc;
     }
 
-    public List<String> getLastName(String firstName) {
+    public List<String> getLastNames(String firstName) {
         String sql = "SELECT last_name FROM patient WHERE first_name = ?";
         try {
             return jdbc.query(sql, (resultSet, i) -> resultSet.getString("last_name"), firstName);
