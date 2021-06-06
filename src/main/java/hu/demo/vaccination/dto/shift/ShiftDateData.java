@@ -1,24 +1,15 @@
 package hu.demo.vaccination.dto.shift;
 
+import lombok.Data;
+
 import java.sql.Timestamp;
 
+@Data
 public class ShiftDateData {  //TODO ezt az egészet átnézni
+
     private Timestamp start;
     private Timestamp end;
 
-    public Timestamp getStart() {
-        return start;
-    }
-
-    public void setStart(Timestamp start) {
-        this.start = start;
-    }
-
-    public Timestamp getEnd() {
-        return end;
-    }
-
-    public void setEnd(Timestamp end) {
-        this.end = end;
+    public ShiftDateData() {
     }
 }

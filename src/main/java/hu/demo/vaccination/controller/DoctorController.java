@@ -86,7 +86,11 @@ public class DoctorController {   // TODO Testeket írni!!
     public ResponseEntity<List<String>> getLastName(@PathVariable String doctorFirstName) {
         List<String> lastNameList = doctorService.getLastName(doctorFirstName);
         if (lastNameList != null) {
-            return new ResponseEntity<>(lastNameList, HttpStatus.OK);
+            if (!lastNameList.isEmpty()) {
+                return new ResponseEntity<>(lastNameList, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

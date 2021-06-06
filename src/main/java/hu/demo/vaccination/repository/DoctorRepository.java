@@ -45,7 +45,7 @@ public class DoctorRepository {
         }
     }
 
-    public boolean save(DoctorCreateUpdateData doctorCreateUpdateData) {  //TODO miat a @NotNull kint a balszegélyen?
+    public boolean save(DoctorCreateUpdateData doctorCreateUpdateData) {  //TODO miaz a @NotNull kint a balszegélyen?
         String sqlInsert = "INSERT INTO doctor (first_name, last_name, email, address, telephone_number) VALUES (?,?,?,?,?)";
         try {
             if (jdbcTemplate.update(sqlInsert, doctorCreateUpdateData.getFirstName(),
@@ -72,7 +72,6 @@ public class DoctorRepository {
             }
         } catch (DataAccessException ex) {
             log.error("update exception " + ex.getMessage());
-            // TODO ide rakva a return miért nem működik?
         }
         return false;
     }
@@ -114,5 +113,4 @@ public class DoctorRepository {
         }
         return null;
     }
-
 }
