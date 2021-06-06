@@ -1,6 +1,7 @@
 package hu.demo.vaccination.config;
 
 import hu.demo.vaccination.domain.Patient;
+import hu.demo.vaccination.domain.Shift;
 import hu.demo.vaccination.domain.Vaccination;
 
 import java.time.LocalDate;
@@ -66,4 +67,12 @@ public class VaccinationTestHelper {
     public static final List<Integer> PATIENT_IDS = IntStream.rangeClosed(1, 21).boxed().collect(Collectors.toList());
 
     public static final List<Integer> SHIFT_IDS = IntStream.rangeClosed(1, 8).boxed().collect(Collectors.toList());
+
+    public static final List<Shift> SHIFT_DATA = SHIFT_IDS.stream()
+            .map(id -> {
+                Shift shift = new Shift();
+                shift.setId(id);
+                return shift;
+            })
+            .collect(Collectors.toList());
 }

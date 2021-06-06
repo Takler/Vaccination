@@ -3,8 +3,10 @@ package hu.demo.vaccination.service;
 import hu.demo.vaccination.config.VaccinationTestHelper;
 import hu.demo.vaccination.config.VaccineTestHelper;
 import hu.demo.vaccination.domain.Patient;
+import hu.demo.vaccination.domain.Shift;
 import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.domain.Vaccine;
+import hu.demo.vaccination.dto.VaccinationCreateData;
 import hu.demo.vaccination.dto.vaccination.AggregatedFieldData;
 import hu.demo.vaccination.dto.vaccination.CountPercentageData;
 import hu.demo.vaccination.repository.VaccinationRepository;
@@ -17,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,6 +42,7 @@ class VaccinationServiceTest {
     List<Patient> patients;
     List<Vaccination> vaccinations;
     List<Vaccine> vaccines;
+    List<Shift> shifts;
 
     @BeforeEach
     public void init() {
@@ -48,6 +52,7 @@ class VaccinationServiceTest {
         patients = VaccinationTestHelper.PATIENT_DATA;
         vaccinations = VaccinationTestHelper.VACCINATION_DATA;
         vaccines = VaccineTestHelper.VACCINE_DATA;
+        shifts = VaccinationTestHelper.SHIFT_DATA;
     }
 
     @Test
@@ -140,7 +145,7 @@ class VaccinationServiceTest {
     }
 
     @Test
-    void getVaccinatedByVaccine() {
+    void getVaccinatedByVaccineTest() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
         List<AggregatedFieldData> result = vaccinationService.getVaccinatedPerVaccine();
@@ -177,5 +182,78 @@ class VaccinationServiceTest {
     void getNumberOfVaccinationsForPeriod_lastWeek() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Assertions.assertEquals(11, vaccinationService.getNumberOfVaccinationsForPeriod(LocalDate.now().minusDays(14), LocalDate.now().minusDays(7)));
+    }
+
+    @Test
+    void getVaccinationsByPatient_emptyList() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Assertions.assertEquals(Collections.emptyList(), vaccinationService.getVaccinationsByPatient(16));
+    }
+
+    @Test
+    void getVaccinationsByPatient_oneResult() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        List<Vaccination> expected = List.of(new Vaccination(6,2,8,6, LocalDate.now().minusDays(5), false));
+        Assertions.assertEquals(expected, vaccinationService.getVaccinationsByPatient(8));
+    }
+
+    @Test
+    void getVaccinationsByPatient_twoResult() {
+        List<Vaccination> expected = List.of(
+                new Vaccination(11, 3, 14 , 5, LocalDate.now().minusDays(6), false),
+                new Vaccination(20,3,14,7, LocalDate.now().minusDays(3), false));
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Assertions.assertEquals(expected, vaccinationService.getVaccinationsByPatient(14));
+    }
+
+    @Test
+    void saveTest_success() {
+        Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        Mockito.when(shiftService.findAll()).thenReturn(shifts);
+        VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(1, 5, 8, LocalDate.now().minusDays(2));
+        Mockito.when(vaccinationRepository.createVaccination(vaccinationCreateData)).thenReturn(true);
+
+        Assertions.assertTrue(vaccinationService.save(vaccinationCreateData));
+    }
+
+    @Test
+    void saveTest_vaccineIdFail() {
+        Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        Mockito.when(shiftService.findAll()).thenReturn(shifts);
+        VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(10, 5, 8, LocalDate.now().minusDays(2));
+
+        Assertions.assertFalse(vaccinationService.save(vaccinationCreateData));
+    }
+
+    @Test
+    void saveTest_patientIdFail() {
+        Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        Mockito.when(shiftService.findAll()).thenReturn(shifts);
+        VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(1, 150, 8, LocalDate.now().minusDays(2));
+
+        Assertions.assertFalse(vaccinationService.save(vaccinationCreateData));
+    }
+
+    @Test
+    void saveTest_shiftIdFail() {
+        Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        Mockito.when(shiftService.findAll()).thenReturn(shifts);
+        VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(1, 5, 128, LocalDate.now().minusDays(2));
+
+        Assertions.assertFalse(vaccinationService.save(vaccinationCreateData));
+    }
+
+    @Test
+    void saveTest_dateFail() {
+        Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        Mockito.when(shiftService.findAll()).thenReturn(shifts);
+        VaccinationCreateData vaccinationCreateData = new VaccinationCreateData(1, 5, 128, LocalDate.now().plusDays(1));
+
+        Assertions.assertFalse(vaccinationService.save(vaccinationCreateData));
     }
 }
