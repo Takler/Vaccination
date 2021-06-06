@@ -49,7 +49,7 @@ public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateDa
     }
 
     @Override
-    public List<String> getLastName(String firstName) {
-        return null;
+    public List<String> getLastName(String doctorFirstName) {
+        return doctorRepository.getLastName(doctorFirstName);
     }
 }

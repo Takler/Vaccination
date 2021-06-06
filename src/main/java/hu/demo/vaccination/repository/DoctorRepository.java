@@ -92,7 +92,7 @@ public class DoctorRepository {
     public String getName(int doctorId) {
         Map<String, Object> doctorFirstLastname = new TreeMap<>();
         String name = "";
-        String sqlSelect = "SELECT first_name, last_name FROM doctor WHERE id = ?";
+        String sqlSelect = "SELECT first_name, last_name FROM doctor WHERE id = ?";  //TODO dleted ki
         try {
             doctorFirstLastname = jdbcTemplate.queryForMap(sqlSelect, doctorId);
             for (Map.Entry<String, Object> item : doctorFirstLastname.entrySet()) {
@@ -105,13 +105,22 @@ public class DoctorRepository {
         return "";
     }
 
-//    public List<String> getLastName(String firstName) {
+    public List<String> getLastName(String doctorFirstName) {
+        String sqlSelect = "SELECT last_name FROM doctor WHERE first_name = ?";  //TODO oreder...  //TODO dleted ki
+        try {
+            return jdbcTemplate.queryForList(sqlSelect, String.class, doctorFirstName);
+        } catch (DataAccessException ex) {
+            log.error("delete exception " + ex.getMessage());
+        }
+        return null;
+    }
+
+
 //        String sqlSelect = "SELECT first_name, last_name FROM doctor WHERE id = ?";
 //        try {
 //            return jdbcTemplate.queryForMap(sqlSelect,firstName );
 //        }
-//        return null;
-//    }
+
 // return String.valueOf(((TreeMap<String, Object>) doctor).firstEntry());   //TODO doctor miért van aláhúzva?
 
 }
