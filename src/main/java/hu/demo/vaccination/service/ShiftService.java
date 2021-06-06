@@ -10,11 +10,17 @@ import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
 import hu.demo.vaccination.repository.ShiftRepository;
 import hu.demo.vaccination.service.interfaces.FileHandler;
 import hu.demo.vaccination.service.interfaces.InfoOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData, ShiftInfoData, ShiftNameInfoData>, FileHandler { //TODO: Requestable??? Object is a placeholder for ShiftNameData
 
@@ -94,7 +100,17 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
 
     @Override
     public boolean fileSave(InputCreateData input) {
-        return false;
+        Path path = Paths.get(input.getInput());
+        List<Shift> shiftList = shiftRepository.findAll();
+        try {
+            for (Shift item : shiftList) {
+                Files.writeString(path, item.toString());
+            }
+            return true;
+        } catch (IOException ex) {
+            log.error("fileSave exception: " + ex.getMessage());
+            return false;
+        }
     }
 
     @Override

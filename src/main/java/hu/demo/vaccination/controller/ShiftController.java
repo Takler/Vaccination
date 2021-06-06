@@ -1,6 +1,7 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Shift;
+import hu.demo.vaccination.dto.InputCreateData;
 import hu.demo.vaccination.dto.shift.ShiftCreateUpdateData;
 import hu.demo.vaccination.dto.shift.ShiftInfoData;
 import hu.demo.vaccination.dto.shift.ShiftNameInfoData;
@@ -22,9 +23,6 @@ public class ShiftController {
     public ShiftController(ShiftService shiftService) {
         this.shiftService = shiftService;
     }
-
-    // @GetMapping("/file")
-    // @PostMapping("/file")
 
     @GetMapping
     public ResponseEntity<List<Shift>> findAll() {
@@ -82,4 +80,17 @@ public class ShiftController {
     public ResponseEntity<ShiftInfoData> getInfo(@PathVariable int shiftId) {
         return new ResponseEntity<>(shiftService.getInfo(shiftId), HttpStatus.OK);
     }
+
+    @GetMapping("/file")
+    public ResponseEntity<Void> filesave(@RequestBody InputCreateData inputCreateData) {
+        if (shiftService.fileSave(inputCreateData)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    // @PostMapping("/file")
+
 }

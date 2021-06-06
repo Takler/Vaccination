@@ -71,10 +71,11 @@ public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateDa
             for (Doctor item : doctorList) {
                 Files.writeString(path, item.toString());
             }
+            return true;
         } catch (IOException ex) {
             log.error("fileSave exception: " + ex.getMessage());
+            return false;
         }
-        return false;
     }
 
     @Override
