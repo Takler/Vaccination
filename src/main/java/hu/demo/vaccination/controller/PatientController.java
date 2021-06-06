@@ -23,7 +23,7 @@ public class PatientController {
     }
 
     @GetMapping("/file")
-    public ResponseEntity<Void> saveFile(@RequestBody InputCreateData input) {
+    public ResponseEntity<Void> fileSave(@RequestBody InputCreateData input) {
         if (patientService.fileSave(input)) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
@@ -32,9 +32,29 @@ public class PatientController {
     }
 
     @PostMapping("/file")
-    public ResponseEntity<Void> loadFile(@RequestBody InputCreateData input) {
+    public ResponseEntity<Void> fileLoad(@RequestBody InputCreateData input) {
         if (patientService.fileLoad(input)) {
             return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/lastnames/{firstName}")
+    public ResponseEntity<List<String>> getLastNames(@PathVariable String firstName) {
+        List<String> lastNames = patientService.getLastNames(firstName);
+        if (!lastNames.isEmpty()) {
+            return new ResponseEntity<>(lastNames, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/name/{id}")
+    public ResponseEntity<String> getName(@PathVariable int id) {
+        String name = patientService.getName(id);
+        if (!name.isEmpty()) {
+            return new ResponseEntity<>(name, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

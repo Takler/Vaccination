@@ -13,8 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static hu.demo.vaccination.config.PatientTestHelper.*;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -28,6 +27,40 @@ class PatientControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Test
+    @DisplayName("GET /api/patient/lastnames/albert - getLastNames")
+    void test_getLastNames_getCorrectLastNames() {
+        doReturn(Lists.newArrayList(PATIENT_1_LAST_NAME, PATIENT_2_LAST_NAME))
+                .when(patientServiceMock).getLastNames("albert");
+
+        try {
+            mockMvc.perform(get("/api/patient/lastnames/albert"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$", hasSize(2)))
+                    .andExpect(jsonPath("$[0]", is(PATIENT_1_LAST_NAME)))
+                    .andExpect(jsonPath("$[1]", is(PATIENT_2_LAST_NAME)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @DisplayName("GET /api/patient/name/748237274 - getName")
+    void test_getName_getCorrectName() {
+        String name = PATIENT_1_FIRST_NAME + " " + PATIENT_1_LAST_NAME;
+
+        doReturn(name).when(patientServiceMock).getName(PATIENT_1_ID);
+
+        try {
+            mockMvc.perform(get("/api/patient/name/748237274"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(containsString(name)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     @DisplayName("GET /api/patient - findAll")
