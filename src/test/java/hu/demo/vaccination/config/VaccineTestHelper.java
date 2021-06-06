@@ -22,4 +22,29 @@ public class VaccineTestHelper {
             new Vaccine(7, "Janssen", "adenovirus", 4, 18, 999,
                     1, -1, 0, 14, true, false, true)
     );
+
+    public static final List<Vaccine> VACCINE_FOR_PREGNANT_STRICTER = List.of(
+            new Vaccine(1, "Pfizer", "mRNA", -70, 16, 999,
+                    2, 1, 28, 42, true, true, true),
+            new Vaccine(2, "Moderna", "mRNA", -20, 18, 999,
+                    2, 2, 28, 42, true, true, true),
+            new Vaccine(3, "AstraZeneca", "adenovirus", 4, 18, 999,
+                    2, 3, 84, 96, true, true, true)
+    );
+
+    public static final List<Vaccine> VACCINE_FOR_CHRONIC_STRICT = List.of(
+            new Vaccine(1, "Pfizer", "mRNA", -70, 16, 999,
+                    2, 1, 28, 42, true, true, true),
+            new Vaccine(2, "Moderna", "mRNA", -20, 18, 999,
+                    2, 2, 28, 42, true, true, true),
+            new Vaccine(3, "AstraZeneca", "adenovirus", 4, 18, 999,
+                    2, 3, 84, 96, true, true, true),
+            new Vaccine(7, "Janssen", "adenovirus", 4, 18, 999,
+                    1, -1, 0, 14, true, false, true)
+    );
+
+    public static final List<Vaccine> VACCINE_FOR_YOUNG_STRICTEST = List.of(
+            new Vaccine(1, "Pfizer", "mRNA", -70, 16, 999,
+                    2, 1, 28, 42, true, true, true)
+    );
 }
