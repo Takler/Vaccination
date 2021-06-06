@@ -3,6 +3,7 @@ package hu.demo.vaccination.repository;
 import hu.demo.vaccination.domain.Reservation;
 import hu.demo.vaccination.dto.reservation.PatientReservationData;
 import hu.demo.vaccination.dto.reservation.ReservationCreateData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class ReservationRepository {
 
@@ -37,6 +39,7 @@ public class ReservationRepository {
                 return patientReservation;
             }, patientId);
         } catch (DataAccessException e) {
+            log.error("getPatientReservation exception: " + e.getMessage());
             return null;
         }
     }
@@ -46,6 +49,7 @@ public class ReservationRepository {
         try {
             return jdbc.query(sql, new ReservationMapper());
         } catch (DataAccessException e) {
+            log.error("findAll exception: " + e.getMessage());
             return Collections.emptyList();
         }
     }
@@ -55,6 +59,7 @@ public class ReservationRepository {
         try {
             return jdbc.queryForObject(sql, new ReservationMapper(), id);
         } catch (DataAccessException e) {
+            log.error("getById exception: " + e.getMessage());
             return null;
         }
     }
@@ -77,6 +82,7 @@ public class ReservationRepository {
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("save exception: " + e.getMessage());
             return false;
         }
 
@@ -101,6 +107,7 @@ public class ReservationRepository {
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("update exception: " + e.getMessage());
             return false;
         }
     }
@@ -111,6 +118,7 @@ public class ReservationRepository {
             int rowsAffected = jdbc.update(sql, true, id);
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("delete exception: " + e.getMessage());
             return false;
         }
     }
