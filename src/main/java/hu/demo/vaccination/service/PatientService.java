@@ -102,16 +102,38 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
 
     @Override
     public boolean save(PatientCreateData data) {
-        return patientRepository.save(data);
+        if (validator(data)) {
+            return patientRepository.save(data);
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean update(int id, PatientCreateData data) {
-        return patientRepository.update(id, data);
+        if (validator(data)) {
+            return patientRepository.update(id, data);
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean delete(int id) {
         return patientRepository.delete(id);
+    }
+
+    private boolean validator(PatientCreateData data) {
+        int id = data.getId();
+        if (id < 0 || id > 999_999_999) {
+            return false;
+        }
+
+        String email = data.getEmail();
+        if (!email.contains("@") || !email.contains(".")) {
+            return false;
+        }
+
+        return true;
     }
 }

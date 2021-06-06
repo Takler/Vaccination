@@ -235,6 +235,30 @@ class PatientServiceTest {
     }
 
     @Test
+    void test_save_notValidEmail() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        patientCreateData.setEmail("aaa");
+
+        assertFalse(patientService.save(patientCreateData));
+    }
+
+    @Test
+    void test_save_notValidSSN_negative() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        patientCreateData.setId(-100);
+
+        assertFalse(patientService.save(patientCreateData));
+    }
+
+    @Test
+    void test_save_notValidSSN_overNineDigits() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        patientCreateData.setId(1_000_000_000);
+
+        assertFalse(patientService.save(patientCreateData));
+    }
+
+    @Test
     void test_delete_onceCalled() {
         int id = getPatientOne().getId();
 
@@ -264,6 +288,33 @@ class PatientServiceTest {
 
         assertFalse(patientService.update(id, patientCreateData));
         verify(patientRepositoryMock).update(patientCreateData.getId(), patientCreateData);
+    }
+
+    @Test
+    void test_update_notValidEmail() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        int id = patientCreateData.getId();
+        patientCreateData.setEmail("aaa");
+
+        assertFalse(patientService.update(id, patientCreateData));
+    }
+
+    @Test
+    void test_update_notValidSSN_negative() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        int id = patientCreateData.getId();
+        patientCreateData.setId(-100);
+
+        assertFalse(patientService.update(id, patientCreateData));
+    }
+
+    @Test
+    void test_update_notValidSSN_overNineDigits() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        int id = patientCreateData.getId();
+        patientCreateData.setId(1_000_000_000);
+
+        assertFalse(patientService.update(id, patientCreateData));
     }
 
     private void initTestFiles() {
