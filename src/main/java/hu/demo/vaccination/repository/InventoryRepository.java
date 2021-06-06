@@ -1,7 +1,7 @@
 package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Inventory;
-import hu.demo.vaccination.dto.InventoryCreateData;
+import hu.demo.vaccination.dto.inventory.InventoryCreateData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

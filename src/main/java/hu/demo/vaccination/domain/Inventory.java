@@ -12,4 +12,14 @@ public class Inventory {
     @JsonIgnore
     private boolean deleted;
 
+    public Inventory() {
+    }
+
+    public Inventory(int id, int centerId, int vaccineId, int amount, boolean deleted) {
+        this.id = id;
+        this.centerId = centerId;
+        this.vaccineId = vaccineId;
+        this.amount = amount;
+        this.deleted = deleted;
+    }
 }

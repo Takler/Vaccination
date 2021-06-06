@@ -14,4 +14,16 @@ public class Center {
     @JsonIgnore
     private boolean deleted;
 
+    public Center() {
+    }
+
+    public Center(int id, String name, String city, String email, String telephoneNumber, int dailyCapacity, boolean deleted) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.email = email;
+        this.telephoneNumber = telephoneNumber;
+        this.dailyCapacity = dailyCapacity;
+        this.deleted = deleted;
+    }
 }
