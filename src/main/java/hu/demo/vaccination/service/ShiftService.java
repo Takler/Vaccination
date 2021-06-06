@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 @Slf4j
@@ -104,7 +105,7 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
         List<Shift> shiftList = shiftRepository.findAll();
         try {
             for (Shift item : shiftList) {
-                Files.writeString(path, item.toString());
+                Files.writeString(path, item.toString() + "\r\n", StandardOpenOption.APPEND);
             }
             return true;
         } catch (IOException ex) {

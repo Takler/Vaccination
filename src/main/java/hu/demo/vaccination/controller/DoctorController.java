@@ -95,7 +95,7 @@ public class DoctorController {   // TODO Testeket írni!!
     }
 
     @GetMapping("/file")
-    public ResponseEntity<Void> filesave(@RequestBody InputCreateData inputCreateData) {
+    public ResponseEntity<Void> fileSave(@RequestBody InputCreateData inputCreateData) {
         if (doctorService.fileSave(inputCreateData)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {
@@ -103,6 +103,13 @@ public class DoctorController {   // TODO Testeket írni!!
         }
     }
 
-    // @PostMapping("/file")
+    @PostMapping("/file")
+    public ResponseEntity<Void> fileLoad(@RequestBody InputCreateData inputCreateData) {
+        if (doctorService.fileLoad(inputCreateData)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

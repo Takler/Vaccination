@@ -11,10 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 @Slf4j
@@ -69,7 +71,7 @@ public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateDa
         List<Doctor> doctorList = doctorRepository.findAll();
         try {
             for (Doctor item : doctorList) {
-                Files.writeString(path, item.toString());
+                Files.writeString(path, item.toString() + "\r\n", StandardOpenOption.APPEND);
             }
             return true;
         } catch (IOException ex) {
@@ -80,6 +82,25 @@ public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateDa
 
     @Override
     public boolean fileLoad(InputCreateData input) {
-        return false;
+        boolean result = true;
+        Path path = Paths.get(input.getInput());   //TODO hol vannak a lokális változók létrehozva, használat előtt vagy egységesen a metódus elején
+        try (BufferedReader bufferedReader = Files.newBufferedReader(path)) {
+            DoctorCreateUpdateData doctorCreateUpdateData = new DoctorCreateUpdateData();
+            String row = "";
+            while (((row = bufferedReader.readLine()) != null) && result) {    //TODO külön metódus? ... van megszokott neve?
+                String[] attribs = row.split(";");
+                doctorCreateUpdateData.setFirstName(attribs[1]);
+                doctorCreateUpdateData.setLastName(attribs[2]);
+                doctorCreateUpdateData.setEmail(attribs[3]);
+                doctorCreateUpdateData.setAddress(attribs[4]);
+                doctorCreateUpdateData.setTelephoneNumber(attribs[5]);
+                if (!doctorRepository.save(doctorCreateUpdateData)) {
+                    result = false;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
