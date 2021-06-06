@@ -105,6 +105,7 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
         if (validator(data)) {
             return patientRepository.save(data);
         } else {
+            log.error("save validation: bad input data");
             return false;
         }
     }
@@ -114,6 +115,7 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
         if (validator(data)) {
             return patientRepository.update(id, data);
         } else {
+            log.error("update validation: bad input data");
             return false;
         }
     }
@@ -126,11 +128,13 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
     private boolean validator(PatientCreateData data) {
         int id = data.getId();
         if (id < 0 || id > 999_999_999) {
+            log.error("wrong SSN number");
             return false;
         }
 
         String email = data.getEmail();
         if (!email.contains("@") || !email.contains(".")) {
+            log.error("wrong e-mail");
             return false;
         }
 
