@@ -57,7 +57,7 @@ public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateDa
     }
 
     @Override
-    public List<String> getLastName(String doctorFirstName) {
+    public List<String> getLastNames(String doctorFirstName) {
         return doctorRepository.getLastName(doctorFirstName);
     }
 

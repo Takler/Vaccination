@@ -78,7 +78,7 @@ public class PatientService implements CrudOperation<Patient, PatientCreateData>
     }
 
     @Override
-    public List<String> getLastName(String firstName) {
+    public List<String> getLastNames(String firstName) {
         return patientRepository.getLastName(firstName);
     }
 
