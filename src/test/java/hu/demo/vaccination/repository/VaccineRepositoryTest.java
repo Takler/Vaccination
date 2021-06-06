@@ -29,22 +29,22 @@ public class VaccineRepositoryTest {
     }
 
     @Test
-    void getVaccinesTest() {
+    void test_getVaccines() {
         Assertions.assertEquals(VaccineTestHelper.VACCINE_DATA, vaccineRepository.getVaccines());
     }
 
     @Test
-    void getVaccineById_success() {
+    void test_getVaccineById_success() {
         Assertions.assertEquals(VaccineTestHelper.VACCINE_DATA.get(0), vaccineRepository.getVaccine(1));
     }
 
     @Test
-    void getVaccineById_fail() {
+    void test_getVaccineById_fail() {
         Assertions.assertNull(vaccineRepository.getVaccine(564));
     }
 
     @Test
-    void createVaccine_success() {
+    void test_createVaccine_success() {
         VaccineCreateData vaccineCreateData = new VaccineCreateData("BrandNewVaccine", "mRNA", 0,
                 18, 65, 1, 35, -1, 49,
                 true, false, false);
@@ -66,7 +66,7 @@ public class VaccineRepositoryTest {
     }
 
     @Test
-    void updateVaccine_success() {
+    void test_updateVaccine_success() {
         VaccineCreateData vaccineCreateData = new VaccineCreateData("BrandNewVaccine", "mRNA", 0,
                 18, 65, 1, 35, -1, 49,
                 true, false, false);
@@ -87,7 +87,7 @@ public class VaccineRepositoryTest {
     }
 
     @Test
-    void updateVaccine_fail() {
+    void test_updateVaccine_fail() {
         VaccineCreateData vaccineCreateData = new VaccineCreateData("BrandNewVaccine", "mRNA", 0,
                 18, 65, 1, 35, -1, 49,
                 true, false, false);
@@ -95,13 +95,13 @@ public class VaccineRepositoryTest {
     }
 
     @Test
-    void deleteVaccine_success() {
+    void test_deleteVaccine_success() {
         Assertions.assertTrue(vaccineRepository.deleteVaccine(3));
         Assertions.assertFalse(vaccineRepository.getVaccine(3).isApplicable());
     }
 
     @Test
-    void deleteVaccine_fail() {
+    void test_deleteVaccine_fail() {
         Assertions.assertFalse(vaccineRepository.deleteVaccine(897));
     }
 }
