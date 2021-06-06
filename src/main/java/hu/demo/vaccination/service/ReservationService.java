@@ -31,19 +31,28 @@ public class ReservationService implements InfoOperation<Reservation, Reservatio
 
     public PatientReservationData getPatientReservation(int patientId) {
         PatientReservationData patientReservation = reservationRepository.getPatientReservation(patientId);
+        if (patientReservation == null) {
+            return null;
+        }
+
         Reservation reservation = reservationRepository.getById(patientReservation.getReservationId());
+        if (reservation == null) {
+            return null;
+        }
 
         patientReservation.setPatientId(patientId);
         patientReservation.setPatientName(patientService.getName(patientId));
         patientReservation.setCenterName(centerService.getName(reservation.getCenterId()));
         patientReservation.setVaccineName(vaccineService.getName(reservation.getVaccineId()));
-
         return patientReservation;
     }
 
     @Override
     public ReservationInfoData getInfo(int id) {
         Reservation reservation = reservationRepository.getById(id);
+        if (reservation == null) {
+            return null;
+        }
 
         ReservationInfoData reservationInfoData = new ReservationInfoData();
 
@@ -60,6 +69,9 @@ public class ReservationService implements InfoOperation<Reservation, Reservatio
     @Override
     public ReservationNameInfoData getNameInfo(int id) {
         Reservation reservation = reservationRepository.getById(id);
+        if (reservation == null) {
+            return null;
+        }
 
         ReservationNameInfoData reservationNameInfoData = new ReservationNameInfoData();
 
