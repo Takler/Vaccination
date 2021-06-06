@@ -10,6 +10,7 @@ import hu.demo.vaccination.service.interfaces.LastNameable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 @Slf4j
+@Transactional
 @Service
 public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateData>, LastNameable, FileHandler {
 
