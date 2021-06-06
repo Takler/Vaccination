@@ -27,17 +27,27 @@ public class PatientRepository {
 
     public List<String> getLastName(String firstName) {
         String sql = "SELECT last_name FROM patient WHERE first_name = ?";
-        return jdbc.query(sql, (resultSet, i) -> resultSet.getString("last_name"), firstName);
+        try {
+            return jdbc.query(sql, (resultSet, i) -> resultSet.getString("last_name"), firstName);
+        } catch (DataAccessException e) {
+            log.error("getLastName exception: " + e.getMessage());
+            return Collections.emptyList();
+        }
     }
 
 
     public String getName(int id) {
         String sql = "SELECT first_name, last_name FROM patient WHERE id = ?";
-        return jdbc.queryForObject(sql, (resultSet, i) -> {
-            String firstName = resultSet.getString("first_name");
-            String lastName = resultSet.getString("last_name");
-            return firstName + " " + lastName;
-        }, id);
+        try {
+            return jdbc.queryForObject(sql, (resultSet, i) -> {
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                return firstName + " " + lastName;
+            }, id);
+        } catch (DataAccessException e) {
+            log.error("getName exception: " + e.getMessage());
+            return "";
+        }
     }
 
     public List<Patient> findAll() {
