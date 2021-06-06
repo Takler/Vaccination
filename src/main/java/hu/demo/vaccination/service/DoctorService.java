@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -67,10 +66,11 @@ public class DoctorService implements CrudOperation<Doctor, DoctorCreateUpdateDa
     @Override
     public boolean fileSave(InputCreateData input) {
         Path path = Paths.get(input.getInput());
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
-            while (doctorRepository.fileSave() != null) {
+        List<Doctor> doctorList = doctorRepository.findAll();
+        try {
+            for (Doctor item : doctorList) {
+                Files.writeString(path, item.toString());
             }
-
         } catch (IOException ex) {
             log.error("fileSave exception: " + ex.getMessage());
         }

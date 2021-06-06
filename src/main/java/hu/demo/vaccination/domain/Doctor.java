@@ -17,4 +17,9 @@ public class Doctor {
 
     public Doctor() {
     }
+
+    @Override
+    public String toString() {
+        return id + ";" + firstName + ";" + lastName + ";" + email + ";" + address + ";" + telephoneNumber + ";" + deleted;
+    }
 }
