@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
@@ -177,5 +178,27 @@ class VaccinationServiceTest {
     void getNumberOfVaccinationsForPeriod_lastWeek() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Assertions.assertEquals(11, vaccinationService.getNumberOfVaccinationsForPeriod(LocalDate.now().minusDays(14), LocalDate.now().minusDays(7)));
+    }
+
+    @Test
+    void getVaccinationsByPatient_emptyList() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Assertions.assertEquals(Collections.emptyList(), vaccinationService.getVaccinationsByPatient(16));
+    }
+
+    @Test
+    void getVaccinationsByPatient_oneResult() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        List<Vaccination> expected = List.of(new Vaccination(6,2,8,6, LocalDate.now().minusDays(5), false));
+        Assertions.assertEquals(expected, vaccinationService.getVaccinationsByPatient(8));
+    }
+
+    @Test
+    void getVaccinationsByPatient_twoResult() {
+        List<Vaccination> expected = List.of(
+                new Vaccination(11, 3, 14 , 5, LocalDate.now().minusDays(6), false),
+                new Vaccination(20,3,14,7, LocalDate.now().minusDays(3), false));
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Assertions.assertEquals(expected, vaccinationService.getVaccinationsByPatient(14));
     }
 }
