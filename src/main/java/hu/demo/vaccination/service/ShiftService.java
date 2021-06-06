@@ -14,11 +14,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Slf4j
@@ -105,7 +107,7 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
         List<Shift> shiftList = shiftRepository.findAll();
         try {
             for (Shift item : shiftList) {
-                Files.writeString(path, item.toString() + "\r\n", StandardOpenOption.APPEND);
+                Files.writeString(path, item.toString() + "\r\n", StandardOpenOption.APPEND);  //TODO létrehozás nem ok.
             }
             return true;
         } catch (IOException ex) {
@@ -116,6 +118,24 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
 
     @Override
     public boolean fileLoad(InputCreateData input) {
-        return false;
+        boolean result = true;
+        Path path = Paths.get(input.getInput());
+        try (BufferedReader bufferedReader = Files.newBufferedReader(path)) {
+            ShiftCreateUpdateData shiftCreateUpdateData = new ShiftCreateUpdateData();
+            String row = "";
+            while (((row = bufferedReader.readLine()) != null) && result) {
+                String[] attribs = row.split(";");
+                shiftCreateUpdateData.setCenterId(Integer.parseInt(attribs[1]));
+                shiftCreateUpdateData.setDoctorId(Integer.parseInt(attribs[2]));
+                shiftCreateUpdateData.setStart(Timestamp.valueOf(attribs[3]));
+                shiftCreateUpdateData.setEnd(Timestamp.valueOf(attribs[4]));
+                if (!shiftRepository.save(shiftCreateUpdateData)) {
+                    result = false;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

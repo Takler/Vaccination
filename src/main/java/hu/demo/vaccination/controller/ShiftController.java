@@ -92,7 +92,7 @@ public class ShiftController {
 
     @PostMapping("/file")
     public ResponseEntity<Void> fileLoad(@RequestBody InputCreateData inputCreateData) {
-        if (shiftService.fileSave(inputCreateData)) {
+        if (shiftService.fileLoad(inputCreateData)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
