@@ -37,7 +37,7 @@ public class ShiftRepository {
     }
 
     public Shift getById(int shiftId) {
-        String sqlSelect = "SELECT * FROM shift WHERE id=? and deleted = false";
+        String sqlSelect = "SELECT * FROM shift WHERE id=? AND deleted = false";
         try {
             return jdbcTemplate.queryForObject(sqlSelect, new ShiftMapper(), shiftId);
         } catch (DataAccessException ex) {

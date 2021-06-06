@@ -36,7 +36,7 @@ public class DoctorRepository {
     }
 
     public Doctor getById(int doctorId) {
-        String sqlSelect = "SELECT * FROM doctor WHERE id=? and deleted = false";
+        String sqlSelect = "SELECT * FROM doctor WHERE id=? AND deleted = false";
         try {
             return jdbcTemplate.queryForObject(sqlSelect, new DoctorMapper(), doctorId);
         } catch (DataAccessException ex) {
@@ -92,7 +92,7 @@ public class DoctorRepository {
     public String getName(int doctorId) {
         Map<String, Object> doctorFirstLastname = new TreeMap<>();
         String name = "";
-        String sqlSelect = "SELECT first_name, last_name FROM doctor WHERE id = ?";  //TODO dleted ki
+        String sqlSelect = "SELECT first_name, last_name FROM doctor WHERE id = ? AND deleted = false";
         try {
             doctorFirstLastname = jdbcTemplate.queryForMap(sqlSelect, doctorId);
             for (Map.Entry<String, Object> item : doctorFirstLastname.entrySet()) {
@@ -106,7 +106,7 @@ public class DoctorRepository {
     }
 
     public List<String> getLastName(String doctorFirstName) {
-        String sqlSelect = "SELECT last_name FROM doctor WHERE first_name = ?";  //TODO oreder...  //TODO dleted ki
+        String sqlSelect = "SELECT last_name FROM doctor WHERE first_name = ? AND deleted = false ORDER BY last_name";
         try {
             return jdbcTemplate.queryForList(sqlSelect, String.class, doctorFirstName);
         } catch (DataAccessException ex) {
@@ -114,13 +114,5 @@ public class DoctorRepository {
         }
         return null;
     }
-
-
-//        String sqlSelect = "SELECT first_name, last_name FROM doctor WHERE id = ?";
-//        try {
-//            return jdbcTemplate.queryForMap(sqlSelect,firstName );
-//        }
-
-// return String.valueOf(((TreeMap<String, Object>) doctor).firstEntry());   //TODO doctor miért van aláhúzva?
 
 }
