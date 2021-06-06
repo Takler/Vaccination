@@ -20,11 +20,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static hu.demo.vaccination.config.PatientTestHelper.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -111,6 +111,14 @@ class PatientServiceTest {
     }
 
     @Test
+    void test_fileSave_noResult() {
+        InputCreateData input = new InputCreateData();
+        input.setInput(" BAD/PATH");
+
+        assertFalse(patientService.fileSave(input));
+    }
+
+    @Test
     void test_fileLoad_successfulLoad() {
         InputCreateData input = new InputCreateData();
         input.setInput(LOAD_FILE);
@@ -128,17 +136,33 @@ class PatientServiceTest {
     }
 
     @Test
+    void test_fileLoad_noResult() {
+        InputCreateData input = new InputCreateData();
+        input.setInput(" BAD/PATH");
+
+        assertFalse(patientService.fileLoad(input));
+    }
+
+    @Test
     void test_getLastName_receiveLastName() {
         String lastName = "Test";
         String firstName = "Elek";
         List<String> lastNames = new ArrayList<>();
         lastNames.add(lastName);
 
-        when(patientRepositoryMock.getLastName(firstName)).thenReturn(lastNames);
+        when(patientRepositoryMock.getLastNames(firstName)).thenReturn(lastNames);
 
         List<String> receivedLastNames = patientService.getLastNames(firstName);
         assertEquals(lastName, receivedLastNames.get(0));
-        verify(patientRepositoryMock).getLastName(firstName);
+        verify(patientRepositoryMock).getLastNames(firstName);
+    }
+
+    @Test
+    void test_getLastName_noResult() {
+        when(patientRepositoryMock.getLastNames(PATIENT_1_FIRST_NAME)).thenReturn(Collections.emptyList());
+
+        assertTrue(patientService.getLastNames(PATIENT_1_FIRST_NAME).isEmpty());
+        verify(patientRepositoryMock).getLastNames(PATIENT_1_FIRST_NAME);
     }
 
     @Test
@@ -150,7 +174,11 @@ class PatientServiceTest {
 
         assertEquals(name, patientService.getName(id));
         verify(patientRepositoryMock).getName(id);
+    }
 
+    @Test
+    void test_getName_noResult() {
+        assertNull(patientService.getName(1));
     }
 
     @Test
@@ -170,6 +198,14 @@ class PatientServiceTest {
     }
 
     @Test
+    void test_findAll_noResult() {
+        when(patientRepositoryMock.findAll()).thenReturn(Collections.emptyList());
+
+        assertTrue(patientService.findAll().isEmpty());
+        verify(patientRepositoryMock).findAll();
+    }
+
+    @Test
     void test_getById_receiveCorrectPatient() {
         Patient patient = getPatientOne();
 
@@ -178,6 +214,14 @@ class PatientServiceTest {
         Patient receivedPatient = patientService.getById(patient.getId());
         assertEquals(patient, receivedPatient);
         verify(patientRepositoryMock).getById(patient.getId());
+    }
+
+    @Test
+    void test_getById_noResult() {
+        when(patientRepositoryMock.getById(PATIENT_1_ID)).thenReturn(null);
+
+        assertNull(patientService.getById(PATIENT_1_ID));
+        verify(patientRepositoryMock).getById(PATIENT_1_ID);
     }
 
     @Test
@@ -208,6 +252,17 @@ class PatientServiceTest {
         when(patientRepositoryMock.update(id, patientCreateData)).thenReturn(true);
 
         assertTrue(patientService.update(id, patientCreateData));
+        verify(patientRepositoryMock).update(patientCreateData.getId(), patientCreateData);
+    }
+
+    @Test
+    void test_update_noResult() {
+        PatientCreateData patientCreateData = getPatientOneCreateData();
+        int id = patientCreateData.getId();
+
+        when(patientRepositoryMock.update(id, patientCreateData)).thenReturn(false);
+
+        assertFalse(patientService.update(id, patientCreateData));
         verify(patientRepositoryMock).update(patientCreateData.getId(), patientCreateData);
     }
 

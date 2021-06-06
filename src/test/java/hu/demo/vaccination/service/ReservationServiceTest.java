@@ -19,8 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static hu.demo.vaccination.config.ReservationTestHelper.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -71,7 +70,11 @@ class ReservationServiceTest {
         verify(centerServiceMock).getName(RESERVATION_1_CENTER_ID);
         verify(vaccineServiceMock).getName(RESERVATION_1_VACCINE_ID);
         verify(patientServiceMock).getName(RESERVATION_1_PATIENT_ID);
+    }
 
+    @Test
+    void test_getPatientReservation_noResult() {
+        assertNull(reservationService.getPatientReservation(RESERVATION_1_PATIENT_ID));
     }
 
     @Test
@@ -107,6 +110,11 @@ class ReservationServiceTest {
     }
 
     @Test
+    void test_getInfo_noResult() {
+        assertNull(reservationService.getInfo(RESERVATION_1_ID));
+    }
+
+    @Test
     void test_getNameInfo_receiveCorrectData() {
         Reservation sampleReservation = getReservationOne();
 
@@ -129,6 +137,11 @@ class ReservationServiceTest {
     }
 
     @Test
+    void test_getNameInfo_noResult() {
+        assertNull(reservationService.getNameInfo(RESERVATION_1_ID));
+    }
+
+    @Test
     void test_findAll_receiveAllReservations() {
         Reservation testReservation = getReservationOne();
 
@@ -139,7 +152,11 @@ class ReservationServiceTest {
         assertEquals(1, resultReservations.size());
         assertEquals(testReservation, resultReservations.get(0));
         verify(reservationRepositoryMock).findAll();
+    }
 
+    @Test
+    void test_findAll_noResult() {
+        assertTrue(reservationService.findAll().isEmpty());
     }
 
     @Test
@@ -153,7 +170,11 @@ class ReservationServiceTest {
 
         assertEquals(testReservation, resultReservation);
         verify(reservationRepositoryMock).getById(id);
+    }
 
+    @Test
+    void test_getById_noResult() {
+        assertNull(reservationService.getById(1));
     }
 
     @Test
@@ -177,10 +198,28 @@ class ReservationServiceTest {
     }
 
     @Test
+    void test_update_noResult() {
+        ReservationCreateData testData = getReservationOneCreateData();
+
+        when(reservationRepositoryMock.update(RESERVATION_1_ID, testData)).thenReturn(false);
+
+        assertFalse(reservationService.update(RESERVATION_1_ID, testData));
+        verify(reservationRepositoryMock).update(RESERVATION_1_ID, testData);
+    }
+
+    @Test
     void test_delete_onceCalled() {
         when(reservationRepositoryMock.delete(RESERVATION_1_ID)).thenReturn(true);
 
         assertTrue(reservationService.delete(RESERVATION_1_ID));
+        verify(reservationRepositoryMock).delete(RESERVATION_1_ID);
+    }
+
+    @Test
+    void test_delete_noResult() {
+        when(reservationRepositoryMock.delete(RESERVATION_1_ID)).thenReturn(false);
+
+        assertFalse(reservationService.delete(RESERVATION_1_ID));
         verify(reservationRepositoryMock).delete(RESERVATION_1_ID);
     }
 
