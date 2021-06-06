@@ -2,7 +2,7 @@ package hu.demo.vaccination.service;
 
 import hu.demo.vaccination.config.CenterTestHelper;
 import hu.demo.vaccination.domain.Center;
-import hu.demo.vaccination.dto.CenterCreateData;
+import hu.demo.vaccination.dto.center.CenterCreateData;
 import hu.demo.vaccination.repository.CenterRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

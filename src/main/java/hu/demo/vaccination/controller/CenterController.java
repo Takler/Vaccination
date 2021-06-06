@@ -1,7 +1,7 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Center;
-import hu.demo.vaccination.dto.CenterCreateData;
+import hu.demo.vaccination.dto.center.CenterCreateData;
 import hu.demo.vaccination.service.CenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

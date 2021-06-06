@@ -1,7 +1,7 @@
 package hu.demo.vaccination.service;
 
 import hu.demo.vaccination.domain.Center;
-import hu.demo.vaccination.dto.CenterCreateData;
+import hu.demo.vaccination.dto.center.CenterCreateData;
 import hu.demo.vaccination.repository.CenterRepository;
 import hu.demo.vaccination.service.interfaces.CrudOperation;
 import hu.demo.vaccination.service.interfaces.Nameable;

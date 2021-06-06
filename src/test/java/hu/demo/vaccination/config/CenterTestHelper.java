@@ -1,7 +1,7 @@
 package hu.demo.vaccination.config;
 
 import hu.demo.vaccination.domain.Center;
-import hu.demo.vaccination.dto.CenterCreateData;
+import hu.demo.vaccination.dto.center.CenterCreateData;
 
 public final class CenterTestHelper {
     public static final int ID_FIRST = 1;
