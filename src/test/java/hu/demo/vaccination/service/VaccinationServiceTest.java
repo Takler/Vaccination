@@ -307,4 +307,22 @@ class VaccinationServiceTest {
 
         Assertions.assertFalse(vaccinationService.update(3, vaccinationCreateData));
     }
+
+    @Test
+    void test_delete_success() {
+        Mockito.when(vaccinationRepository.deleteVaccination(3)).thenReturn(true);
+        Mockito.when(vaccinationRepository.getVaccination(3)).thenReturn(null);
+
+        Assertions.assertTrue(vaccinationService.delete(3));
+        Assertions.assertNull(vaccinationService.getById(3));
+    }
+
+    @Test
+    void test_delete_fail() {
+        Mockito.when(vaccinationRepository.deleteVaccination(100)).thenReturn(false);
+        Mockito.when(vaccinationRepository.getVaccination(100)).thenReturn(null);
+
+        Assertions.assertFalse(vaccinationService.delete(100));
+        Assertions.assertNull(vaccinationService.getById(100));
+    }
 }
