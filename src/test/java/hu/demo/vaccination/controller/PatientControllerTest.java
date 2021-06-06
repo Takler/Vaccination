@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static hu.demo.vaccination.config.PatientTestHelper.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -31,8 +32,9 @@ class PatientControllerTest {
     @Test
     @DisplayName("GET /api/patient/lastnames/albert - getLastNames")
     void test_getLastNames_getCorrectLastNames() {
+        String firstName = "albert";
         doReturn(Lists.newArrayList(PATIENT_1_LAST_NAME, PATIENT_2_LAST_NAME))
-                .when(patientServiceMock).getLastNames("albert");
+                .when(patientServiceMock).getLastNames(firstName);
 
         try {
             mockMvc.perform(get("/api/patient/lastnames/albert"))
@@ -44,6 +46,8 @@ class PatientControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(patientServiceMock).getLastNames(firstName);
     }
 
     @Test
@@ -60,6 +64,8 @@ class PatientControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(patientServiceMock).getName(PATIENT_1_ID);
     }
 
     @Test
@@ -105,6 +111,8 @@ class PatientControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(patientServiceMock).findAll();
     }
 
     @Test
@@ -134,5 +142,7 @@ class PatientControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(patientServiceMock).getById(PATIENT_1_ID);
     }
 }

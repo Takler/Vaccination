@@ -20,6 +20,7 @@ import static hu.demo.vaccination.config.ReservationTestHelper.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -54,6 +55,8 @@ class ReservationControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(reservationServiceMock).getPatientReservation(PATIENT_RESERVATION_1_PATIENT_ID);
     }
 
     @Test
@@ -108,6 +111,8 @@ class ReservationControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(reservationServiceMock).getInfo(RESERVATION_INFO_1_RESERVATION_ID);
     }
 
     @Test
@@ -130,6 +135,8 @@ class ReservationControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(reservationServiceMock).getNameInfo(RESERVATION_NAME_INFO_1_ID);
     }
 
     @Test
@@ -161,6 +168,8 @@ class ReservationControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(reservationServiceMock).findAll();
     }
 
     @Test
@@ -183,5 +192,7 @@ class ReservationControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        verify(reservationServiceMock).getById(RESERVATION_1_ID);
     }
 }

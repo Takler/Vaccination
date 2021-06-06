@@ -25,7 +25,8 @@ import java.util.List;
 import static hu.demo.vaccination.config.PatientTestHelper.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PatientServiceTest {
@@ -106,7 +107,7 @@ class PatientServiceTest {
 
         assertEquals(patientOne, firstResultPatient);
         assertEquals(patientTwo, secondResultPatient);
-        verify(patientRepositoryMock, times(1)).findAll();
+        verify(patientRepositoryMock).findAll();
     }
 
     @Test
@@ -122,8 +123,8 @@ class PatientServiceTest {
 
         assertTrue(patientService.fileLoad(input));
 
-        verify(patientRepositoryMock, times(1)).save(patientOne);
-        verify(patientRepositoryMock, times(1)).save(patientTwo);
+        verify(patientRepositoryMock).save(patientOne);
+        verify(patientRepositoryMock).save(patientTwo);
     }
 
     @Test
@@ -137,7 +138,7 @@ class PatientServiceTest {
 
         List<String> receivedLastNames = patientService.getLastNames(firstName);
         assertEquals(lastName, receivedLastNames.get(0));
-        verify(patientRepositoryMock, times(1)).getLastName(firstName);
+        verify(patientRepositoryMock).getLastName(firstName);
     }
 
     @Test
@@ -148,7 +149,7 @@ class PatientServiceTest {
         when(patientRepositoryMock.getName(id)).thenReturn(name);
 
         assertEquals(name, patientService.getName(id));
-        verify(patientRepositoryMock, times(1)).getName(id);
+        verify(patientRepositoryMock).getName(id);
 
     }
 
@@ -165,7 +166,7 @@ class PatientServiceTest {
 
         List<Patient> receivedPatients = patientService.findAll();
         assertEquals(2, receivedPatients.size());
-        verify(patientRepositoryMock, times(1)).findAll();
+        verify(patientRepositoryMock).findAll();
     }
 
     @Test
@@ -176,7 +177,7 @@ class PatientServiceTest {
 
         Patient receivedPatient = patientService.getById(patient.getId());
         assertEquals(patient, receivedPatient);
-        verify(patientRepositoryMock, times(1)).getById(patient.getId());
+        verify(patientRepositoryMock).getById(patient.getId());
     }
 
     @Test
@@ -186,7 +187,7 @@ class PatientServiceTest {
         when(patientRepositoryMock.save(patientCreateData)).thenReturn(true);
 
         assertTrue(patientService.save(patientCreateData));
-        verify(patientRepositoryMock, times(1)).save(patientCreateData);
+        verify(patientRepositoryMock).save(patientCreateData);
     }
 
     @Test
@@ -196,7 +197,7 @@ class PatientServiceTest {
         when(patientRepositoryMock.delete(id)).thenReturn(true);
 
         assertTrue(patientService.delete(id));
-        verify(patientRepositoryMock, times(1)).delete(id);
+        verify(patientRepositoryMock).delete(id);
     }
 
     @Test
@@ -207,7 +208,7 @@ class PatientServiceTest {
         when(patientRepositoryMock.update(id, patientCreateData)).thenReturn(true);
 
         assertTrue(patientService.update(id, patientCreateData));
-        verify(patientRepositoryMock, times(1)).update(patientCreateData.getId(), patientCreateData);
+        verify(patientRepositoryMock).update(patientCreateData.getId(), patientCreateData);
     }
 
     private void initTestFiles() {
