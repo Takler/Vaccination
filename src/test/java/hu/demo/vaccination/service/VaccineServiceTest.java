@@ -109,4 +109,23 @@ public class VaccineServiceTest {
         Assertions.assertEquals(List.of(new Vaccine(5, "Gamaleja 2nd", "adenovirus", 4, 18, 999,
                 2, 0, -1, 14, true, false, false)), vaccineService.getVaccineForPatient(patient));
     }
+
+    @Test
+    void test_getVaccineForPatient_notPregnantIsChronicAge45IsVaccinatedOnceAndFully() {
+        Mockito.when(vaccinationService.getVaccinationsByPatient(58)).thenReturn(List.of(new Vaccination(103, 7, 58, 8, LocalDate.now().minusDays(18), false)));
+        Mockito.when(vaccineService.findAll()).thenReturn(allVaccines);
+        Patient patient = new Patient(58, "male", LocalDate.now().minusYears(45).minusDays(150), "1234", false, true);
+
+        Assertions.assertEquals(Collections.emptyList(), vaccineService.getVaccineForPatient(patient));
+    }
+
+    @Test
+    void test_getVaccineForPatient_NotPregnantNotChronicAge50IsVaccinatedTwiceAndFully() {
+        Mockito.when(vaccinationService.getVaccinationsByPatient(59)).thenReturn(List.of(new Vaccination(104, 1, 59, 5, LocalDate.now().minusDays(30), false),
+                new Vaccination(105, 1, 59, 10, LocalDate.now().minusDays(5), false)));
+        Mockito.when(vaccineService.findAll()).thenReturn(allVaccines);
+        Patient patient = new Patient(59, "male", LocalDate.now().minusYears(50).minusDays(150), "1234", false, false);
+
+        Assertions.assertEquals(Collections.emptyList(), vaccineService.getVaccineForPatient(patient));
+    }
 }
