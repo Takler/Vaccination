@@ -119,4 +119,9 @@ public class VaccinationController {
                                                                     @RequestParam LocalDate end) {
         return new ResponseEntity<>(vaccinationService.getNumberOfVaccinationsForPeriod(start, end), HttpStatus.OK);
     }
+
+    @GetMapping("/patient/{id}")
+    public ResponseEntity<List<VaccinationInfoData>> getVaccinationInfoByPatient(@RequestParam int id) {
+        return new ResponseEntity<>(vaccinationService.getVaccinationInfoByPatient(id), HttpStatus.OK);
+    }
 }

@@ -119,6 +119,12 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
                 .collect(Collectors.toList());
     }
 
+    public List<VaccinationInfoData> getVaccinationInfoByPatient(int patientId) {
+        return getVaccinationsByPatient(patientId).stream()
+                .map(vaccination -> getInfo(vaccination.getId()))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public VaccinationInfoData getInfo(int id) {
         VaccinationInfoData vaccinationInfoData = new VaccinationInfoData();
