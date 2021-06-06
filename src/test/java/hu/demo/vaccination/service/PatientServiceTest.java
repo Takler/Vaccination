@@ -135,7 +135,7 @@ class PatientServiceTest {
 
         when(patientRepositoryMock.getLastName(firstName)).thenReturn(lastNames);
 
-        List<String> receivedLastNames = patientService.getLastName(firstName);
+        List<String> receivedLastNames = patientService.getLastNames(firstName);
         assertEquals(lastName, receivedLastNames.get(0));
         verify(patientRepositoryMock, times(1)).getLastName(firstName);
     }

@@ -82,7 +82,7 @@ public class DoctorController {   // TODO Testeket írni!!
 
     @GetMapping("/lastName/{doctorFirstName}")
     public ResponseEntity<List<String>> getLastName(@PathVariable String doctorFirstName) {
-        List<String> lastNameList = doctorService.getLastName(doctorFirstName);
+        List<String> lastNameList = doctorService.getLastNames(doctorFirstName);
         if (lastNameList != null) {
             if (!lastNameList.isEmpty()) {
                 return new ResponseEntity<>(lastNameList, HttpStatus.OK);
@@ -99,7 +99,7 @@ public class DoctorController {   // TODO Testeket írni!!
         if (doctorService.fileSave(inputCreateData)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST)
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
 
