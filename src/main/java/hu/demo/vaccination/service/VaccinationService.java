@@ -99,10 +99,11 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
         return getAggregatedFieldDataList(countOfVaccinationsPerVaccine, vaccineIdName);
     }
 
-    private List<AggregatedFieldData> getAggregatedFieldDataList(Map<Integer, Long> countPerEntity, Map<Integer, String> idName) {
+    private List<AggregatedFieldData> getAggregatedFieldDataList(Map<Integer, Long> countPerEntity, 
+                                                                 Map<Integer, String> entityIdName) {
         int totalCount = countPerEntity.values().stream().reduce(0L, Long::sum).intValue();
         return countPerEntity.entrySet().stream()
-                .map(map -> new AggregatedFieldData(idName.get(map.getKey()),
+                .map(map -> new AggregatedFieldData(entityIdName.get(map.getKey()),
                         new CountPercentageData(map.getValue().intValue(),
                                 Math.round(countPerEntity.get(map.getKey()) * 10000 / (double) totalCount) / 100.0)))
                 .collect(Collectors.toList());
