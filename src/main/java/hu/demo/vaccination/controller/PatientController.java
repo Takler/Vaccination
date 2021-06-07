@@ -64,11 +64,11 @@ public class PatientController {
     public ResponseEntity<List<Patient>> findAll() {
         List<Patient> patients = patientService.findAll();
         if (!patients.isEmpty()) {
-            return new ResponseEntity<>(patients, HttpStatus.OK);   // TODO nem értem? egyszer üres lista van generálva ha rossz, OK -val aztán meg visszamegy?
+            return new ResponseEntity<>(patients, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }  // TODO nem értem: akkor meg minek a 47-es sor?
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Patient> getById(@PathVariable int id) {
@@ -76,13 +76,13 @@ public class PatientController {
         if (patient != null) {
             return new ResponseEntity<>(patient, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  //TODO nem értem?  not found és adatbázis hiba is ezt dobja? -> BAD_REQUEST?
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody PatientCreateData data) {
-        if (patientService.save(data)) {// TODO nem értem: minek ez a sor?
+        if (patientService.save(data)) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -95,7 +95,7 @@ public class PatientController {
         if (updateSuccessful) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  //TODO itt értem, hogy miért nem NOT_MODIFIED, lásd. getByID
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
