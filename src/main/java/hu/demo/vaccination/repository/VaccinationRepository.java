@@ -1,7 +1,7 @@
 package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Vaccination;
-import hu.demo.vaccination.dto.VaccinationCreateData;
+import hu.demo.vaccination.dto.vaccination.VaccinationCreateData;
 import hu.demo.vaccination.repository.mapper.VaccinationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;

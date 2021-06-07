@@ -1,7 +1,7 @@
 package hu.demo.vaccination.service;
 
 import hu.demo.vaccination.domain.*;
-import hu.demo.vaccination.dto.VaccinationCreateData;
+import hu.demo.vaccination.dto.vaccination.VaccinationCreateData;
 import hu.demo.vaccination.dto.vaccination.AggregatedFieldData;
 import hu.demo.vaccination.dto.vaccination.CountPercentageData;
 import hu.demo.vaccination.dto.vaccination.VaccinationInfoData;

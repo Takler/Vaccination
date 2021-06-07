@@ -1,6 +1,6 @@
 package hu.demo.vaccination.domain;
 
-import hu.demo.vaccination.dto.VaccineCreateData;
+import hu.demo.vaccination.dto.vaccine.VaccineCreateData;
 import lombok.*;
 
 import java.util.Objects;

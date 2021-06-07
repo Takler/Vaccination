@@ -1,7 +1,7 @@
 package hu.demo.vaccination.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import hu.demo.vaccination.dto.VaccinationCreateData;
+import hu.demo.vaccination.dto.vaccination.VaccinationCreateData;
 import lombok.*;
 
 import java.time.LocalDate;

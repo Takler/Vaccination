@@ -6,7 +6,7 @@ import hu.demo.vaccination.domain.Patient;
 import hu.demo.vaccination.domain.Shift;
 import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.domain.Vaccine;
-import hu.demo.vaccination.dto.VaccinationCreateData;
+import hu.demo.vaccination.dto.vaccination.VaccinationCreateData;
 import hu.demo.vaccination.dto.vaccination.AggregatedFieldData;
 import hu.demo.vaccination.dto.vaccination.CountPercentageData;
 import hu.demo.vaccination.repository.VaccinationRepository;
