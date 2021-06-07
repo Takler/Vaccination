@@ -2,6 +2,7 @@ package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Inventory;
 import hu.demo.vaccination.dto.inventory.InventoryCreateData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class InventoryRepository {
     private final JdbcTemplate jdbcTemplate;
@@ -28,7 +31,8 @@ public class InventoryRepository {
         try {
             return jdbcTemplate.query(sql, new InventoryMapper());
         } catch (DataAccessException e) {
-            return null;
+            log.error("getInventories exception: " + e.getMessage());
+            return Collections.emptyList();
         }
 
     }
@@ -40,6 +44,7 @@ public class InventoryRepository {
         try {
             return jdbcTemplate.queryForObject(sql, new InventoryMapper(), id);
         } catch (DataAccessException e) {
+            log.error("getInventory exception: " + e.getMessage());
             return null;
         }
 
@@ -52,6 +57,7 @@ public class InventoryRepository {
             int rowsAffected = jdbcTemplate.update(sql, data.getCenterId(), data.getVaccineId(), data.getAmount());
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("createInventory exception: " + e.getMessage());
             return false;
         }
     }
@@ -64,6 +70,7 @@ public class InventoryRepository {
             int rowsAffected = jdbcTemplate.update(sql, data.getCenterId(), data.getVaccineId(), data.getAmount(), id);
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("updateInventory exception: " + e.getMessage());
             return false;
         }
     }
@@ -76,6 +83,7 @@ public class InventoryRepository {
             int rowsAffected = jdbcTemplate.update(sql, id);
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("deleteInventory exception: " + e.getMessage());
             return false;
         }
     }

@@ -2,6 +2,7 @@ package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Center;
 import hu.demo.vaccination.dto.center.CenterCreateData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class CenterRepository {
     private final JdbcTemplate jdbcTemplate;
@@ -38,6 +40,7 @@ public class CenterRepository {
         try {
             return jdbcTemplate.query(sql, centerRowMapper);
         } catch (DataAccessException e) {
+            log.error("getCenters exception: " + e.getMessage());
             return Collections.emptyList();
         }
     }
@@ -49,6 +52,7 @@ public class CenterRepository {
         try {
             return jdbcTemplate.queryForObject(sql, centerRowMapper, id);
         } catch (DataAccessException e) {
+            log.error("getCenter exception " + e.getMessage());
             return null;
         }
     }
@@ -60,6 +64,7 @@ public class CenterRepository {
             int rowsAffected = jdbcTemplate.update(sql, data.getName(), data.getCity(), data.getEmail(), data.getTelephoneNumber(), data.getDailyCapacity());
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("createCenter exception: " + e.getMessage());
             return false;
         }
     }
@@ -72,6 +77,7 @@ public class CenterRepository {
             int rowsAffected = jdbcTemplate.update(sql, data.getName(), data.getCity(), data.getEmail(), data.getTelephoneNumber(), data.getDailyCapacity(), id);
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("updateCenter exception: " + e.getMessage());
             return false;
         }
     }
@@ -84,6 +90,7 @@ public class CenterRepository {
             int rowsAffected = jdbcTemplate.update(sql, id);
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("deleteCenter exception: " + e.getMessage());
             return false;
         }
     }
