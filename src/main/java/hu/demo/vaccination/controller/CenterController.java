@@ -1,6 +1,7 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Center;
+import hu.demo.vaccination.dto.InputCreateData;
 import hu.demo.vaccination.dto.center.CenterCreateData;
 import hu.demo.vaccination.service.CenterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,24 @@ public class CenterController {
     @Autowired
     public CenterController(CenterService centerService) {
         this.centerService = centerService;
+    }
+
+    @GetMapping("/file")
+    public ResponseEntity<Void> fileSave(@RequestBody InputCreateData input) {
+        if (centerService.fileSave(input)) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/file")
+    public ResponseEntity<Void> fileLoad(@RequestBody InputCreateData input) {
+        if (centerService.fileLoad(input)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/name/{id}")

@@ -7,11 +7,13 @@ import hu.demo.vaccination.repository.CenterRepository;
 import hu.demo.vaccination.service.interfaces.CrudOperation;
 import hu.demo.vaccination.service.interfaces.FileHandler;
 import hu.demo.vaccination.service.interfaces.Nameable;
+import hu.demo.vaccination.utility.FilePathDefinition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -61,7 +63,7 @@ public class CenterService implements CrudOperation<Center, CenterCreateData>, N
 
     @Override
     public boolean fileSave(InputCreateData input) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get(input.getInput())))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(Files.newBufferedWriter(Paths.get(FilePathDefinition.SAVE_PATH.getDefinition(), input.getInput())))) {
             List<Center> centers = centerRepository.getCenters();
             for (Center center : centers) {
                 bufferedWriter.write(convertToCsv(center));
@@ -76,8 +78,20 @@ public class CenterService implements CrudOperation<Center, CenterCreateData>, N
 
     @Override
     public boolean fileLoad(InputCreateData input) {
-        // TODO
-        return false;
+        try (BufferedReader bufferedReader = new BufferedReader(Files.newBufferedReader(Paths.get(FilePathDefinition.SAVE_PATH.getDefinition(), input.getInput())))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] lineSplit = line.split(";");
+                if (lineSplit.length == 5) {
+                    CenterCreateData centerCreateData = new CenterCreateData(lineSplit[0], lineSplit[1], lineSplit[2], lineSplit[3], Integer.parseInt(lineSplit[4]));
+                    centerRepository.createCenter(centerCreateData);
+                }
+            }
+            return true;
+        } catch (IOException e) {
+            log.error("load failed: " + e.getMessage());
+            return false;
+        }
     }
 
     private String convertToCsv(Center center) {
