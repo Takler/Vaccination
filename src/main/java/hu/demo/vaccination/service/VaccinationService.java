@@ -91,18 +91,20 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
                         Map.Entry::getValue,
                         Collectors.counting()));
 
-        int totalCountVaccinated = countOfVaccinationsPerVaccine.values().stream().reduce(0L, Long::sum).intValue();
-
         Map<Integer, String> vaccineIdName = vaccineService.findAll().stream()
                 .collect(Collectors.toMap(
                         Vaccine::getId,
-                        Vaccine::getName
-                ));
+                        Vaccine::getName));
 
-        return countOfVaccinationsPerVaccine.entrySet().stream()
-                .map(map -> new AggregatedFieldData(vaccineIdName.get(map.getKey()),
+        return getAggregatedFieldDataList(countOfVaccinationsPerVaccine, vaccineIdName);
+    }
+
+    private List<AggregatedFieldData> getAggregatedFieldDataList(Map<Integer, Long> countPerEntity, Map<Integer, String> idName) {
+        int totalCount = countPerEntity.values().stream().reduce(0L, Long::sum).intValue();
+        return countPerEntity.entrySet().stream()
+                .map(map -> new AggregatedFieldData(idName.get(map.getKey()),
                         new CountPercentageData(map.getValue().intValue(),
-                                Math.round(countOfVaccinationsPerVaccine.get(map.getKey()) * 10000 / (double) totalCountVaccinated) / 100.0)))
+                                Math.round(countPerEntity.get(map.getKey()) * 10000 / (double) totalCount) / 100.0)))
                 .collect(Collectors.toList());
     }
 
