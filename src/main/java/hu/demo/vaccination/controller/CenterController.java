@@ -20,6 +20,16 @@ public class CenterController {
         this.centerService = centerService;
     }
 
+    @GetMapping("/name/{id}")
+    public ResponseEntity<String> getName(@PathVariable int id) {
+        String result = centerService.getName(id);
+        if (result != null && !result.isEmpty()) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<Center>> getCenters() {
         List<Center> centers = centerService.findAll();

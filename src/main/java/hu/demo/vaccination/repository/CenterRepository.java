@@ -89,6 +89,11 @@ public class CenterRepository {
     }
 
     public String getName(int id) {
-        return getCenter(id).getName();
+        Center center = getCenter(id);
+        if (center != null) {
+            return center.getName();
+        } else {
+            return "";
+        }
     }
 }
