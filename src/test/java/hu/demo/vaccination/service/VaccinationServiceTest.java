@@ -136,12 +136,12 @@ class VaccinationServiceTest {
     }
 
     @Test
-    void test_getFullVaccinatedPercentage_defaultArgs() {
+    void test_getFullVaccinatedData_defaultArgs() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
         Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
-        double result = vaccinationService.getFullVaccinatedPercentage(0, 0, false, false);
-        Assertions.assertEquals(38.1, result);
+        CountPercentageData result = vaccinationService.getFullVaccinatedData(0, 0, false, false);
+        Assertions.assertEquals(new CountPercentageData(8, 38.1), result);
     }
 
     @Test

@@ -1,10 +1,7 @@
 package hu.demo.vaccination.controller;
 
 import hu.demo.vaccination.domain.Vaccination;
-import hu.demo.vaccination.dto.vaccination.VaccinationCreateData;
-import hu.demo.vaccination.dto.vaccination.AggregatedFieldData;
-import hu.demo.vaccination.dto.vaccination.VaccinationInfoData;
-import hu.demo.vaccination.dto.vaccination.VaccinationNameInfoData;
+import hu.demo.vaccination.dto.vaccination.*;
 import hu.demo.vaccination.service.VaccinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -87,14 +84,14 @@ public class VaccinationController {
 
     @GetMapping("/full")
     @ResponseBody
-    public ResponseEntity<Double> getFullVaccinatedPercentage(@RequestParam(name = "min_age", defaultValue = "0") int minAge,
-                                                               @RequestParam(name = "max_age", defaultValue = "0") int maxAge,
-                                                               @RequestParam(name = "chronic", defaultValue = "false") boolean chronic,
-                                                               @RequestParam(name = "pregnant", defaultValue = "false") boolean pregnant) {
+    public ResponseEntity<CountPercentageData> getFullVaccinatedData(@RequestParam(name = "min_age", defaultValue = "0") int minAge,
+                                                                    @RequestParam(name = "max_age", defaultValue = "0") int maxAge,
+                                                                    @RequestParam(name = "chronic", defaultValue = "false") boolean chronic,
+                                                                    @RequestParam(name = "pregnant", defaultValue = "false") boolean pregnant) {
         if (minAge > maxAge && maxAge != 0) {
-            return new ResponseEntity<>(0.0, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CountPercentageData(), HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>(vaccinationService.getFullVaccinatedPercentage(minAge, maxAge, chronic, pregnant),
+            return new ResponseEntity<>(vaccinationService.getFullVaccinatedData(minAge, maxAge, chronic, pregnant),
                     HttpStatus.OK);
         }
     }
