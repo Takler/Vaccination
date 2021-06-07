@@ -12,7 +12,6 @@ public class ShiftInfoData {
     private int id;
     private Timestamp start;
     private Timestamp end;
-    private boolean deleted;
     private Doctor doctor;
     private Center center;
 

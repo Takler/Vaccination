@@ -74,14 +74,13 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
     @Override
     public ShiftInfoData getInfo(int shiftId) {
         ShiftInfoData shiftInfoData = new ShiftInfoData();
-        Shift shift = shiftRepository.getShift(shiftId);
+        Shift shift = shiftRepository.getShift(shiftId);  //TODO shiftById
         Doctor doctor = doctorService.getById(shift.getDoctorId());
         Center center = centerService.getById(shift.getCenterId());
 
         shiftInfoData.setId(shiftId);
         shiftInfoData.setStart(shift.getStart());
         shiftInfoData.setEnd(shift.getEnd());
-        shiftInfoData.setDeleted(shift.isDeleted());
         shiftInfoData.setDoctor(doctor);
         shiftInfoData.setCenter(center);
         return shiftInfoData;
@@ -90,7 +89,7 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
     @Override
     public ShiftNameInfoData getNameInfo(int shiftId) {
         ShiftNameInfoData shiftNameInfoData = new ShiftNameInfoData();
-        Shift shift = shiftRepository.getShift(shiftId);
+        Shift shift = shiftRepository.getShift(shiftId); //TODO shiftById
         Doctor doctor = doctorService.getById(shift.getDoctorId());
 
         shiftNameInfoData.setId(shiftId);
