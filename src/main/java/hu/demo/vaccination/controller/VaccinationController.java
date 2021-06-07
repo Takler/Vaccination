@@ -121,7 +121,7 @@ public class VaccinationController {
     }
 
     @GetMapping("/patient/{id}")
-    public ResponseEntity<List<VaccinationInfoData>> getVaccinationInfoByPatient(@RequestParam int id) {
+    public ResponseEntity<List<VaccinationInfoData>> getVaccinationInfoByPatient(@PathVariable int id) {
         return new ResponseEntity<>(vaccinationService.getVaccinationInfoByPatient(id), HttpStatus.OK);
     }
 }
