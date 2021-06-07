@@ -74,7 +74,7 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
     @Override
     public ShiftInfoData getInfo(int shiftId) {
         ShiftInfoData shiftInfoData = new ShiftInfoData();
-        Shift shift = shiftRepository.getShift(shiftId);  //TODO shiftById
+        Shift shift = shiftRepository.getById(shiftId);  //TODO getById és innen vagy a repositoryból?
         Doctor doctor = doctorService.getById(shift.getDoctorId());
         Center center = centerService.getById(shift.getCenterId());
 
@@ -87,9 +87,9 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
     }
 
     @Override
-    public ShiftNameInfoData getNameInfo(int shiftId) {
+    public ShiftNameInfoData getNameInfo(int shiftId) {  // TODO TEST, mert cseréltem!!!!!!
         ShiftNameInfoData shiftNameInfoData = new ShiftNameInfoData();
-        Shift shift = shiftRepository.getShift(shiftId); //TODO shiftById
+        Shift shift = shiftRepository.getById(shiftId);
         Doctor doctor = doctorService.getById(shift.getDoctorId());
 
         shiftNameInfoData.setId(shiftId);
