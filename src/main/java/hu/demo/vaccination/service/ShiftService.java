@@ -72,7 +72,7 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
     // implement InfoOperation methods
 
     @Override
-    public ShiftInfoData getInfo(int shiftId) {    //TODO Nagy ellenőrzés
+    public ShiftInfoData getInfo(int shiftId) {
         ShiftInfoData shiftInfoData = new ShiftInfoData();
         Shift shift = shiftRepository.getShift(shiftId);
         Doctor doctor = doctorService.getById(shift.getDoctorId());
@@ -88,10 +88,10 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
     }
 
     @Override
-    public ShiftNameInfoData getNameInfo(int shiftId) {     //TODO Nagy ellenőrzés
+    public ShiftNameInfoData getNameInfo(int shiftId) {
         ShiftNameInfoData shiftNameInfoData = new ShiftNameInfoData();
         Shift shift = shiftRepository.getShift(shiftId);
-        Doctor doctor = doctorService.getById(shift.getDoctorId());  //egész rekord kényszer a rossz getNameByID miatt...
+        Doctor doctor = doctorService.getById(shift.getDoctorId());
 
         shiftNameInfoData.setId(shiftId);
         shiftNameInfoData.setStart(shift.getStart());
@@ -99,9 +99,11 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
         shiftNameInfoData.setDeleted(shift.isDeleted());
         shiftNameInfoData.setDoctorFirstName(doctor.getFirstName());
         shiftNameInfoData.setDoctorLastName(doctor.getLastName());
-        shiftNameInfoData.setCenterName(centerService.getName(shift.getCenterId()));  //getByIdOnlyName -nak kéne lennie?
+        shiftNameInfoData.setCenterName(centerService.getName(shift.getCenterId()));
         return shiftNameInfoData;
     }
+
+    // implement FileHandler methods
 
     @Override
     public boolean fileSave(InputCreateData input) {
