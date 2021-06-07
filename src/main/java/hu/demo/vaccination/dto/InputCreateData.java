@@ -1,14 +1,10 @@
 package hu.demo.vaccination.dto;
 
+import lombok.Data;
+
+@Data
 public class InputCreateData {
 
     private String input;
 
-    public String getInput() {
-        return input;
-    }
-
-    public void setInput(String input) {
-        this.input = input;
-    }
 }
