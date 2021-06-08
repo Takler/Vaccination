@@ -50,7 +50,7 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
         vaccinatedRegisteredPatients.retainAll(filteredRegisteredPatients);
 
         return new CountPercentageData(vaccinatedRegisteredPatients.size(),
-                Math.round(vaccinatedRegisteredPatients.size() * 10000 / (double) filteredRegisteredPatients.size()) / 100.0);
+                getPercentage(filteredRegisteredPatients.size(), vaccinatedRegisteredPatients.size()));
 
     }
 
@@ -77,7 +77,7 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
                 .filter(map -> countOfVaccinationsPerPatient.get(map.getKey()) >= numberOfShotsNeededPerVaccine.get(map.getValue()))
                 .count();
 
-        return new CountPercentageData(numberOfFullVaccinated, Math.round(numberOfFullVaccinated * 10000 / (double) numberOfFilteredPatients) / 100.0);
+        return new CountPercentageData(numberOfFullVaccinated, getPercentage(numberOfFilteredPatients, numberOfFullVaccinated));
     }
 
     public List<AggregatedFieldData> getVaccinatedPerVaccine() {
@@ -100,21 +100,13 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
         return getAggregatedFieldDataList(countOfVaccinationsPerVaccine, vaccineIdName);
     }
 
-    private List<AggregatedFieldData> getAggregatedFieldDataList(Map<Integer, Long> countPerEntity, 
-                                                                 Map<Integer, String> entityIdName) {
-        int totalCount = countPerEntity.values().stream().reduce(0L, Long::sum).intValue();
-        return countPerEntity.entrySet().stream()
-                .map(map -> new AggregatedFieldData(entityIdName.get(map.getKey()),
-                        new CountPercentageData(map.getValue().intValue(),
-                                Math.round(countPerEntity.get(map.getKey()) * 10000 / (double) totalCount) / 100.0)))
-                .collect(Collectors.toList());
-    }
-
-    public int getNumberOfVaccinationsForPeriod(LocalDate start, LocalDate end) {
-        return (int) findAll().stream()
+    public CountPercentageData getStatOfVaccinationsForPeriod(LocalDate start, LocalDate end) {
+        int numberOfVaccinationsForPeriod = (int) findAll().stream()
                 .filter(vaccination -> vaccination.getDate().isAfter(start.minusDays(1)))
                 .filter(vaccination -> vaccination.getDate().isBefore(end.plusDays(1)))
                 .count();
+        int totalNumberOfRegistered = patientService.findAll().size();
+        return new CountPercentageData(numberOfVaccinationsForPeriod, getPercentage(totalNumberOfRegistered, numberOfVaccinationsForPeriod));
     }
 
     public List<Vaccination> getVaccinationsByPatient(int patientId) {
@@ -233,6 +225,16 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
         return filterPatientsByAge(patients, minAge, maxAge);
     }
 
+    private List<AggregatedFieldData> getAggregatedFieldDataList(Map<Integer, Long> countPerEntity,
+                                                                 Map<Integer, String> entityIdName) {
+        int totalCount = countPerEntity.values().stream().reduce(0L, Long::sum).intValue();
+        return countPerEntity.entrySet().stream()
+                .map(map -> new AggregatedFieldData(entityIdName.get(map.getKey()),
+                        new CountPercentageData(map.getValue().intValue(),
+                                getPercentage(totalCount, countPerEntity.get(map.getKey()).intValue()))))
+                .collect(Collectors.toList());
+    }
+
     private boolean validateData(VaccinationCreateData data) {
         boolean isVaccineValid = vaccineService.findAll().stream()
                 .filter(Vaccine::isApplicable)
@@ -253,6 +255,10 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
         boolean isDateValid = !data.getDate().isAfter(LocalDate.now());
 
         return isVaccineValid && isPatientValid && isShiftValid && isDateValid;
+    }
+
+    private double getPercentage(int totalCount, int partialCount) {
+        return Math.round(partialCount * 10000 / (double) totalCount) / 100.0;
     }
 
 }

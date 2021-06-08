@@ -161,27 +161,31 @@ class VaccinationServiceTest {
     }
 
     @Test
-    void test_getNumberOfVaccinationsForPeriod_thisWeek() {
+    void test_getStatOfVaccinationsForPeriod_thisWeek() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
-        Assertions.assertEquals(14, vaccinationService.getNumberOfVaccinationsForPeriod(LocalDate.now().minusDays(7), LocalDate.now()));
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        Assertions.assertEquals(new CountPercentageData(14, 66.67), vaccinationService.getStatOfVaccinationsForPeriod(LocalDate.now().minusDays(7), LocalDate.now()));
     }
 
     @Test
-    void test_getNumberOfVaccinationsForPeriod_twoDaysAgo() {
+    void test_getStatOfVaccinationsForPeriod_twoDaysAgo() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
-        Assertions.assertEquals(3, vaccinationService.getNumberOfVaccinationsForPeriod(LocalDate.now().minusDays(2), LocalDate.now().minusDays(2)));
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        Assertions.assertEquals(new CountPercentageData(3, 14.29), vaccinationService.getStatOfVaccinationsForPeriod(LocalDate.now().minusDays(2), LocalDate.now().minusDays(2)));
     }
 
     @Test
-    void test_getNumberOfVaccinationsForPeriod_wrongDate() {
+    void test_getStatOfVaccinationsForPeriod_wrongDate() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
-        Assertions.assertEquals(0, vaccinationService.getNumberOfVaccinationsForPeriod(LocalDate.now().minusDays(5), LocalDate.now().minusDays(6)));
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        Assertions.assertEquals(new CountPercentageData(0, 0.0), vaccinationService.getStatOfVaccinationsForPeriod(LocalDate.now().minusDays(5), LocalDate.now().minusDays(6)));
     }
 
     @Test
-    void test_getNumberOfVaccinationsForPeriod_lastWeek() {
+    void test_getStatOfVaccinationsForPeriod_lastWeek() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
-        Assertions.assertEquals(11, vaccinationService.getNumberOfVaccinationsForPeriod(LocalDate.now().minusDays(14), LocalDate.now().minusDays(7)));
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        Assertions.assertEquals(new CountPercentageData(11, 52.38), vaccinationService.getStatOfVaccinationsForPeriod(LocalDate.now().minusDays(14), LocalDate.now().minusDays(7)));
     }
 
     @Test

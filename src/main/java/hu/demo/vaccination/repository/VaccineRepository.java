@@ -2,6 +2,7 @@ package hu.demo.vaccination.repository;
 
 import hu.demo.vaccination.domain.Vaccine;
 import hu.demo.vaccination.dto.vaccine.VaccineCreateData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,6 +13,7 @@ import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class VaccineRepository {
 
@@ -48,6 +50,7 @@ public class VaccineRepository {
         try {
             return jdbc.query(sql, vaccineRowMapper);
         } catch (DataAccessException e) {
+            log.error("getVaccines exception: " + e.getMessage());
             return Collections.emptyList();
         }
     }
@@ -57,6 +60,7 @@ public class VaccineRepository {
         try {
             return jdbc.queryForObject(sql, vaccineRowMapper, id);
         } catch (DataAccessException e) {
+            log.error("getVaccine exception: " + e.getMessage());
             return null;
         }
     }
@@ -93,6 +97,7 @@ public class VaccineRepository {
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("createVaccine exception: " + e.getMessage());
             return false;
         }
     }
@@ -130,6 +135,7 @@ public class VaccineRepository {
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("updateVaccine exception: " + e.getMessage());
             return false;
         }
     }
@@ -142,6 +148,7 @@ public class VaccineRepository {
             int rowsAffected = jdbc.update(sql, id);
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("deleteVaccine exception: " + e.getMessage());
             return false;
         }
     }

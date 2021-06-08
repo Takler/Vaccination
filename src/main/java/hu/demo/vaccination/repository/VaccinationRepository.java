@@ -3,6 +3,7 @@ package hu.demo.vaccination.repository;
 import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.dto.vaccination.VaccinationCreateData;
 import hu.demo.vaccination.repository.mapper.VaccinationMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +14,7 @@ import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class VaccinationRepository {
 
@@ -33,6 +35,7 @@ public class VaccinationRepository {
         try {
             return jdbc.query(sql, vaccinationMapper);
         } catch (DataAccessException e) {
+            log.error("getVaccinations exception: " + e.getMessage());
             return Collections.emptyList();
         }
     }
@@ -42,6 +45,7 @@ public class VaccinationRepository {
         try {
             return jdbc.queryForObject(sql, vaccinationMapper, id);
         } catch (DataAccessException e) {
+            log.error("getVaccination exception: " + e.getMessage());
             return null;
         }
     }
@@ -62,7 +66,7 @@ public class VaccinationRepository {
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            log.error("createVaccination exception: " + e.getMessage());
             return false;
         }
     }
@@ -84,7 +88,7 @@ public class VaccinationRepository {
             );
             return rowsAffected == 1;
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            log.error("updateVaccination exception: " + e.getMessage());
             return false;
         }
     }
@@ -97,6 +101,7 @@ public class VaccinationRepository {
             int rowsAffected = jdbc.update(sql, id);
             return rowsAffected == 1;
         } catch (DataAccessException e) {
+            log.error("deleteVaccination exception: " + e.getMessage());
             return false;
         }
     }

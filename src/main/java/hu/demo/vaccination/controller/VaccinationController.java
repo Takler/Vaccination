@@ -112,9 +112,9 @@ public class VaccinationController {
     }
 
     @GetMapping("/period")
-    public ResponseEntity<Integer> getNumberOfVaccinationsForPeriod(@RequestParam LocalDate start,
+    public ResponseEntity<CountPercentageData> getNumberOfVaccinationsForPeriod(@RequestParam LocalDate start,
                                                                     @RequestParam LocalDate end) {
-        return new ResponseEntity<>(vaccinationService.getNumberOfVaccinationsForPeriod(start, end), HttpStatus.OK);
+        return new ResponseEntity<>(vaccinationService.getStatOfVaccinationsForPeriod(start, end), HttpStatus.OK);
     }
 
     @GetMapping("/patient/{id}")
