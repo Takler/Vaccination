@@ -39,7 +39,7 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
         this.doctorService = doctorService;
     }
 
-    public double getFirstVaccinatedPercentage(int minAge, int maxAge, boolean chronic, boolean pregnant) {
+    public CountPercentageData getFirstVaccinatedData(int minAge, int maxAge, boolean chronic, boolean pregnant) {
         List<Patient> patients = patientService.findAll();
 
         patients = filterPatientsByAgeAndCondition(patients, minAge, maxAge, chronic, pregnant);
@@ -49,7 +49,8 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
         Set<Integer> vaccinatedRegisteredPatients = new HashSet<>(getVaccinatedPatientsIds());
         vaccinatedRegisteredPatients.retainAll(filteredRegisteredPatients);
 
-        return Math.round(vaccinatedRegisteredPatients.size() * 10000 / (double) filteredRegisteredPatients.size()) / 100.0;
+        return new CountPercentageData(vaccinatedRegisteredPatients.size(),
+                Math.round(vaccinatedRegisteredPatients.size() * 10000 / (double) filteredRegisteredPatients.size()) / 100.0);
 
     }
 

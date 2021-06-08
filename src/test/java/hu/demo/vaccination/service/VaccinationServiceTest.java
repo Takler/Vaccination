@@ -56,83 +56,83 @@ class VaccinationServiceTest {
     }
 
     @Test
-    public void test_getFirstVaccinatedPercentage_defaultArgs() {
+    public void test_getFirstVaccinatedData_defaultArgs() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
-        double result = vaccinationService.getFirstVaccinatedPercentage(0, 0, false, false);
-        Assertions.assertEquals(76.19, result);
+        CountPercentageData result = vaccinationService.getFirstVaccinatedData(0, 0, false, false);
+        Assertions.assertEquals(new CountPercentageData(16, 76.19), result);
     }
 
     @Test
-    public void test_getFirstVaccinatedPercentage_minAge60() {
+    public void test_getFirstVaccinatedData_minAge60() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
-        double result = vaccinationService.getFirstVaccinatedPercentage(60, 0, false, false);
-        Assertions.assertEquals(75.0, result);
+        CountPercentageData result = vaccinationService.getFirstVaccinatedData(60, 0, false, false);
+        Assertions.assertEquals(new CountPercentageData(6, 75.0), result);
     }
 
     @Test
-    public void test_getFirstVaccinatedPercentage_maxAge40() {
+    public void test_getFirstVaccinatedData_maxAge40() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
-        double result = vaccinationService.getFirstVaccinatedPercentage(0, 40, false, false);
-        Assertions.assertEquals(77.78, result);
+        CountPercentageData result = vaccinationService.getFirstVaccinatedData(0, 40, false, false);
+        Assertions.assertEquals(new CountPercentageData(7, 77.78), result);
     }
 
     @Test
-    public void test_getFirstVaccinatedPercentage_chronicTrue() {
+    public void test_getFirstVaccinatedData_chronicTrue() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
-        double result = vaccinationService.getFirstVaccinatedPercentage(0, 0, true, false);
-        Assertions.assertEquals(77.78, result);
+        CountPercentageData result = vaccinationService.getFirstVaccinatedData(0, 0, true, false);
+        Assertions.assertEquals(new CountPercentageData(7, 77.78), result);
     }
 
     @Test
-    public void test_getFirstVaccinatedPercentage_pregnantTrue() {
+    public void test_getFirstVaccinatedData_pregnantTrue() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
-        double result = vaccinationService.getFirstVaccinatedPercentage(0, 0, false, true);
-        Assertions.assertEquals(80.0, result);
+        CountPercentageData result = vaccinationService.getFirstVaccinatedData(0, 0, false, true);
+        Assertions.assertEquals(new CountPercentageData(4, 80.0), result);
     }
 
     @Test
-    public void test_getFirstVaccinatedPercentage_minAge20maxAge65() {
+    public void test_getFirstVaccinatedData_minAge20maxAge65() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
-        double result = vaccinationService.getFirstVaccinatedPercentage(20, 65, false, false);
-        Assertions.assertEquals(88.89, result);
+        CountPercentageData result = vaccinationService.getFirstVaccinatedData(20, 65, false, false);
+        Assertions.assertEquals(new CountPercentageData(8, 88.89), result);
     }
 
     @Test
-    public void test_getFirstVaccinatedPercentage_pregnantTrueChronicTrue() {
+    public void test_getFirstVaccinatedData_pregnantTrueChronicTrue() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
-        double result = vaccinationService.getFirstVaccinatedPercentage(0, 0, true, true);
-        Assertions.assertEquals(100.0, result);
+        CountPercentageData result = vaccinationService.getFirstVaccinatedData(0, 0, true, true);
+        Assertions.assertEquals(new CountPercentageData(1, 100.0), result);
     }
 
     @Test
-    public void test_getFirstVaccinatedPercentage_minAge40ChronicTrue() {
+    public void test_getFirstVaccinatedData_minAge40ChronicTrue() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
-        double result = vaccinationService.getFirstVaccinatedPercentage(40, 0, true, false);
-        Assertions.assertEquals(71.43, result);
+        CountPercentageData result = vaccinationService.getFirstVaccinatedData(40, 0, true, false);
+        Assertions.assertEquals(new CountPercentageData(5, 71.43), result);
     }
 
     @Test
-    public void test_getFirstVaccinatedPercentage_maxAge50PregnantTrue() {
+    public void test_getFirstVaccinatedData_maxAge50PregnantTrue() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
-        double result = vaccinationService.getFirstVaccinatedPercentage(0, 50, false, true);
-        Assertions.assertEquals(100.0, result);
+        CountPercentageData result = vaccinationService.getFirstVaccinatedData(0, 50, false, true);
+        Assertions.assertEquals(new CountPercentageData(4, 100.0), result);
     }
 
     @Test
-    public void test_getFirstVaccinatedPercentage_emptyResult() {
+    public void test_getFirstVaccinatedData_emptyResult() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(patientService.findAll()).thenReturn(patients);
-        double result = vaccinationService.getFirstVaccinatedPercentage(150, 0, false, false);
-        Assertions.assertEquals(0.0, result);
+        CountPercentageData result = vaccinationService.getFirstVaccinatedData(150, 0, false, false);
+        Assertions.assertEquals(new CountPercentageData(0, 0.0), result);
     }
 
     @Test
