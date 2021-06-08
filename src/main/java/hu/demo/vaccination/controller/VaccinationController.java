@@ -71,10 +71,10 @@ public class VaccinationController {
 
     @GetMapping("/first")
     @ResponseBody
-    public ResponseEntity<CountPercentageData> getFirstVaccinatedPercentage(@RequestParam(name = "min_age", defaultValue = "0") int minAge,
-                                                               @RequestParam(name = "max_age", defaultValue = "0") int maxAge,
-                                                               @RequestParam(name = "chronic", defaultValue = "false") boolean chronic,
-                                                               @RequestParam(name = "pregnant", defaultValue = "false") boolean pregnant) {
+    public ResponseEntity<CountPercentageData> getFirstVaccinatedPercentage(@RequestParam(defaultValue = "0") int minAge,
+                                                               @RequestParam(defaultValue = "0") int maxAge,
+                                                               @RequestParam(defaultValue = "false") boolean chronic,
+                                                               @RequestParam(defaultValue = "false") boolean pregnant) {
         if (minAge > maxAge && maxAge != 0) {
             return new ResponseEntity<>(new CountPercentageData(), HttpStatus.BAD_REQUEST);
         } else {

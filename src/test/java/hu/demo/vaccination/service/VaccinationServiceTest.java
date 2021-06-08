@@ -154,6 +154,15 @@ class VaccinationServiceTest {
     }
 
     @Test
+    void test_getFullVaccinatedData_max30() {
+        Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
+        Mockito.when(patientService.findAll()).thenReturn(patients);
+        Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
+        CountPercentageData result = vaccinationService.getFullVaccinatedData(0, 30, false, false);
+        Assertions.assertEquals(new CountPercentageData(3, 42.86), result);
+    }
+
+    @Test
     void test_getVaccinatedByVaccine() {
         Mockito.when(vaccinationRepository.getVaccinations()).thenReturn(vaccinations);
         Mockito.when(vaccineService.findAll()).thenReturn(vaccines);
