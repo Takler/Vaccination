@@ -4,6 +4,7 @@ import hu.demo.vaccination.domain.Vaccination;
 import hu.demo.vaccination.dto.vaccination.*;
 import hu.demo.vaccination.service.VaccinationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -112,8 +113,9 @@ public class VaccinationController {
     }
 
     @GetMapping("/period")
-    public ResponseEntity<CountPercentageData> getNumberOfVaccinationsForPeriod(@RequestParam LocalDate start,
-                                                                    @RequestParam LocalDate end) {
+    public ResponseEntity<CountPercentageData> getStatOfVaccinationsForPeriod(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         return new ResponseEntity<>(vaccinationService.getStatOfVaccinationsForPeriod(start, end), HttpStatus.OK);
     }
 
