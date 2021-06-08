@@ -55,8 +55,10 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
     }
 
     public CountPercentageData getFullVaccinatedData(int minAge, int maxAge, boolean chronic, boolean pregnant) {
-        int numberOfFilteredPatients = getPatientIds(filterPatientsByAgeAndCondition(patientService.findAll(),
-                minAge, maxAge, chronic, pregnant)).size();
+        List<Integer> includedPatients = getPatientIds(filterPatientsByAgeAndCondition(patientService.findAll(),
+                minAge, maxAge, chronic, pregnant));
+        int numberOfFilteredPatients = includedPatients.size();
+
         List<Vaccination> vaccinations = vaccinationRepository.getVaccinations();
 
         Map<Integer, Integer> numberOfShotsNeededPerVaccine = vaccineService.findAll().stream()
@@ -68,6 +70,7 @@ public class VaccinationService implements InfoOperation<Vaccination, Vaccinatio
                         Vaccination::getPatientId,
                         Collectors.counting()));
         Map<Integer, Integer> patientIdsVaccinesIds = vaccinations.stream()
+                .filter(vaccination -> includedPatients.contains(vaccination.getPatientId()))
                 .collect(Collectors.toMap(
                         Vaccination::getPatientId,
                         Vaccination::getVaccineId,
