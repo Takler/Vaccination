@@ -29,8 +29,6 @@ import java.util.List;
 @Service
 public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData, ShiftInfoData, ShiftNameInfoData>, FileHandler { //TODO: Requestable??? Object is a placeholder for ShiftNameData
 
-    //TODO   dátumkezelés beállítása, számít implenets<> -ben a típussorrend?
-
     private ShiftRepository shiftRepository;
     private DoctorService doctorService;
     private CenterService centerService;
@@ -45,7 +43,7 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
     // implement CrudOperation methods
 
     @Override
-    public List<Shift> findAll() {      // TODO Interface<Shift> ,miért "eszi" meg?
+    public List<Shift> findAll() {
         return shiftRepository.findAll();
     }
 
@@ -74,7 +72,7 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
     @Override
     public ShiftInfoData getInfo(int shiftId) {
         ShiftInfoData shiftInfoData = new ShiftInfoData();
-        Shift shift = shiftRepository.getById(shiftId);  //TODO getById és innen vagy a repositoryból?
+        Shift shift = shiftRepository.getById(shiftId);
         Doctor doctor = doctorService.getById(shift.getDoctorId());
         Center center = centerService.getById(shift.getCenterId());
 
@@ -87,7 +85,7 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
     }
 
     @Override
-    public ShiftNameInfoData getNameInfo(int shiftId) {  // TODO TEST, mert cseréltem!!!!!!
+    public ShiftNameInfoData getNameInfo(int shiftId) {
         ShiftNameInfoData shiftNameInfoData = new ShiftNameInfoData();
         Shift shift = shiftRepository.getById(shiftId);
         Doctor doctor = doctorService.getById(shift.getDoctorId());
@@ -110,7 +108,7 @@ public class ShiftService implements InfoOperation<Shift, ShiftCreateUpdateData,
         List<Shift> shiftList = shiftRepository.findAll();
         try {
             for (Shift item : shiftList) {
-                Files.writeString(path, item.toString() + "\r\n", StandardOpenOption.APPEND);  //TODO létrehozás nem ok.
+                Files.writeString(path, item.toString() + "\r\n", StandardOpenOption.APPEND);
             }
             return true;
         } catch (IOException ex) {
